@@ -1,0 +1,10 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "lior-server-stack"
+resolve_s3 = true
+s3_prefix = "lior-server-stack"
+region = "eu-central-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "PrefixParam=\"prod\" Stage=\"Prod\""
+image_repositories = []
