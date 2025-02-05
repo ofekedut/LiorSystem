@@ -1,4 +1,5 @@
 from typing import List
+from uuid import UUID
 
 from fastapi import APIRouter, HTTPException
 
@@ -22,7 +23,10 @@ from server.database.documents_databse import (
     ValidationRuleCreate,
     ValidationRule,
 )
+
 router = APIRouter()
+
+
 @router.get("/documents", response_model=List[DocumentInDB])
 async def read_documents():
     """
@@ -30,8 +34,9 @@ async def read_documents():
     """
     return await list_documents()
 
+
 @router.get("/documents/{document_id}", response_model=DocumentInDB)
-async def read_document(document_id: int):
+async def read_document(document_id: UUID):
     """
     Get a specific document by ID.
     """
@@ -50,7 +55,7 @@ async def create_new_document(document_in: DocumentInCreate):
 
 
 @router.put("/documents/{document_id}", response_model=DocumentInDB)
-async def update_existing_document(document_id: int, document_update: DocumentUpdate):
+async def update_existing_document(document_id: UUID, document_update: DocumentUpdate):
     """
     Update an existing document by ID.
     """
@@ -61,7 +66,7 @@ async def update_existing_document(document_id: int, document_update: DocumentUp
 
 
 @router.delete("/documents/{document_id}", status_code=204)
-async def remove_document(document_id: int):
+async def remove_document(document_id: UUID):
     """
     Delete a document by ID.
     """
@@ -76,11 +81,10 @@ async def remove_document(document_id: int):
 # -------------------------------------------------
 
 @router.get("/documents/{document_id}/fields", response_model=List[DocumentField])
-async def read_document_fields(document_id: int):
+async def read_document_fields(document_id: UUID):
     """
     Retrieve all fields for a given document.
     """
-    # Optional: verify the document exists
     doc = await get_document(document_id)
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
@@ -89,15 +93,13 @@ async def read_document_fields(document_id: int):
 
 
 @router.post("/documents/{document_id}/fields", response_model=DocumentField, status_code=201)
-async def create_field_for_document(document_id: int, field_in: DocumentFieldCreate):
+async def create_field_for_document(document_id: UUID, field_in: DocumentFieldCreate):
     """
     Create a new field for a given document.
     """
-    # Ensure the 'document_id' in field_in matches the URL param
     if field_in.document_id != document_id:
         raise HTTPException(status_code=400, detail="document_id mismatch")
 
-    # Optional: verify the document exists
     doc = await get_document(document_id)
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
@@ -106,7 +108,7 @@ async def create_field_for_document(document_id: int, field_in: DocumentFieldCre
 
 
 @router.delete("/fields/{field_id}", status_code=204)
-async def remove_document_field(field_id: int):
+async def remove_document_field(field_id: UUID):
     """
     Delete a single field by its ID.
     """
@@ -121,11 +123,10 @@ async def remove_document_field(field_id: int):
 # -------------------------------------------------
 
 @router.get("/documents/{document_id}/validation_rules", response_model=List[ValidationRule])
-async def read_validation_rules(document_id: int):
+async def read_validation_rules(document_id: UUID):
     """
     Retrieve all validation rules for a given document.
     """
-    # Optional: verify the document exists
     doc = await get_document(document_id)
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
@@ -134,15 +135,13 @@ async def read_validation_rules(document_id: int):
 
 
 @router.post("/documents/{document_id}/validation_rules", response_model=ValidationRule, status_code=201)
-async def create_rule_for_document(document_id: int, rule_in: ValidationRuleCreate):
+async def create_rule_for_document(document_id: UUID, rule_in: ValidationRuleCreate):
     """
     Create a new validation rule for a given document.
     """
-    # Ensure the 'document_id' in rule_in matches the URL param
     if rule_in.document_id != document_id:
         raise HTTPException(status_code=400, detail="document_id mismatch")
 
-    # Optional: verify the document exists
     doc = await get_document(document_id)
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
@@ -151,7 +150,7 @@ async def create_rule_for_document(document_id: int, rule_in: ValidationRuleCrea
 
 
 @router.delete("/validation_rules/{rule_id}", status_code=204)
-async def remove_validation_rule(rule_id: int):
+async def remove_validation_rule(rule_id: UUID):
     """
     Delete a validation rule by ID.
     """

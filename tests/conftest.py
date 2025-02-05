@@ -88,3 +88,19 @@ def admin_token(admin_user):
 def user_token(regular_user):
     """Generate JWT token for regular user."""
     return create_access_token(regular_user.id)
+@pytest.fixture
+def new_document_payload() -> dict:
+    """
+    Returns a valid payload for creating a new document.
+    Adjust the fields if your DocumentInCreate model requires different values.
+    """
+    return {
+        "name": "Test Document",
+        "description": "A test document",
+        "document_type": "one-time",
+        "category": "tax",
+        "period_type": None,
+        "periods_required": None,
+        "has_multiple_periods": False,
+        "required_for": ["all"]
+    }

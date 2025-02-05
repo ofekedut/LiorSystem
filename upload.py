@@ -126,7 +126,8 @@ def main():
             f"pip install --upgrade pip && "
             f"pip install  python-jose python-multipart passlib[bcrypt] asyncio asyncpg fastapi boto3 "
             f"camelot-py opencv-contrib-python opencv-python-headless "
-            f"pdf2image PyMuPDF PyPDF2 pytesseract rapidfuzz uvicorn"
+            f"pdf2image PyMuPDF PyPDF2 pytesseract rapidfuzz uvicorn "
+            f"'pydantic[email]'"
         )
 
         # 8. Create or update systemd service

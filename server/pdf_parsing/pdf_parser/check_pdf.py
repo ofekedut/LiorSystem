@@ -1,6 +1,7 @@
 import os
 from PyPDF2 import PdfReader
 
+
 def check_pdf_text(directory: str) -> dict[str, bool]:
     """
     Scan a directory for PDFs and check which ones have selectable text.

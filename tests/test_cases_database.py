@@ -1,0 +1,346 @@
+# cases_database_test.py
+
+import uuid
+import pytest
+import pytest_asyncio
+from datetime import datetime, date
+
+from database.documents_databse import DocumentCategory, DocumentType
+from server.database.documents_databse import (create_document, DocumentInCreate)
+from server.database.cases_database import (
+    create_case,
+    get_case,
+    list_cases,
+    update_case,
+    delete_case,
+    CaseInCreate,
+    CaseUpdate,
+    CaseStatus,
+
+    create_case_person,
+    get_case_person,
+    list_case_persons,
+    update_case_person,
+    delete_case_person,
+    CasePersonCreate,
+    CasePersonUpdate,
+    PersonRole,
+    PersonGender,
+
+    create_person_relation,
+    list_person_relations,
+    delete_person_relation,
+    CasePersonRelationCreate,
+
+    create_case_document,
+    get_case_document,
+    list_case_documents,
+    update_case_document,
+    delete_case_document,
+    CaseDocumentCreate,
+    CaseDocumentUpdate,
+    DocumentStatus,
+    DocumentProcessingStatus,
+
+    create_case_loan,
+    get_case_loan,
+    list_case_loans,
+    update_case_loan,
+    delete_case_loan,
+    CaseLoanCreate,
+    CaseLoanUpdate,
+    LoanStatus
+)
+
+
+# =============================================================================
+# Fixtures
+# =============================================================================
+
+@pytest_asyncio.fixture
+async def created_main_doc():
+    return await create_document(DocumentInCreate(
+        name='test doc',
+        description='test doc',
+        document_type=DocumentType.recurring,
+        category=DocumentCategory.identification,
+        period_type='quarter',
+        periods_required=4,
+        has_multiple_periods=True,
+        required_for=[],
+    ))
+
+
+@pytest_asyncio.fixture
+async def created_case():
+    """
+    Creates a new case for testing and returns the resulting CaseInDB.
+    """
+    case_data = CaseInCreate(
+        name="Test Case",
+        status=CaseStatus.pending,
+        activity_level=50,
+        last_active=datetime.utcnow(),
+        project_count=0
+    )
+    case_db = await create_case(case_data)
+    return case_db
+
+
+@pytest_asyncio.fixture
+async def created_person(created_case):
+    """
+    Creates a new person linked to the created_case fixture.
+    """
+    person_data = CasePersonCreate(
+        case_id=created_case.id,
+        first_name="Alice",
+        last_name="Tester",
+        id_number="ID12345",
+        age=30,
+        gender=PersonGender.female,
+        role=PersonRole.primary,
+        birth_date=date(1990, 1, 1),
+        phone="+123456789",
+        email="alice@example.com",
+        status="active"
+    )
+    person_db = await create_case_person(person_data)
+    return person_db
+
+
+@pytest_asyncio.fixture
+async def created_document(created_case, created_main_doc):
+    """
+    Creates a placeholder 'case_document' entry for testing.
+    In a real-world scenario, you'd have a valid document_id from the documents table.
+    Here, we generate a random UUID for demonstration.
+    """
+    doc_data = CaseDocumentCreate(
+        case_id=created_case.id,
+        document_id=created_main_doc.id,
+        status=DocumentStatus.pending,
+        processing_status=DocumentProcessingStatus.pending,
+        uploaded_at=None,
+        reviewed_at=None,
+        uploaded_by=None
+    )
+    doc_db = await create_case_document(doc_data)
+    return doc_db
+
+
+@pytest_asyncio.fixture
+async def created_loan(created_case):
+    """
+    Creates a new loan linked to the created_case fixture.
+    """
+    loan_data = CaseLoanCreate(
+        case_id=created_case.id,
+        amount=100000.0,
+        status=LoanStatus.active,
+        start_date=date.today(),
+        end_date=None
+    )
+    loan_db = await create_case_loan(loan_data)
+    yield loan_db
+    await delete_case_loan(loan_db.id)
+
+
+# =============================================================================
+# Test Cases: CRUD for the 'cases' table
+# =============================================================================
+
+@pytest.mark.asyncio
+class TestCases:
+    async def test_create_case(self):
+        new_case = CaseInCreate(
+            name="New Mortgage Case",
+            status=CaseStatus.active,
+            activity_level=75,
+            last_active=datetime.utcnow(),
+            project_count=2
+        )
+        case_db = await create_case(new_case)
+        assert case_db.id is not None
+        assert case_db.name == new_case.name
+
+    async def test_get_case(self, created_case):
+        fetched = await get_case(created_case.id)
+        assert fetched is not None
+        assert fetched.id == created_case.id
+        assert fetched.name == created_case.name
+
+    async def test_list_cases(self, created_case):
+        results = await list_cases()
+        assert isinstance(results, list)
+        assert any(c.id == created_case.id for c in results)
+
+    async def test_update_case(self, created_case):
+        update_data = CaseUpdate(
+            name="Updated Case Name",
+            status=CaseStatus.active,
+            activity_level=90
+        )
+        updated = await update_case(created_case.id, update_data)
+        assert updated is not None
+        assert updated.name == "Updated Case Name"
+        assert updated.status == CaseStatus.active
+        assert updated.activity_level == 90
+
+    async def test_delete_case(self, created_case):
+        deleted = await delete_case(created_case.id)
+        assert deleted is True
+        fetched_after = await get_case(created_case.id)
+        assert fetched_after is None
+
+
+# =============================================================================
+# Test Case Persons
+# =============================================================================
+
+@pytest.mark.asyncio
+class TestCasePersons:
+    async def test_create_case_person(self, created_case):
+        person_data = CasePersonCreate(
+            case_id=created_case.id,
+            first_name="Bob",
+            last_name="Example",
+            id_number="ID54321",
+            age=40,
+            gender=PersonGender.male,
+            role=PersonRole.cosigner,
+            birth_date=date(1985, 1, 1),
+            phone="+987654321",
+            email="bob@example.com",
+            status="active"
+        )
+        person_db = await create_case_person(person_data)
+        assert person_db.id is not None
+        assert person_db.case_id == created_case.id
+
+    async def test_get_case_person(self, created_person):
+        fetched = await get_case_person(created_person.id)
+        assert fetched is not None
+        assert fetched.id == created_person.id
+        await delete_case_person(created_person.id)
+
+    async def test_list_case_persons(self, created_case, created_person):
+        results = await list_case_persons(created_case.id)
+        assert isinstance(results, list)
+        assert any(p.id == created_person.id for p in results)
+        await delete_case_person(created_person.id)
+
+    async def test_update_case_person(self, created_person):
+        update_data = CasePersonUpdate(
+            phone="+999999999",
+            role=PersonRole.guarantor
+        )
+        updated = await update_case_person(created_person.id, update_data)
+        assert updated is not None
+        assert updated.phone == "+999999999"
+        assert updated.role == PersonRole.guarantor
+        await delete_case_person(created_person.id)
+
+    async def test_delete_case_person(self, created_person):
+        deleted = await delete_case_person(created_person.id)
+        assert deleted is True
+        fetched_after = await get_case_person(created_person.id)
+        assert fetched_after is None
+
+
+# =============================================================================
+# Test Person Relations
+# =============================================================================
+
+@pytest.mark.asyncio
+class TestCasePersonRelations:
+    async def test_create_person_relation(self, created_person):
+        """
+        Creates a relation between the same person for demonstration,
+        but in real usage you'd have two distinct persons.
+        """
+        rel_data = CasePersonRelationCreate(
+            from_person_id=created_person.id,
+            to_person_id=created_person.id,  # Not typical; just for test
+            relationship_type="self"
+        )
+        rel_db = await create_person_relation(rel_data)
+        assert rel_db.from_person_id == created_person.id
+        assert rel_db.to_person_id == created_person.id
+
+    # =============================================================================
+    # Test Case Documents
+    # =============================================================================
+
+    async def test_get_case_document(self, created_document):
+        fetched = await get_case_document(created_document.case_id, created_document.document_id)
+        assert fetched is not None
+        assert fetched.case_id == created_document.case_id
+        assert fetched.document_id == created_document.document_id
+
+    async def test_list_case_documents(self, created_case, created_document):
+        results = await list_case_documents(created_case.id)
+        assert isinstance(results, list)
+        assert any(doc.document_id == created_document.document_id for doc in results)
+
+    async def test_update_case_document(self, created_document):
+        update_data = CaseDocumentUpdate(
+            status=DocumentStatus.approved,
+            processing_status=DocumentProcessingStatus.processed
+        )
+        updated = await update_case_document(created_document.case_id, created_document.document_id, update_data)
+        assert updated is not None
+        assert updated.status == DocumentStatus.approved
+        assert updated.processing_status == DocumentProcessingStatus.processed
+
+    async def test_delete_case_document(self, created_document):
+        deleted = await delete_case_document(created_document.case_id, created_document.document_id)
+        assert deleted is True
+        # Verify
+        fetched_after = await get_case_document(created_document.case_id, created_document.document_id)
+        assert fetched_after is None
+
+
+# =============================================================================
+# Test Case Loans
+# =============================================================================
+
+@pytest.mark.asyncio
+class TestCaseLoans:
+    async def test_create_case_loan(self, created_case):
+        loan_data = CaseLoanCreate(
+            case_id=created_case.id,
+            amount=50000.0,
+            status=LoanStatus.active,
+            start_date=date.today()
+        )
+        loan_db = await create_case_loan(loan_data)
+        assert loan_db.id is not None
+        assert loan_db.case_id == created_case.id
+        assert loan_db.status == LoanStatus.active
+
+    async def test_get_case_loan(self, created_loan):
+        fetched = await get_case_loan(created_loan.id)
+        assert fetched is not None
+        assert fetched.id == created_loan.id
+
+    async def test_list_case_loans(self, created_case, created_loan):
+        results = await list_case_loans(created_case.id)
+        assert isinstance(results, list)
+        assert any(loan.id == created_loan.id for loan in results)
+
+    async def test_update_case_loan(self, created_loan):
+        update_data = CaseLoanUpdate(
+            amount=75000.0,
+            status=LoanStatus.closed
+        )
+        updated = await update_case_loan(created_loan.id, update_data)
+        assert updated is not None
+        assert updated.amount == 75000.0
+        assert updated.status == LoanStatus.closed
+
+    async def test_delete_case_loan(self, created_loan):
+        deleted = await delete_case_loan(created_loan.id)
+        assert deleted is True
+        fetched_after = await get_case_loan(created_loan.id)
+        assert fetched_after is None

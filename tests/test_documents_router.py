@@ -1,17 +1,17 @@
+import uuid
 import pytest
 import pytest_asyncio
 from httpx import AsyncClient
 from fastapi import status
 
-# Import the FastAPI app.
-# Adjust this import to match your project structure.
+# Adjust the import below to match your actual project structure:
 from server.api import app
 
 # =============================================================================
 # Fixtures
 # =============================================================================
 
-@pytest_asyncio.fixture()
+@pytest_asyncio.fixture
 async def async_client():
     """
     Provides an AsyncClient for making requests to the FastAPI app.
@@ -19,22 +19,6 @@ async def async_client():
     async with AsyncClient(app=app, base_url="http://test") as client:
         yield client
 
-@pytest.fixture
-def new_document_payload() -> dict:
-    """
-    Returns a valid payload for creating a new document.
-    Adjust the fields if your DocumentInCreate model requires different values.
-    """
-    return {
-        "name": "Test Document",
-        "description": "A test document",
-        "document_type": "one-time",
-        "category": "tax",
-        "period_type": None,
-        "periods_required": None,
-        "has_multiple_periods": False,
-        "required_for": ["all"]
-    }
 
 # =============================================================================
 # Tests for Documents Endpoints
@@ -48,8 +32,12 @@ class TestDocumentsEndpoints:
         """
         response = await async_client.post("/documents", json=new_document_payload)
         assert response.status_code == status.HTTP_201_CREATED
+
         data = response.json()
+        # Verify UUID
         assert "id" in data
+        assert isinstance(data["id"], str)
+        # You could optionally attempt to parse UUID(data["id"]) to ensure it's valid
         assert data["name"] == new_document_payload["name"]
         assert data["description"] == new_document_payload["description"]
         assert data["required_for"] == new_document_payload["required_for"]
@@ -61,8 +49,11 @@ class TestDocumentsEndpoints:
         """
         # Create a document
         await async_client.post("/documents", json=new_document_payload)
+
+        # List documents
         response = await async_client.get("/documents")
         assert response.status_code == status.HTTP_200_OK
+
         data = response.json()
         assert isinstance(data, list)
         # Expect at least one document in the list.
@@ -80,6 +71,7 @@ class TestDocumentsEndpoints:
         # Retrieve the document by its ID
         response = await async_client.get(f"/documents/{doc_id}")
         assert response.status_code == status.HTTP_200_OK
+
         data = response.json()
         assert data["id"] == doc_id
         assert data["name"] == new_document_payload["name"]
@@ -88,7 +80,9 @@ class TestDocumentsEndpoints:
         """
         Test retrieving a non-existent document should return 404.
         """
-        response = await async_client.get("/documents/9999999")
+        # A random or fixed UUID that (likely) doesn't exist
+        invalid_uuid = "11111111-1111-1111-1111-111111111111"
+        response = await async_client.get(f"/documents/{invalid_uuid}")
         assert response.status_code == status.HTTP_404_NOT_FOUND
 
     async def test_update_document(self, async_client: AsyncClient, new_document_payload: dict):
@@ -100,7 +94,7 @@ class TestDocumentsEndpoints:
         created_doc = create_resp.json()
         doc_id = created_doc["id"]
 
-        # Prepare update payload. Ensure all required fields are `provided.
+        # Prepare update payload. Ensure all required fields are provided.
         update_payload = {
             "name": "Updated Document Name",
             "description": "Updated description",
@@ -113,6 +107,7 @@ class TestDocumentsEndpoints:
         }
         update_resp = await async_client.put(f"/documents/{doc_id}", json=update_payload)
         assert update_resp.status_code == status.HTTP_200_OK
+
         updated_doc = update_resp.json()
         assert updated_doc["name"] == update_payload["name"]
         assert updated_doc["document_type"] == update_payload["document_type"]
@@ -162,6 +157,7 @@ class TestDocumentFieldsEndpoints:
         }
         resp = await async_client.post(f"/documents/{doc_id}/fields", json=field_payload)
         assert resp.status_code == status.HTTP_201_CREATED
+
         data = resp.json()
         assert "id" in data
         assert data["document_id"] == doc_id
@@ -172,6 +168,7 @@ class TestDocumentFieldsEndpoints:
         Test listing document fields (GET /documents/{document_id}/fields).
         """
         doc_id = document_for_fields["id"]
+
         # Create a couple of fields for the document
         for i in range(2):
             field_payload = {
@@ -185,6 +182,7 @@ class TestDocumentFieldsEndpoints:
         # Retrieve document fields
         resp = await async_client.get(f"/documents/{doc_id}/fields")
         assert resp.status_code == status.HTTP_200_OK
+
         fields = resp.json()
         assert isinstance(fields, list)
         assert len(fields) >= 2
@@ -219,12 +217,11 @@ class TestDocumentFieldsEndpoints:
 
 @pytest.mark.asyncio
 class TestValidationRulesEndpoints:
-    @pytest_asyncio.fixture()
+    @pytest_asyncio.fixture
     async def document_for_rules(self, async_client: AsyncClient, new_document_payload: dict):
         """
         Creates a new document for testing validation rules endpoints.
         """
-        # Use a payload appropriate for a document that supports validation rules.
         payload = new_document_payload.copy()
         payload.update({
             "name": "Validation Rule Test Document",
@@ -252,6 +249,7 @@ class TestValidationRulesEndpoints:
         }
         resp = await async_client.post(f"/documents/{doc_id}/validation_rules", json=rule_payload)
         assert resp.status_code == status.HTTP_201_CREATED
+
         data = resp.json()
         assert "id" in data
         assert data["document_id"] == doc_id
@@ -264,7 +262,7 @@ class TestValidationRulesEndpoints:
         """
         doc_id = document_for_rules["id"]
 
-        # Create a validation rule first.
+        # Create a validation rule
         rule_payload = {
             "document_id": doc_id,
             "field": "another_field",
@@ -274,9 +272,10 @@ class TestValidationRulesEndpoints:
         }
         await async_client.post(f"/documents/{doc_id}/validation_rules", json=rule_payload)
 
-        # Retrieve validation rules.
+        # Retrieve validation rules
         resp = await async_client.get(f"/documents/{doc_id}/validation_rules")
         assert resp.status_code == status.HTTP_200_OK
+
         rules = resp.json()
         assert isinstance(rules, list)
         assert len(rules) >= 1
@@ -300,7 +299,7 @@ class TestValidationRulesEndpoints:
         del_resp = await async_client.delete(f"/validation_rules/{rule_id}")
         assert del_resp.status_code == status.HTTP_204_NO_CONTENT
 
-        # Verify deletion by listing rules
+        # Verify
         list_resp = await async_client.get(f"/documents/{doc_id}/validation_rules")
         rules_list = list_resp.json()
         assert all(rule["id"] != rule_id for rule in rules_list)

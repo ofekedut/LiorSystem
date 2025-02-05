@@ -1,0 +1,745 @@
+# cases_database.py
+import enum
+from typing import List, Optional
+from datetime import datetime, date
+from uuid import UUID
+
+from pydantic import BaseModel, Field, conint
+from server.database.database import get_connection
+
+
+# =============================================================================
+# 1. Enum Definitions
+# =============================================================================
+
+class CaseStatus(str, enum.Enum):
+    active = "active"
+    inactive = "inactive"
+    pending = "pending"
+
+
+class PersonRole(str, enum.Enum):
+    primary = "primary"
+    cosigner = "cosigner"
+    guarantor = "guarantor"
+
+
+class PersonGender(str, enum.Enum):
+    male = "male"
+    female = "female"
+
+
+class DocumentStatus(str, enum.Enum):
+    pending = "pending"
+    approved = "approved"
+    rejected = "rejected"
+
+
+class DocumentProcessingStatus(str, enum.Enum):
+    processed = "processed"
+    pending = "pending"
+    error = "error"
+    userActionRequired = "userActionRequired"
+
+
+class LoanStatus(str, enum.Enum):
+    active = "active"
+    closed = "closed"
+    defaulted = "defaulted"
+
+
+# =============================================================================
+# 2. Pydantic Models
+# =============================================================================
+
+# ----------------------------
+# 2A. Cases
+# ----------------------------
+class CaseBase(BaseModel):
+    name: str
+    status: CaseStatus
+    activity_level: conint(ge=0, le=100)
+    last_active: datetime
+    project_count: conint(ge=0) = 0
+
+
+class CaseInCreate(CaseBase):
+    """
+    Model for creating a new case.
+    """
+
+
+class CaseInDB(CaseBase):
+    """
+    Model representing a case as stored in the database.
+    """
+    id: UUID
+    created_at: datetime
+    updated_at: datetime
+
+
+class CaseUpdate(BaseModel):
+    """
+    Model for updating an existing case.
+    Only includes fields that can be changed.
+    """
+    name: Optional[str] = None
+    status: Optional[CaseStatus] = None
+    activity_level: Optional[conint(ge=0, le=100)] = None
+    last_active: Optional[datetime] = None
+    project_count: Optional[conint(ge=0)] = None
+
+
+# ----------------------------
+# 2B. Case Persons
+# ----------------------------
+class CasePersonBase(BaseModel):
+    first_name: str
+    last_name: str
+    id_number: str
+    age: Optional[int] = None
+    gender: PersonGender
+    role: PersonRole
+    birth_date: date
+    phone: Optional[str] = None
+    email: Optional[str] = None
+    status: str  # e.g., 'active' or 'inactive'
+
+
+class CasePersonCreate(CasePersonBase):
+    """
+    Model for creating a new person record linked to a specific case.
+    """
+    case_id: UUID
+
+
+class CasePersonInDB(CasePersonBase):
+    """
+    Model representing a case person as stored in the database.
+    """
+    id: UUID
+    case_id: UUID
+    created_at: datetime
+    updated_at: datetime
+
+
+class CasePersonUpdate(BaseModel):
+    """
+    Model for updating an existing case person record.
+    Only includes fields that can be changed.
+    """
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    id_number: Optional[str] = None
+    age: Optional[int] = None
+    gender: Optional[PersonGender] = None
+    role: Optional[PersonRole] = None
+    birth_date: Optional[date] = None
+    phone: Optional[str] = None
+    email: Optional[str] = None
+    status: Optional[str] = None
+
+
+# ----------------------------
+# 2C. Case Person Relations
+# ----------------------------
+class CasePersonRelationBase(BaseModel):
+    """
+    Represents a relationship between two persons in a single case.
+    For example: parent-child, partner, etc.
+    """
+    from_person_id: UUID
+    to_person_id: UUID
+    relationship_type: str  # e.g. 'child', 'partner', 'parent', etc.
+
+
+class CasePersonRelationCreate(CasePersonRelationBase):
+    """
+    Model for creating a new relationship record between two persons.
+    """
+
+
+class CasePersonRelationInDB(CasePersonRelationBase):
+    """
+    Model representing a person-to-person relationship as stored in the database.
+    """
+    pass
+
+
+# ----------------------------
+# 2D. Case Documents
+# ----------------------------
+class CaseDocumentBase(BaseModel):
+    status: DocumentStatus
+    processing_status: DocumentProcessingStatus
+    uploaded_at: Optional[datetime] = None
+    reviewed_at: Optional[datetime] = None
+    uploaded_by: Optional[UUID] = None
+
+
+class CaseDocumentCreate(CaseDocumentBase):
+    """
+    Model for creating a new case-document link.
+    """
+    case_id: UUID
+    document_id: UUID
+
+
+class CaseDocumentInDB(CaseDocumentBase):
+    """
+    Model representing a case-document link as stored in the database.
+    """
+    case_id: UUID
+    document_id: UUID
+
+
+class CaseDocumentUpdate(BaseModel):
+    """
+    Model for updating the status or processing information of an existing case-document link.
+    """
+    status: Optional[DocumentStatus] = None
+    processing_status: Optional[DocumentProcessingStatus] = None
+    reviewed_at: Optional[datetime] = None
+
+
+# ----------------------------
+# 2E. Case Loans
+# ----------------------------
+class CaseLoanBase(BaseModel):
+    amount: float
+    status: LoanStatus
+    start_date: date
+    end_date: Optional[date] = None
+
+
+class CaseLoanCreate(CaseLoanBase):
+    """
+    Model for creating a new loan record linked to a specific case.
+    """
+    case_id: UUID
+
+
+class CaseLoanInDB(CaseLoanBase):
+    """
+    Model representing a case loan as stored in the database.
+    """
+    id: UUID
+    case_id: UUID
+    created_at: datetime
+    updated_at: datetime
+
+
+class CaseLoanUpdate(BaseModel):
+    """
+    Model for updating fields of an existing case loan record.
+    """
+    amount: Optional[float] = None
+    status: Optional[LoanStatus] = None
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
+
+
+# =============================================================================
+# 3. CRUD Operations
+# =============================================================================
+
+# ----------------------------
+# 3A. Cases
+# ----------------------------
+async def create_case(case_in: CaseInCreate) -> CaseInDB:
+    """
+    Create a new case record.
+    """
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            row = await conn.fetchrow(
+                """
+                INSERT INTO cases (name, status, activity_level, last_active, project_count)
+                VALUES ($1, $2, $3, $4, $5)
+                RETURNING *
+                """,
+                case_in.name,
+                case_in.status.value,
+                case_in.activity_level,
+                case_in.last_active,
+                case_in.project_count,
+            )
+            return CaseInDB(**dict(row))
+    finally:
+        await conn.close()
+
+
+async def get_case(case_id: UUID) -> Optional[CaseInDB]:
+    """
+    Retrieve a single case by its UUID.
+    """
+    conn = await get_connection()
+    try:
+        row = await conn.fetchrow("SELECT * FROM cases WHERE id = $1", case_id)
+        return CaseInDB(**dict(row)) if row else None
+    finally:
+        await conn.close()
+
+
+async def update_case(case_id: UUID, case_update: CaseUpdate) -> Optional[CaseInDB]:
+    """
+    Update an existing case record.
+    """
+    existing = await get_case(case_id)
+    if not existing:
+        return None
+
+    updated_data = existing.copy(update=case_update.dict(exclude_unset=True))
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            row = await conn.fetchrow(
+                """
+                UPDATE cases
+                SET name = $1,
+                    status = $2,
+                    activity_level = $3,
+                    last_active = $4,
+                    project_count = $5,
+                    updated_at = NOW()
+                WHERE id = $6
+                RETURNING *
+                """,
+                updated_data.name,
+                updated_data.status.value if updated_data.status else existing.status.value,
+                updated_data.activity_level,
+                updated_data.last_active,
+                updated_data.project_count,
+                case_id,
+            )
+            return CaseInDB(**dict(row)) if row else None
+    finally:
+        await conn.close()
+
+
+async def delete_case(case_id: UUID) -> bool:
+    """
+    Delete a case record by its UUID.
+    """
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            result = await conn.execute("DELETE FROM cases WHERE id = $1", case_id)
+            return "DELETE 1" in result
+    finally:
+        await conn.close()
+
+
+async def list_cases() -> List[CaseInDB]:
+    """
+    Retrieve all cases, ordered by creation date descending.
+    """
+    conn = await get_connection()
+    try:
+        rows = await conn.fetch("SELECT * FROM cases ORDER BY created_at DESC")
+        return [CaseInDB(**dict(row)) for row in rows]
+    finally:
+        await conn.close()
+
+
+# ----------------------------
+# 3B. Case Persons
+# ----------------------------
+async def create_case_person(person_in: CasePersonCreate) -> CasePersonInDB:
+    """
+    Create a new person record tied to a specific case.
+    """
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            row = await conn.fetchrow(
+                """
+                INSERT INTO case_persons (
+                    case_id, first_name, last_name, id_number, age,
+                    gender, role, birth_date, phone, email, status
+                )
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+                RETURNING *
+                """,
+                person_in.case_id,
+                person_in.first_name,
+                person_in.last_name,
+                person_in.id_number,
+                person_in.age,
+                person_in.gender.value,
+                person_in.role.value,
+                person_in.birth_date,
+                person_in.phone,
+                person_in.email,
+                person_in.status,
+            )
+            return CasePersonInDB(**dict(row))
+    finally:
+        await conn.close()
+
+
+async def get_case_person(person_id: UUID) -> Optional[CasePersonInDB]:
+    """
+    Retrieve a single case person record by its UUID.
+    """
+    conn = await get_connection()
+    try:
+        row = await conn.fetchrow("SELECT * FROM case_persons WHERE id = $1", person_id)
+        return CasePersonInDB(**dict(row)) if row else None
+    finally:
+        await conn.close()
+
+
+async def list_case_persons(case_id: UUID) -> List[CasePersonInDB]:
+    """
+    Retrieve all persons associated with a specific case.
+    """
+    conn = await get_connection()
+    try:
+        rows = await conn.fetch("SELECT * FROM case_persons WHERE case_id = $1", case_id)
+        return [CasePersonInDB(**dict(row)) for row in rows]
+    finally:
+        await conn.close()
+
+
+async def update_case_person(person_id: UUID, person_update: CasePersonUpdate) -> Optional[CasePersonInDB]:
+    """
+    Update an existing case person record by ID.
+    """
+    existing = await get_case_person(person_id)
+    if not existing:
+        return None
+
+    updated_data = existing.copy(update=person_update.dict(exclude_unset=True))
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            row = await conn.fetchrow(
+                """
+                UPDATE case_persons
+                SET first_name = $1,
+                    last_name = $2,
+                    id_number = $3,
+                    age = $4,
+                    gender = $5,
+                    role = $6,
+                    birth_date = $7,
+                    phone = $8,
+                    email = $9,
+                    status = $10,
+                    updated_at = NOW()
+                WHERE id = $11
+                RETURNING *
+                """,
+                updated_data.first_name,
+                updated_data.last_name,
+                updated_data.id_number,
+                updated_data.age,
+                updated_data.gender.value if updated_data.gender else existing.gender.value,
+                updated_data.role.value if updated_data.role else existing.role.value,
+                updated_data.birth_date,
+                updated_data.phone,
+                updated_data.email,
+                updated_data.status,
+                person_id,
+            )
+            return CasePersonInDB(**dict(row)) if row else None
+    finally:
+        await conn.close()
+
+
+async def delete_case_person(person_id: UUID) -> bool:
+    """
+    Delete a case person record by its UUID.
+    """
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            result = await conn.execute("DELETE FROM case_persons WHERE id = $1", person_id)
+            return "DELETE 1" in result
+    finally:
+        await conn.close()
+
+
+# ----------------------------
+# 3C. Case Person Relations
+# ----------------------------
+async def create_person_relation(rel_in: CasePersonRelationCreate) -> CasePersonRelationInDB:
+    """
+    Create a relationship record between two persons in the same case.
+    """
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            await conn.execute(
+                """
+                INSERT INTO case_person_relations (from_person_id, to_person_id, relationship_type)
+                VALUES ($1, $2, $3)
+                """,
+                rel_in.from_person_id,
+                rel_in.to_person_id,
+                rel_in.relationship_type,
+            )
+            return CasePersonRelationInDB(**rel_in.dict())
+    finally:
+        await conn.close()
+
+
+async def list_person_relations(person_id: UUID) -> List[CasePersonRelationInDB]:
+    """
+    List all person-to-person relationships where the given person is either the source or target.
+    """
+    conn = await get_connection()
+    try:
+        rows = await conn.fetch(
+            """
+            SELECT *
+            FROM case_person_relations
+            WHERE from_person_id = $1
+               OR to_person_id = $1
+            """,
+            person_id,
+        )
+        return [CasePersonRelationInDB(**dict(row)) for row in rows]
+    finally:
+        await conn.close()
+
+
+async def delete_person_relation(from_person_id: UUID, to_person_id: UUID) -> bool:
+    """
+    Delete a specific relationship record by the two person IDs.
+    """
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            result = await conn.execute(
+                """
+                DELETE FROM case_person_relations
+                WHERE from_person_id = $1
+                  AND to_person_id = $2
+                """,
+                from_person_id,
+                to_person_id,
+            )
+            return "DELETE 1" in result
+    finally:
+        await conn.close()
+
+
+# ----------------------------
+# 3D. Case Documents
+# ----------------------------
+async def create_case_document(doc_in: CaseDocumentCreate) -> CaseDocumentInDB:
+    """
+    Create a link between a case and a document, representing a specific document needed or provided.
+    """
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            row = await conn.fetchrow(
+                """
+                INSERT INTO case_documents (
+                    case_id, document_id, status, processing_status, uploaded_at, reviewed_at, uploaded_by
+                )
+                VALUES ($1, $2, $3, $4, COALESCE($5, NOW()), $6, $7)
+                RETURNING *
+                """,
+                doc_in.case_id,
+                doc_in.document_id,
+                doc_in.status.value,
+                doc_in.processing_status.value,
+                doc_in.uploaded_at,
+                doc_in.reviewed_at,
+                doc_in.uploaded_by,
+            )
+            return CaseDocumentInDB(**dict(row))
+    finally:
+        await conn.close()
+
+
+async def get_case_document(case_id: UUID, document_id: UUID) -> Optional[CaseDocumentInDB]:
+    """
+    Retrieve the link record for a specific document in a specific case.
+    """
+    conn = await get_connection()
+    try:
+        row = await conn.fetchrow(
+            """
+            SELECT *
+            FROM case_documents
+            WHERE case_id = $1
+              AND document_id = $2
+            """,
+            case_id,
+            document_id,
+        )
+        return CaseDocumentInDB(**dict(row)) if row else None
+    finally:
+        await conn.close()
+
+
+async def list_case_documents(case_id: UUID) -> List[CaseDocumentInDB]:
+    """
+    List all documents linked to a particular case.
+    """
+    conn = await get_connection()
+    try:
+        rows = await conn.fetch("SELECT * FROM case_documents WHERE case_id = $1", case_id)
+        return [CaseDocumentInDB(**dict(row)) for row in rows]
+    finally:
+        await conn.close()
+
+
+async def update_case_document(case_id: UUID, document_id: UUID, doc_update: CaseDocumentUpdate) -> Optional[CaseDocumentInDB]:
+    """
+    Update the status or processing info of an existing case-document link.
+    """
+    existing = await get_case_document(case_id, document_id)
+    if not existing:
+        return None
+
+    updated_data = existing.copy(update=doc_update.dict(exclude_unset=True))
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            row = await conn.fetchrow(
+                """
+                UPDATE case_documents
+                SET status = $1,
+                    processing_status = $2,
+                    reviewed_at = $3
+                WHERE case_id = $4
+                  AND document_id = $5
+                RETURNING *
+                """,
+                updated_data.status.value if updated_data.status else existing.status.value,
+                updated_data.processing_status.value if updated_data.processing_status else existing.processing_status.value,
+                updated_data.reviewed_at,
+                case_id,
+                document_id,
+            )
+            return CaseDocumentInDB(**dict(row)) if row else None
+    finally:
+        await conn.close()
+
+
+async def delete_case_document(case_id: UUID, document_id: UUID) -> bool:
+    """
+    Delete the link record between a case and a document.
+    """
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            result = await conn.execute(
+                """
+                DELETE FROM case_documents
+                WHERE case_id = $1
+                  AND document_id = $2
+                """,
+                case_id,
+                document_id,
+            )
+            return "DELETE 1" in result
+    finally:
+        await conn.close()
+
+
+# ----------------------------
+# 3E. Case Loans
+# ----------------------------
+async def create_case_loan(loan_in: CaseLoanCreate) -> CaseLoanInDB:
+    """
+    Create a new loan record tied to a specific case.
+    """
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            row = await conn.fetchrow(
+                """
+                INSERT INTO case_loans (
+                    case_id, amount, status, start_date, end_date
+                )
+                VALUES ($1, $2, $3, $4, $5)
+                RETURNING *
+                """,
+                loan_in.case_id,
+                loan_in.amount,
+                loan_in.status.value,
+                loan_in.start_date,
+                loan_in.end_date,
+            )
+            return CaseLoanInDB(**dict(row))
+    finally:
+        await conn.close()
+
+
+async def get_case_loan(loan_id: UUID) -> Optional[CaseLoanInDB]:
+    """
+    Retrieve a single case loan by its UUID.
+    """
+    conn = await get_connection()
+    try:
+        row = await conn.fetchrow("SELECT * FROM case_loans WHERE id = $1", loan_id)
+        return CaseLoanInDB(**dict(row)) if row else None
+    finally:
+        await conn.close()
+
+
+async def list_case_loans(case_id: UUID) -> List[CaseLoanInDB]:
+    """
+    List all loans associated with a specific case.
+    """
+    conn = await get_connection()
+    try:
+        rows = await conn.fetch("SELECT * FROM case_loans WHERE case_id = $1", case_id)
+        return [CaseLoanInDB(**dict(row)) for row in rows]
+    finally:
+        await conn.close()
+
+
+async def update_case_loan(loan_id: UUID, loan_update: CaseLoanUpdate) -> Optional[CaseLoanInDB]:
+    """
+    Update fields of an existing case loan record.
+    """
+    existing = await get_case_loan(loan_id)
+    if not existing:
+        return None
+
+    updated_data = existing.copy(update=loan_update.dict(exclude_unset=True))
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            row = await conn.fetchrow(
+                """
+                UPDATE case_loans
+                SET amount = $1,
+                    status = $2,
+                    start_date = $3,
+                    end_date = $4,
+                    updated_at = NOW()
+                WHERE id = $5
+                RETURNING *
+                """,
+                updated_data.amount,
+                updated_data.status.value if updated_data.status else existing.status.value,
+                updated_data.start_date,
+                updated_data.end_date,
+                loan_id,
+            )
+            return CaseLoanInDB(**dict(row)) if row else None
+    finally:
+        await conn.close()
+
+
+async def delete_case_loan(loan_id: UUID) -> bool:
+    """
+    Delete a case loan record by its UUID.
+    """
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            result = await conn.execute("DELETE FROM case_loans WHERE id = $1", loan_id)
+            return "DELETE 1" in result
+    finally:
+        await conn.close()

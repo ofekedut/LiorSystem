@@ -13,7 +13,9 @@ from server.database.database import create_schema_if_not_exists
 from server.database.documents_databse import list_tables
 from server.routers.documents_router import router as documents_router
 from server.routers.users_router import router as users_router
+from server.routers.cases_router import router as cases_router
 from server.routers.auth_router import router as auth_router
+from server.routers.fin_org_router import router as fin_org_router
 
 
 @asynccontextmanager
@@ -60,6 +62,9 @@ async def read_documents():
 app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(documents_router)
+app.include_router(cases_router)
+app.include_router(fin_org_router)
+
 
 async def create_schema_and_admin():
     await create_schema_if_not_exists()

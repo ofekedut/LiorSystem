@@ -6,7 +6,7 @@ import io
 from PyPDF2 import PdfReader
 
 from server.pdf_parsing.pdf_parser.main import process_single_pdf
-from server.pdf_parsing.pdf_parser.pdf_result import PDFPageResult
+from server.pdf_parsing.pdf_parser.pdf_result import PDFPageResult, TextBlock, Content, ProcessingInfo
 
 
 @dataclass
@@ -93,9 +93,6 @@ class SearchInPdf:
 
     def _create_page_result(self, text: str, page_num: int, method: str) -> PDFPageResult:
         """Create a PDFPageResult object from extracted text"""
-        from server.pdf_parsing.pdf_parser import (
-            TextBlock, Content, ProcessingInfo
-        )
 
         text_block = TextBlock(
             text=text,

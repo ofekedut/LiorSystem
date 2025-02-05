@@ -1,11 +1,10 @@
-# documents_database.py
 import enum
 import json
 from typing import List, Optional
-from pydantic import BaseModel, Field
+from uuid import UUID
 from datetime import datetime
+from pydantic import BaseModel, Field
 from server.database.database import get_connection
-
 
 # -------------------------------------------------
 # 1. Document-related Enums
@@ -15,7 +14,6 @@ class DocumentType(str, enum.Enum):
     updatable = 'updatable'
     recurring = 'recurring'
 
-
 class DocumentCategory(str, enum.Enum):
     identification = 'identification'
     financial = 'financial'
@@ -23,13 +21,11 @@ class DocumentCategory(str, enum.Enum):
     employment = 'employment'
     tax = 'tax'
 
-
 class RequiredFor(str, enum.Enum):
     employees = 'employees'
     self_employed = 'self-employed'
     business_owners = 'business-owners'
     all = 'all'
-
 
 class ValidationOperator(str, enum.Enum):
     equals = 'equals'
@@ -43,7 +39,6 @@ class ValidationOperator(str, enum.Enum):
     before = 'before'
     after = 'after'
 
-
 # -------------------------------------------------
 # 2. Pydantic Models
 # -------------------------------------------------
@@ -56,53 +51,45 @@ class DocumentBase(BaseModel):
     periods_required: Optional[int] = None
     has_multiple_periods: bool
 
-
 class DocumentInCreate(DocumentBase):
     required_for: List[RequiredFor] = Field(default_factory=list)
 
-
 class DocumentInDB(DocumentBase):
-    id: int
+    id: UUID
     created_at: datetime
     updated_at: datetime
     required_for: List[RequiredFor] = Field(default_factory=list)
 
-
 class DocumentUpdate(DocumentBase):
     required_for: Optional[List[RequiredFor]] = None
 
-
 class DocumentField(BaseModel):
-    id: int
-    document_id: int
+    id: UUID
+    document_id: UUID
     name: str
     type: str
     is_identifier: bool
-
 
 class DocumentFieldCreate(BaseModel):
-    document_id: int
+    document_id: UUID
     name: str
     type: str
     is_identifier: bool
 
-
 class ValidationRule(BaseModel):
-    id: int
-    document_id: int
+    id: UUID
+    document_id: UUID
     field: str
     operator: ValidationOperator
     value: Optional[dict] = None
     error_message: str
-
 
 class ValidationRuleCreate(BaseModel):
-    document_id: int
+    document_id: UUID
     field: str
     operator: ValidationOperator
     value: Optional[dict] = None
     error_message: str
-
 
 # -------------------------------------------------
 # 5. CRUD Operations
@@ -115,7 +102,7 @@ async def create_document(doc_in: DocumentInCreate) -> DocumentInDB:
                 """INSERT INTO documents (
                     name, description, document_type, category,
                     period_type, periods_required, has_multiple_periods
-                ) VALUES ($1,$2,$3,$4,$5,$6,$7)
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7)
                 RETURNING *""",
                 doc_in.name,
                 doc_in.description,
@@ -126,7 +113,6 @@ async def create_document(doc_in: DocumentInCreate) -> DocumentInDB:
                 doc_in.has_multiple_periods
             )
             new_doc = DocumentInDB(**dict(record))
-
             if doc_in.required_for:
                 for rf in doc_in.required_for:
                     await conn.execute(
@@ -139,8 +125,7 @@ async def create_document(doc_in: DocumentInCreate) -> DocumentInDB:
     finally:
         await conn.close()
 
-
-async def get_document(document_id: int) -> Optional[DocumentInDB]:
+async def get_document(document_id: UUID) -> Optional[DocumentInDB]:
     conn = await get_connection()
     try:
         row = await conn.fetchrow(
@@ -155,15 +140,13 @@ async def get_document(document_id: int) -> Optional[DocumentInDB]:
     finally:
         await conn.close()
 
-
-async def update_document(document_id: int, doc_update: DocumentUpdate) -> Optional[DocumentInDB]:
+async def update_document(document_id: UUID, doc_update: DocumentUpdate) -> Optional[DocumentInDB]:
     existing = await get_document(document_id)
     if not existing:
         return None
 
     updated_data = existing.model_copy(update=doc_update.model_dump(exclude_unset=True))
     conn = await get_connection()
-
     try:
         async with conn.transaction():
             record = await conn.fetchrow(
@@ -200,15 +183,14 @@ async def update_document(document_id: int, doc_update: DocumentUpdate) -> Optio
                     )
 
             if record is not None:
-                updated = DocumentInDB(**dict(record)) if record else None
-                updated.required_for = doc_update.required_for.copy()
+                updated = DocumentInDB(**dict(record))
+                updated.required_for = doc_update.required_for.copy() if doc_update.required_for is not None else updated.required_for
                 return updated
             return None
     finally:
         await conn.close()
 
-
-async def delete_document(document_id: int) -> bool:
+async def delete_document(document_id: UUID) -> bool:
     conn = await get_connection()
     try:
         async with conn.transaction():
@@ -216,7 +198,6 @@ async def delete_document(document_id: int) -> bool:
             return "DELETE 1" in result
     finally:
         await conn.close()
-
 
 async def list_documents() -> List[DocumentInDB]:
     conn = await get_connection()
@@ -231,7 +212,6 @@ async def list_documents() -> List[DocumentInDB]:
         return [DocumentInDB(**dict(row)) for row in rows]
     finally:
         await conn.close()
-
 
 # Document Fields CRUD
 async def create_document_field(field: DocumentFieldCreate) -> DocumentField:
@@ -250,8 +230,7 @@ async def create_document_field(field: DocumentFieldCreate) -> DocumentField:
     finally:
         await conn.close()
 
-
-async def get_document_fields(document_id: int) -> List[DocumentField]:
+async def get_document_fields(document_id: UUID) -> List[DocumentField]:
     conn = await get_connection()
     try:
         rows = await conn.fetch(
@@ -262,8 +241,7 @@ async def get_document_fields(document_id: int) -> List[DocumentField]:
     finally:
         await conn.close()
 
-
-async def delete_document_field(field_id: int) -> bool:
+async def delete_document_field(field_id: UUID) -> bool:
     conn = await get_connection()
     try:
         result = await conn.execute(
@@ -273,7 +251,6 @@ async def delete_document_field(field_id: int) -> bool:
         return "DELETE 1" in result
     finally:
         await conn.close()
-
 
 # Validation Rules CRUD
 async def create_validation_rule(rule: ValidationRuleCreate) -> ValidationRule:
@@ -297,8 +274,7 @@ async def create_validation_rule(rule: ValidationRuleCreate) -> ValidationRule:
     finally:
         await conn.close()
 
-
-async def get_validation_rules(document_id: int) -> List[ValidationRule]:
+async def get_validation_rules(document_id: UUID) -> List[ValidationRule]:
     conn = await get_connection()
     try:
         rows = await conn.fetch(
@@ -315,8 +291,7 @@ async def get_validation_rules(document_id: int) -> List[ValidationRule]:
     finally:
         await conn.close()
 
-
-async def delete_validation_rule(rule_id: int) -> bool:
+async def delete_validation_rule(rule_id: UUID) -> bool:
     conn = await get_connection()
     try:
         result = await conn.execute(
@@ -327,10 +302,7 @@ async def delete_validation_rule(rule_id: int) -> bool:
     finally:
         await conn.close()
 
-
-from typing import List
-
-
+# Utility: List Tables
 async def list_tables() -> List[str]:
     """
     List all table names in the current database, excluding system tables.
