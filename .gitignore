@@ -38,3 +38,6 @@ venv.bak/
 .DS_Store
 Thumbs.db
 /server/features/docs_processing/monday_assets_bar/
+
+# Uploaded files
+mortgage_system/

@@ -109,6 +109,28 @@ class ValidationRuleCreate(BaseModel):
     error_message: str
 
 
+class DocumentWithDetails(BaseModel):
+    id: UUID
+    name: str
+    description: Optional[str]
+    document_type_id: UUID
+    category_id: UUID
+    created_at: datetime
+    updated_at: datetime
+    case_status: str
+    file_path: Optional[str] = None
+
+
+class DocumentCategoryModel(BaseModel):
+    id: UUID
+    name: str
+    description: Optional[str] = None
+    validation_rules: Optional[dict] = None
+    value: str
+    created_at: datetime
+    updated_at: datetime
+
+
 # -------------------------------------------------
 # 5. CRUD Operations
 # -------------------------------------------------
@@ -351,5 +373,60 @@ async def list_tables() -> List[str]:
             ORDER BY tablename;
         """)
         return [row['tablename'] for row in rows]
+    finally:
+        await conn.close()
+
+
+async def list_case_documents_by_category(case_id: UUID, category_id: UUID) -> List[DocumentWithDetails]:
+    query = """
+        SELECT 
+            d.id, d.name, d.description, 
+            d.document_type_id, d.category_id,
+            d.created_at, d.updated_at,
+            cdoc.status as case_status,
+            cdoc.file_path
+        FROM documents d
+        JOIN case_documents cdoc ON d.id = cdoc.document_id
+        WHERE cdoc.case_id = $1 AND d.category_id = $2
+    """
+    conn = await get_connection()
+    try:
+        results = await conn.fetch(query, case_id, category_id)
+        return [DocumentWithDetails(**dict(r)) for r in results]
+    finally:
+        await conn.close()
+
+
+async def get_document_category_by_value(value: str) -> Optional[DocumentCategoryModel]:
+    """Get a document category by its value field"""
+    conn = await get_connection()
+    try:
+        query = "SELECT * FROM document_categories WHERE value = $1"
+        result = await conn.fetchrow(query, value)
+        return DocumentCategoryModel(**dict(result)) if result else None
+    finally:
+        await conn.close()
+
+
+async def get_all_document_categories() -> List[DocumentCategoryModel]:
+    """Get all document categories from the database"""
+    conn = await get_connection()
+    try:
+        query = "SELECT * FROM document_categories"
+        results = await conn.fetch(query)
+        return [DocumentCategoryModel(**dict(r)) for r in results]
+    finally:
+        await conn.close()
+
+
+async def verify_case_access(user_id: UUID, case_id: UUID) -> bool:
+    """Check if user has access to a case"""
+    conn = await get_connection()
+    try:
+        # Simple implementation - in reality, this would have more complex access control
+        # Normally you'd check if the user is assigned to the case or has a role with access
+        query = "SELECT 1 FROM cases WHERE id = $1"
+        result = await conn.fetchrow(query, case_id)
+        return bool(result)
     finally:
         await conn.close()

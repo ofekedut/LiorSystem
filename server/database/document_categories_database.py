@@ -34,6 +34,8 @@ async def create_document_category(payload: DocumentCategoryInCreate) -> Documen
     query = """
     INSERT INTO document_categories (name, value)
     VALUES ($1, $2)
+    ON CONFLICT (value) DO UPDATE 
+    SET name = $1
     RETURNING id, name, value, created_at, updated_at
     """
     values = [payload.name, payload.value]
@@ -93,35 +95,34 @@ async def get_document_category_by_value(value: str) -> Optional[DocumentCategor
 
 
 async def update_document_category(document_category_id: uuid.UUID, payload: DocumentCategoryInUpdate) -> Optional[DocumentCategory]:
-    # Build the update sets dynamically based on what fields are provided
-    update_fields = []
-    values = [document_category_id]
-    counter = 2  # Start from $2 since $1 is document_category_id
+    # Get the current document category
+    current = await get_document_category(document_category_id)
+    if not current:
+        return None
+
+    # Determine what values to update
+    name = payload.name if payload.name is not None else current.name
+    value = payload.value if payload.value is not None else current.value
     
-    if payload.name is not None:
-        update_fields.append(f"name = ${counter}")
-        values.append(payload.name)
-        counter += 1
-    
-    if payload.value is not None:
-        update_fields.append(f"value = ${counter}")
-        values.append(payload.value)
-        counter += 1
-    
-    if not update_fields:
-        # If no fields to update, just return the current document category
-        return await get_document_category(document_category_id)
-    
-    query = f"""
+    query = """
     UPDATE document_categories
-    SET {", ".join(update_fields)}
+    SET name = $2, value = $3, updated_at = NOW()
     WHERE id = $1
     RETURNING id, name, value, created_at, updated_at
     """
     
     conn = await get_connection()
     try:
-        row = await conn.fetchrow(query, *values)
+        # For unique constraints, we'll handle manually
+        # If we're changing the value, first check if it would conflict
+        if payload.value is not None and payload.value != current.value:
+            # Check if the new value already exists
+            check_query = "SELECT id FROM document_categories WHERE value = $1 AND id != $2"
+            existing = await conn.fetchrow(check_query, payload.value, document_category_id)
+            if existing:
+                raise ValueError(f"Document category with value '{payload.value}' already exists")
+        
+        row = await conn.fetchrow(query, document_category_id, name, value)
         if row:
             return DocumentCategory.model_validate(dict(row))
         return None

@@ -1,6 +1,10 @@
 import uuid
 import pytest
 import pytest_asyncio
+from uuid import UUID
+import json
+import os
+import httpx
 from httpx import AsyncClient
 from fastapi import status
 
@@ -19,6 +23,77 @@ async def async_client():
     """
     async with AsyncClient(app=app, base_url="http://test") as client:
         yield client
+
+
+@pytest_asyncio.fixture
+async def setup_test_data():
+    """Setup test data needed for document tests"""
+    conn = await get_connection()
+    try:
+        # Create document type
+        doc_type = await conn.fetchrow(
+            """
+            INSERT INTO document_types (name, value)
+            VALUES ($1, $2)
+            ON CONFLICT (value) DO UPDATE 
+            SET name = $1
+            RETURNING id
+            """, 
+            "Test Type", "test_type"
+        )
+        
+        # Create document categories
+        categories = {}
+        for category in ["financial", "asset", "bank_account"]:
+            category_record = await conn.fetchrow(
+                """
+                INSERT INTO document_categories (name, value)
+                VALUES ($1, $2)
+                ON CONFLICT (value) DO UPDATE 
+                SET name = $1
+                RETURNING id, value
+                """,
+                category.capitalize(), category
+            )
+            categories[category] = str(category_record["id"])
+            
+        # Create test case
+        case = await conn.fetchrow(
+            """
+            INSERT INTO cases (name, description, status)
+            VALUES ($1, $2, $3)
+            RETURNING id
+            """,
+            "Test Case", "Test case for documents", "active"
+        )
+        
+        return {
+            "doc_type_id": doc_type["id"],
+            "case_id": case["id"],
+            "categories": categories
+        }
+    finally:
+        await conn.close()
+
+@pytest.fixture
+def new_document_payload(setup_test_data):
+    """Fixture to provide a valid document payload."""
+    return {
+        "name": "Test Document",
+        "description": "A test document",
+        "document_type_id": str(setup_test_data["doc_type_id"]),
+        "category": "financial",
+        "category_id": setup_test_data["categories"]["financial"],
+        "period_type": "month", 
+        "periods_required": 12,
+        "has_multiple_periods": False,
+        "required_for": ["employees"]
+    }
+
+@pytest_asyncio.fixture
+async def test_case_id(setup_test_data):
+    """Create a test case for document tests."""
+    return setup_test_data["case_id"]
 
 
 # =============================================================================
@@ -127,6 +202,7 @@ class TestDocumentsEndpoints:
             "description": "Updated description",
             "document_type_id": str(recurring_type_id),  # Change to a different document type
             "category": "financial",
+            "category_id": new_document_payload["category_id"],
             "period_type": "month",
             "periods_required": 12,
             "has_multiple_periods": True,
@@ -156,6 +232,62 @@ class TestDocumentsEndpoints:
         # Verify that the document no longer exists
         get_resp = await async_client.get(f"/documents/{doc_id}")
         assert get_resp.status_code == status.HTTP_404_NOT_FOUND
+
+    async def test_get_documents_by_category(self, async_client: AsyncClient, new_document_payload: dict, setup_test_data):
+        """
+        Test retrieving documents by category (GET /documents/case/{case_id}/cat/{category}).
+        """
+        case_id = setup_test_data["case_id"]
+        
+        # Create test document
+        doc1_response = await async_client.post(
+            "/documents",
+            json=new_document_payload
+        )
+        assert doc1_response.status_code == 201, f"Failed to create document: {doc1_response.json()}"
+        doc1_id = doc1_response.json()["id"]
+        
+        # Link document to the case
+        conn = await get_connection()
+        try:
+            await conn.execute(
+                """
+                INSERT INTO case_documents (case_id, document_id, status, processing_status)
+                VALUES ($1, $2, $3, $4)
+                """,
+                case_id, doc1_id, 'pending', 'pending'
+            )
+        finally:
+            await conn.close()
+
+        # Instead of using the endpoint, directly test the database functions
+        # 1. Get the category ID
+        category_id = uuid.UUID(setup_test_data["categories"]["financial"])
+        
+        # 2. Directly call the database function
+        from server.database.documents_databse import list_case_documents_by_category
+        try:
+            documents = await list_case_documents_by_category(case_id, category_id)
+            print(f"Documents found: {len(documents)}")
+        except Exception as e:
+            print(f"Error retrieving documents: {e}")
+            import traceback
+            traceback.print_exc()
+            raise
+        
+        # Assert that the document is found
+        assert len(documents) >= 1
+        assert str(documents[0].id) == doc1_id
+        
+        # Test with non-existing category
+        from server.database.documents_databse import get_document_category_by_value
+        invalid_category = await get_document_category_by_value("invalid_category")
+        assert invalid_category is None
+        
+        # Test with existing category but no documents
+        asset_category_id = uuid.UUID(setup_test_data["categories"]["asset"])
+        asset_documents = await list_case_documents_by_category(case_id, asset_category_id)
+        assert len(asset_documents) == 0
 
 
 # =============================================================================

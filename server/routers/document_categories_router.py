@@ -61,10 +61,13 @@ async def update_document_category_endpoint(document_category_id: uuid.UUID, pay
     """
     Update a document category.
     """
-    document_category = await update_document_category(document_category_id, payload)
-    if document_category is None:
-        raise HTTPException(status_code=404, detail="Document category not found")
-    return document_category
+    try:
+        document_category = await update_document_category(document_category_id, payload)
+        if document_category is None:
+            raise HTTPException(status_code=404, detail="Document category not found")
+        return document_category
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))
 
 
 @router.delete("/{document_category_id}", status_code=status.HTTP_204_NO_CONTENT)
