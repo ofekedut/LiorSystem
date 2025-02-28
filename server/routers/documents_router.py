@@ -1,7 +1,7 @@
 from typing import List
 from uuid import UUID
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 
 from server.database.documents_databse import (
     list_documents,
@@ -22,7 +22,13 @@ from server.database.documents_databse import (
     DocumentField,
     ValidationRuleCreate,
     ValidationRule,
+    get_document_category_by_value,
+    list_case_documents_by_category,
+    verify_case_access,
+    DocumentWithDetails,
 )
+
+from server.database.auth_database import get_current_user_id
 
 router = APIRouter()
 
@@ -158,3 +164,36 @@ async def remove_validation_rule(rule_id: UUID):
     if not success:
         raise HTTPException(status_code=404, detail="Validation rule not found")
     return None
+
+
+# -------------------------------------------------
+# 5. Case Documents Endpoints
+# -------------------------------------------------
+
+@router.get("/case/{case_id}/cat/{docs_category}", response_model=List[DocumentWithDetails])
+async def get_case_documents_by_category(
+    case_id: UUID,
+    docs_category: str
+):
+    """
+    Get all documents in a specific category for a case
+    
+    - **case_id**: UUID of the case
+    - **docs_category**: Category value from document_categories table
+    - Returns: List of documents with full details
+    """
+    print(f"Looking up category: {docs_category}")
+    # Verify category exists
+    category = await get_document_category_by_value(docs_category)
+    print(f"Category lookup result: {category}")
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    
+    # Get documents
+    documents = await list_case_documents_by_category(case_id, category.id)
+    print(f"Documents found: {len(documents) if documents else 0}")
+    
+    if not documents:
+        return []
+    
+    return documents

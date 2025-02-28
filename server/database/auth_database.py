@@ -150,3 +150,12 @@ class LoginAttempts:
             except Exception as e:
                 logger.error(f"Database error: {str(e)}")
                 raise DatabaseError(f"Database operation failed: {str(e)}")
+
+
+async def get_current_user_id():
+    """
+    In a real application, this would fetch the current user ID from the request context
+    or JWT token. For simplicity, we'll return a fixed user ID for testing.
+    """
+    # This is a placeholder - in production, you would extract this from the authentication system
+    return uuid.UUID("00000000-0000-0000-0000-000000000001")

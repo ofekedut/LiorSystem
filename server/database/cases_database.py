@@ -249,6 +249,42 @@ class CaseLoanUpdate(BaseModel):
     end_date: Optional[date] = None
 
 
+# ----------------------------
+# 2F. Case Person Documents
+# ----------------------------
+class CasePersonDocumentBase(BaseModel):
+    """
+    Base model for case_person_documents junction table.
+    """
+    is_primary: bool = False
+
+
+class CasePersonDocumentCreate(CasePersonDocumentBase):
+    """
+    Model for creating a new person-document link within a case.
+    """
+    case_id: UUID
+    person_id: UUID
+    document_id: UUID
+
+
+class CasePersonDocumentInDB(CasePersonDocumentBase):
+    """
+    Model representing a person-document link as stored in the database.
+    """
+    case_id: UUID
+    person_id: UUID
+    document_id: UUID
+    created_at: datetime
+
+
+class CasePersonDocumentUpdate(BaseModel):
+    """
+    Model for updating a person-document link.
+    """
+    is_primary: Optional[bool] = None
+
+
 # =============================================================================
 # 3. CRUD Operations
 # =============================================================================
@@ -775,5 +811,207 @@ async def delete_case_loan(loan_id: UUID) -> bool:
         async with conn.transaction():
             result = await conn.execute("DELETE FROM case_loans WHERE id = $1", loan_id)
             return "DELETE 1" in result
+    finally:
+        await conn.close()
+
+
+# ----------------------------
+# 3F. Case Person Documents
+# ----------------------------
+async def create_case_person_document(doc_in: CasePersonDocumentCreate) -> CasePersonDocumentInDB:
+    """
+    Create a link between a person and a document within a case context.
+    """
+    conn = await get_connection()
+    try:
+        # Verify that the person is associated with the case
+        person_exists = await conn.fetchval(
+            """
+            SELECT EXISTS(
+                SELECT 1 FROM case_persons 
+                WHERE id = $1 AND case_id = $2
+            )
+            """,
+            doc_in.person_id, doc_in.case_id
+        )
+        
+        if not person_exists:
+            raise ValueError("Person is not associated with the specified case")
+        
+        # Verify that the document exists
+        document_exists = await conn.fetchval(
+            """
+            SELECT EXISTS(
+                SELECT 1 FROM documents 
+                WHERE id = $1
+            )
+            """,
+            doc_in.document_id
+        )
+        
+        if not document_exists:
+            raise ValueError("Document does not exist")
+        
+        # Insert the record with the specified attributes
+        record = await conn.fetchrow(
+            """
+            INSERT INTO case_person_documents 
+            (case_id, person_id, document_id, is_primary) 
+            VALUES ($1, $2, $3, $4)
+            RETURNING case_id, person_id, document_id, is_primary, created_at
+            """,
+            doc_in.case_id, doc_in.person_id, doc_in.document_id, doc_in.is_primary
+        )
+        
+        # Return the created record
+        return CasePersonDocumentInDB(
+            case_id=record["case_id"],
+            person_id=record["person_id"],
+            document_id=record["document_id"],
+            is_primary=record["is_primary"],
+            created_at=record["created_at"]
+        )
+    finally:
+        await conn.close()
+
+
+async def get_case_person_document(case_id: UUID, person_id: UUID, document_id: UUID) -> CasePersonDocumentInDB:
+    """
+    Retrieve the specific link between a person and a document within a case.
+    """
+    conn = await get_connection()
+    try:
+        record = await conn.fetchrow(
+            """
+            SELECT * FROM case_person_documents
+            WHERE case_id = $1 AND person_id = $2 AND document_id = $3
+            """,
+            case_id, person_id, document_id
+        )
+        
+        if not record:
+            raise ValueError(f"No document found for person {person_id} in case {case_id} with document ID {document_id}")
+        
+        return CasePersonDocumentInDB(
+            case_id=record["case_id"],
+            person_id=record["person_id"],
+            document_id=record["document_id"],
+            is_primary=record["is_primary"],
+            created_at=record["created_at"]
+        )
+    finally:
+        await conn.close()
+
+
+async def list_case_person_documents(case_id: UUID, person_id: UUID) -> List[CasePersonDocumentInDB]:
+    """
+    List all documents linked to a specific person within a case.
+    """
+    conn = await get_connection()
+    try:
+        records = await conn.fetch(
+            """
+            SELECT * FROM case_person_documents
+            WHERE case_id = $1 AND person_id = $2
+            """,
+            case_id, person_id
+        )
+        
+        return [
+            CasePersonDocumentInDB(
+                case_id=record["case_id"],
+                person_id=record["person_id"],
+                document_id=record["document_id"],
+                is_primary=record["is_primary"],
+                created_at=record["created_at"]
+            )
+            for record in records
+        ]
+    finally:
+        await conn.close()
+
+
+async def update_case_person_document(
+    case_id: UUID, 
+    person_id: UUID, 
+    document_id: UUID, 
+    doc_update: CasePersonDocumentUpdate
+) -> CasePersonDocumentInDB:
+    """
+    Update a person-document link within a case.
+    """
+    conn = await get_connection()
+    try:
+        # Check if the record exists
+        record = await conn.fetchrow(
+            """
+            SELECT * FROM case_person_documents
+            WHERE case_id = $1 AND person_id = $2 AND document_id = $3
+            """,
+            case_id, person_id, document_id
+        )
+        
+        if not record:
+            raise ValueError(f"No document found for person {person_id} in case {case_id} with document ID {document_id}")
+        
+        # Prepare update values
+        update_fields = []
+        update_values = []
+        
+        if doc_update.is_primary is not None:
+            update_fields.append("is_primary = $" + str(len(update_values) + 4))
+            update_values.append(doc_update.is_primary)
+        
+        # If there's nothing to update, return the existing record
+        if not update_fields:
+            return CasePersonDocumentInDB(
+                case_id=record["case_id"],
+                person_id=record["person_id"],
+                document_id=record["document_id"],
+                is_primary=record["is_primary"],
+                created_at=record["created_at"]
+            )
+        
+        # Build the update query
+        query = f"""
+            UPDATE case_person_documents
+            SET {', '.join(update_fields)}
+            WHERE case_id = $1 AND person_id = $2 AND document_id = $3
+            RETURNING *
+        """
+        
+        # Execute the update
+        updated = await conn.fetchrow(
+            query,
+            case_id, person_id, document_id, *update_values
+        )
+        
+        return CasePersonDocumentInDB(
+            case_id=updated["case_id"],
+            person_id=updated["person_id"],
+            document_id=updated["document_id"],
+            is_primary=updated["is_primary"],
+            created_at=updated["created_at"]
+        )
+    finally:
+        await conn.close()
+
+
+async def delete_case_person_document(case_id: UUID, person_id: UUID, document_id: UUID) -> bool:
+    """
+    Delete a person-document link within a case.
+    """
+    conn = await get_connection()
+    try:
+        result = await conn.execute(
+            """
+            DELETE FROM case_person_documents
+            WHERE case_id = $1 AND person_id = $2 AND document_id = $3
+            """,
+            case_id, person_id, document_id
+        )
+        
+        # Check if a record was deleted
+        return result and "DELETE 1" in result
     finally:
         await conn.close()

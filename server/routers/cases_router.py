@@ -59,6 +59,16 @@ from server.database.cases_database import (
     CaseLoanCreate,
     CaseLoanInDB,
     CaseLoanUpdate,
+    
+    # Case Person Documents
+    create_case_person_document,
+    get_case_person_document,
+    list_case_person_documents,
+    update_case_person_document,
+    delete_case_person_document,
+    CasePersonDocumentCreate,
+    CasePersonDocumentInDB,
+    CasePersonDocumentUpdate,
 )
 
 
@@ -425,3 +435,138 @@ async def remove_case_loan_endpoint(loan_id: UUID):
     if not success:
         raise HTTPException(status_code=404, detail="Case loan not found")
     return None
+
+# =============================================================================
+# 6. Case Person Documents Endpoints
+# =============================================================================
+
+@router.get("/cases/{case_id}/persons/{person_id}/documents", response_model=List[CasePersonDocumentInDB])
+async def read_case_person_documents(case_id: UUID, person_id: UUID) -> List[CasePersonDocumentInDB]:
+    """
+    List all documents linked to a specific person within a case.
+    """
+    try:
+        return await list_case_person_documents(case_id, person_id)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Error fetching documents for person {person_id} in case {case_id}: {str(e)}"
+        )
+
+
+@router.post("/cases/{case_id}/persons/{person_id}/documents", response_model=CasePersonDocumentInDB, status_code=201)
+async def create_document_for_case_person(
+    case_id: UUID,
+    person_id: UUID,
+    doc_in: CasePersonDocumentCreate
+) -> CasePersonDocumentInDB:
+    """
+    Create a new document link for a specific person within a case.
+    """
+    # Ensure the provided case_id and person_id match with the ones in the path
+    if doc_in.case_id != case_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Case ID in the request body does not match the path parameter"
+        )
+    
+    if doc_in.person_id != person_id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Person ID in the request body does not match the path parameter"
+        )
+    
+    try:
+        return await create_case_person_document(doc_in)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error creating document link: {str(e)}"
+        )
+
+
+@router.get(
+    "/cases/{case_id}/persons/{person_id}/documents/{document_id}",
+    response_model=CasePersonDocumentInDB
+)
+async def read_case_person_document(
+    case_id: UUID,
+    person_id: UUID,
+    document_id: UUID
+) -> CasePersonDocumentInDB:
+    """
+    Retrieve a single document linked to a specific person within a case.
+    """
+    try:
+        return await get_case_person_document(case_id, person_id, document_id)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error retrieving document: {str(e)}"
+        )
+
+
+@router.patch(
+    "/cases/{case_id}/persons/{person_id}/documents/{document_id}",
+    response_model=CasePersonDocumentInDB
+)
+async def update_case_person_document_endpoint(
+    case_id: UUID,
+    person_id: UUID,
+    document_id: UUID,
+    doc_update: CasePersonDocumentUpdate
+) -> CasePersonDocumentInDB:
+    """
+    Update a document link for a specific person within a case.
+    """
+    try:
+        return await update_case_person_document(case_id, person_id, document_id, doc_update)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error updating document link: {str(e)}"
+        )
+
+
+@router.delete(
+    "/cases/{case_id}/persons/{person_id}/documents/{document_id}",
+    response_model=dict
+)
+async def delete_case_person_document_endpoint(
+    case_id: UUID,
+    person_id: UUID,
+    document_id: UUID
+) -> dict:
+    """
+    Delete a document link for a specific person within a case.
+    """
+    try:
+        result = await delete_case_person_document(case_id, person_id, document_id)
+        if not result:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Document link not found for person {person_id} in case {case_id} with document ID {document_id}"
+            )
+        return {"deleted": result}
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error deleting document link: {str(e)}"
+        )

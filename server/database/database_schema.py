@@ -236,6 +236,16 @@ CREATE_SCHEMA_QUERIES = [
          RETURN category_id;
        END;
        $$ LANGUAGE plpgsql;""",
+    """INSERT INTO document_categories (id, name, value) 
+       VALUES 
+           (gen_random_uuid(), 'Bank Account', 'bank_account'),
+           (gen_random_uuid(), 'Credit Card', 'credit_card'),
+           (gen_random_uuid(), 'Loan', 'loan'),
+           (gen_random_uuid(), 'Asset', 'asset'),
+           (gen_random_uuid(), 'Income', 'income'),
+           (gen_random_uuid(), 'Personal', 'personal'),
+           (gen_random_uuid(), 'Company', 'company')
+       ON CONFLICT (value) DO NOTHING;""",
     """CREATE TABLE IF NOT EXISTS token_blacklist (
         jti UUID PRIMARY KEY,
         user_id UUID NOT NULL,
@@ -700,7 +710,29 @@ CREATE_SCHEMA_QUERIES = [
     ON pending_processing_documents(case_id);""",
     """ALTER TABLE cases 
        ADD CONSTRAINT fk_cases_primary_contact_id 
-       FOREIGN KEY (primary_contact_id) REFERENCES case_persons(id);"""
+       FOREIGN KEY (primary_contact_id) REFERENCES case_persons(id);""",
+    """CREATE TABLE IF NOT EXISTS case_person_assets (
+        case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
+        person_id UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
+        asset_id UUID NOT NULL REFERENCES person_assets(id) ON DELETE CASCADE,
+        relationship_type TEXT NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        PRIMARY KEY (case_id, person_id, asset_id)
+    );""",
+    """CREATE INDEX IF NOT EXISTS idx_case_person_assets_case_id ON case_person_assets(case_id);""",
+    """CREATE INDEX IF NOT EXISTS idx_case_person_assets_person_id ON case_person_assets(person_id);""",
+    """CREATE INDEX IF NOT EXISTS idx_case_person_assets_asset_id ON case_person_assets(asset_id);""",
+    """CREATE TABLE IF NOT EXISTS case_person_documents (
+        case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
+        person_id UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
+        document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
+        is_primary BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        PRIMARY KEY (case_id, person_id, document_id)
+    );""",
+    """CREATE INDEX IF NOT EXISTS idx_case_person_documents_case_id ON case_person_documents(case_id);""",
+    """CREATE INDEX IF NOT EXISTS idx_case_person_documents_person_id ON case_person_documents(person_id);""",
+    """CREATE INDEX IF NOT EXISTS idx_case_person_documents_document_id ON case_person_documents(document_id);""",
 ]
 
 DROP_ALL_QUERIES = """
@@ -723,6 +755,8 @@ BEGIN
     DROP TABLE IF EXISTS person_employment_history CASCADE;
     DROP TABLE IF EXISTS case_assets CASCADE;
     DROP TABLE IF EXISTS person_assets CASCADE;
+    DROP TABLE IF EXISTS case_person_assets CASCADE;
+    DROP TABLE IF EXISTS case_person_documents CASCADE;
     DROP TABLE IF EXISTS asset_types CASCADE;
     DROP TABLE IF EXISTS case_companies CASCADE;
     DROP TABLE IF EXISTS case_desired_products CASCADE;
