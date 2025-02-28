@@ -22,6 +22,16 @@ from server.database.finorg_database import (
     FinOrgContactCreate,
     FinOrgContactInDB,
     FinOrgContactUpdate,
+    
+    # FinOrgType imports
+    FinOrgTypeCreate,
+    FinOrgTypeInDB,
+    FinOrgTypeUpdate,
+    create_fin_org_type,
+    get_fin_org_type,
+    list_fin_org_types,
+    update_fin_org_type,
+    delete_fin_org_type,
 )
 
 router = APIRouter()
@@ -139,4 +149,57 @@ async def delete_fin_org_contact_endpoint(contact_id: UUID):
     success = await delete_fin_org_contact(contact_id)
     if not success:
         raise HTTPException(status_code=404, detail="Financial organization contact not found")
+    return None
+
+
+# -----------------------------------------------------------------------------
+# FinOrgType Endpoints
+# -----------------------------------------------------------------------------
+
+@router.post("/fin_org_types/", response_model=FinOrgTypeInDB, status_code=201)
+async def create_fin_org_type_endpoint(type_in: FinOrgTypeCreate) -> FinOrgTypeInDB:
+    """
+    Create a new financial organization type.
+    """
+    return await create_fin_org_type(type_in)
+
+
+@router.get("/fin_org_types/", response_model=List[FinOrgTypeInDB])
+async def read_fin_org_types() -> List[FinOrgTypeInDB]:
+    """
+    Retrieve all financial organization types.
+    """
+    return await list_fin_org_types()
+
+
+@router.get("/fin_org_types/{type_id}", response_model=FinOrgTypeInDB)
+async def read_fin_org_type(type_id: UUID) -> FinOrgTypeInDB:
+    """
+    Retrieve a specific financial organization type by its UUID.
+    """
+    org_type = await get_fin_org_type(type_id)
+    if not org_type:
+        raise HTTPException(status_code=404, detail="Financial organization type not found")
+    return org_type
+
+
+@router.put("/fin_org_types/{type_id}", response_model=FinOrgTypeInDB)
+async def update_fin_org_type_endpoint(type_id: UUID, type_update: FinOrgTypeUpdate) -> FinOrgTypeInDB:
+    """
+    Update an existing financial organization type.
+    """
+    updated_type = await update_fin_org_type(type_id, type_update)
+    if not updated_type:
+        raise HTTPException(status_code=404, detail="Financial organization type not found or not updated")
+    return updated_type
+
+
+@router.delete("/fin_org_types/{type_id}", status_code=204)
+async def delete_fin_org_type_endpoint(type_id: UUID):
+    """
+    Delete a financial organization type.
+    """
+    success = await delete_fin_org_type(type_id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Financial organization type not found")
     return None

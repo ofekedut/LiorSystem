@@ -188,6 +188,7 @@ from server.database.users_database import create_user, UserCreate, UserRole
 import asyncio
 from fastapi import HTTPException
 
+
 async def main():
     # Collect admin details
     password = "123456789qQ!"

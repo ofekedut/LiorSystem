@@ -1,4 +1,4 @@
-from server.pdf_parsing.pdf_search.pdf_search import Query, SearchInPdf
+from pdf_parsing.pdf_search.pdf_search import Query, SearchInPdf
 
 # Example usage
 if __name__ == "__main__":

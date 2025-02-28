@@ -58,9 +58,19 @@ class LoanStatus(str, enum.Enum):
 class CaseBase(BaseModel):
     name: str
     status: CaseStatus
-    activity_level: conint(ge=0, le=100)
-    last_active: datetime
-    project_count: conint(ge=0) = 0
+    case_purpose: str
+    loan_type: str
+    last_active: datetime = Field(default_factory=datetime.utcnow)
+    primary_contact_id: Optional[UUID | None] = Field(default=None)
+
+
+class CaseMondayRelationInCreate(BaseModel):
+    monday_id: UUID
+    case_id: UUID
+
+
+class CaseMondayRelationInDB(CaseMondayRelationInCreate):
+    id: UUID
 
 
 class CaseInCreate(CaseBase):
@@ -85,9 +95,10 @@ class CaseUpdate(BaseModel):
     """
     name: Optional[str] = None
     status: Optional[CaseStatus] = None
-    activity_level: Optional[conint(ge=0, le=100)] = None
     last_active: Optional[datetime] = None
-    project_count: Optional[conint(ge=0)] = None
+    case_purpose: str
+    loan_type: str
+    primary_contact_id: Optional[UUID] = None
 
 
 # ----------------------------
@@ -97,7 +108,6 @@ class CasePersonBase(BaseModel):
     first_name: str
     last_name: str
     id_number: str
-    age: Optional[int] = None
     gender: PersonGender
     role: PersonRole
     birth_date: date
@@ -131,7 +141,6 @@ class CasePersonUpdate(BaseModel):
     first_name: Optional[str] = None
     last_name: Optional[str] = None
     id_number: Optional[str] = None
-    age: Optional[int] = None
     gender: Optional[PersonGender] = None
     role: Optional[PersonRole] = None
     birth_date: Optional[date] = None
@@ -191,6 +200,7 @@ class CaseDocumentInDB(CaseDocumentBase):
     """
     case_id: UUID
     document_id: UUID
+    file_path: str | None = None
 
 
 class CaseDocumentUpdate(BaseModel):
@@ -200,7 +210,7 @@ class CaseDocumentUpdate(BaseModel):
     status: Optional[DocumentStatus] = None
     processing_status: Optional[DocumentProcessingStatus] = None
     reviewed_at: Optional[datetime] = None
-
+    file_path: Optional[str] = None
 
 # ----------------------------
 # 2E. Case Loans
@@ -255,17 +265,40 @@ async def create_case(case_in: CaseInCreate) -> CaseInDB:
         async with conn.transaction():
             row = await conn.fetchrow(
                 """
-                INSERT INTO cases (name, status, activity_level, last_active, project_count)
-                VALUES ($1, $2, $3, $4, $5)
+                INSERT INTO cases (name, status,  last_active,case_purpose, loan_type, primary_contact_id)
+                VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING *
                 """,
                 case_in.name,
                 case_in.status.value,
-                case_in.activity_level,
                 case_in.last_active,
-                case_in.project_count,
+                case_in.case_purpose,
+                case_in.loan_type,
+                None,
             )
             return CaseInDB(**dict(row))
+    finally:
+        await conn.close()
+
+
+async def create_case_monday_relation(case_relation_in: CaseMondayRelationInCreate) -> CaseInDB:
+    """
+    Create a new case record.
+    """
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            row = await conn.fetchrow(
+                """
+                INSERT INTO cases_monday_relation (
+                case_id, monday_id)
+                VALUES ($1, $2)
+                RETURNING *
+                """,
+                case_relation_in.case_id,
+                case_relation_in.monday_id,
+            )
+            return CaseMondayRelationInDB(**dict(row))
     finally:
         await conn.close()
 
@@ -299,18 +332,20 @@ async def update_case(case_id: UUID, case_update: CaseUpdate) -> Optional[CaseIn
                 UPDATE cases
                 SET name = $1,
                     status = $2,
-                    activity_level = $3,
+                    case_purpose = $3,
                     last_active = $4,
-                    project_count = $5,
-                    updated_at = NOW()
-                WHERE id = $6
+                    loan_type = $5,
+                    updated_at = NOW(),
+                    primary_contact_id = $6
+                WHERE id = $7
                 RETURNING *
                 """,
                 updated_data.name,
                 updated_data.status.value if updated_data.status else existing.status.value,
-                updated_data.activity_level,
+                updated_data.case_purpose,
                 updated_data.last_active,
-                updated_data.project_count,
+                updated_data.loan_type,
+                updated_data.primary_contact_id,
                 case_id,
             )
             return CaseInDB(**dict(row)) if row else None
@@ -356,17 +391,16 @@ async def create_case_person(person_in: CasePersonCreate) -> CasePersonInDB:
             row = await conn.fetchrow(
                 """
                 INSERT INTO case_persons (
-                    case_id, first_name, last_name, id_number, age,
+                    case_id, first_name, last_name, id_number, 
                     gender, role, birth_date, phone, email, status
                 )
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
                 RETURNING *
                 """,
                 person_in.case_id,
                 person_in.first_name,
                 person_in.last_name,
                 person_in.id_number,
-                person_in.age,
                 person_in.gender.value,
                 person_in.role.value,
                 person_in.birth_date,
@@ -421,21 +455,19 @@ async def update_case_person(person_id: UUID, person_update: CasePersonUpdate) -
                 SET first_name = $1,
                     last_name = $2,
                     id_number = $3,
-                    age = $4,
-                    gender = $5,
-                    role = $6,
-                    birth_date = $7,
-                    phone = $8,
-                    email = $9,
-                    status = $10,
+                    gender = $4,
+                    role = $5,
+                    birth_date = $6,
+                    phone = $7,
+                    email = $8,
+                    status = $9,
                     updated_at = NOW()
-                WHERE id = $11
+                WHERE id = $10
                 RETURNING *
                 """,
                 updated_data.first_name,
                 updated_data.last_name,
                 updated_data.id_number,
-                updated_data.age,
                 updated_data.gender.value if updated_data.gender else existing.gender.value,
                 updated_data.role.value if updated_data.role else existing.role.value,
                 updated_data.birth_date,
@@ -593,7 +625,7 @@ async def list_case_documents(case_id: UUID) -> List[CaseDocumentInDB]:
 
 async def update_case_document(case_id: UUID, document_id: UUID, doc_update: CaseDocumentUpdate) -> Optional[CaseDocumentInDB]:
     """
-    Update the status or processing info of an existing case-document link.
+    Update the status, processing info, or file_path of an existing case-document link.
     """
     existing = await get_case_document(case_id, document_id)
     if not existing:
@@ -606,23 +638,25 @@ async def update_case_document(case_id: UUID, document_id: UUID, doc_update: Cas
             row = await conn.fetchrow(
                 """
                 UPDATE case_documents
-                SET status = $1,
-                    processing_status = $2,
-                    reviewed_at = $3
-                WHERE case_id = $4
-                  AND document_id = $5
+                SET 
+                    status            = COALESCE($1, status),
+                    processing_status = COALESCE($2, processing_status),
+                    reviewed_at       = COALESCE($3, reviewed_at),
+                    file_path         = $4      -- We want to set it exactly, even if it's None
+                WHERE case_id = $5
+                  AND document_id = $6
                 RETURNING *
                 """,
-                updated_data.status.value if updated_data.status else existing.status.value,
-                updated_data.processing_status.value if updated_data.processing_status else existing.processing_status.value,
+                (updated_data.status.value if updated_data.status else None),
+                (updated_data.processing_status.value if updated_data.processing_status else None),
                 updated_data.reviewed_at,
+                updated_data.file_path,  # If None, will overwrite with NULL
                 case_id,
                 document_id,
             )
             return CaseDocumentInDB(**dict(row)) if row else None
     finally:
         await conn.close()
-
 
 async def delete_case_document(case_id: UUID, document_id: UUID) -> bool:
     """

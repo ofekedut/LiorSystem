@@ -3,7 +3,7 @@ import pytest_asyncio
 from fastapi.testclient import TestClient
 from httpx import AsyncClient
 from server.api import app
-from server.database.database import drop_all_tables, create_schema_if_not_exists
+from server.database.database import drop_all_tables, create_schema_if_not_exists, get_connection
 from server.database.users_database import create_user, UserCreate, update_user_role, UserRole, delete_user, get_user, get_user_by_email
 from server.features.users.security import create_access_token
 
@@ -88,16 +88,44 @@ def admin_token(admin_user):
 def user_token(regular_user):
     """Generate JWT token for regular user."""
     return create_access_token(regular_user.id)
-@pytest.fixture
-def new_document_payload() -> dict:
+
+
+@pytest_asyncio.fixture
+async def new_document_payload() -> dict:
     """
     Returns a valid payload for creating a new document.
-    Adjust the fields if your DocumentInCreate model requires different values.
+    First creates a document type directly in the database and uses its ID.
     """
+    # Check if the document type already exists, and if not, create it
+    doc_type_name = "One Time"
+    doc_type_value = "one-time"
+    
+    conn = await get_connection()
+    try:
+        # Try to get existing document type
+        existing = await conn.fetchrow(
+            """SELECT id FROM document_types WHERE name = $1""",
+            doc_type_name
+        )
+        
+        if existing:
+            doc_type_id = existing['id']
+        else:
+            # Create a new document type
+            doc_type = await conn.fetchrow(
+                """INSERT INTO document_types (name, value) 
+                   VALUES ($1, $2) 
+                   RETURNING id""",
+                doc_type_name, doc_type_value
+            )
+            doc_type_id = doc_type['id']
+    finally:
+        await conn.close()
+    
     return {
         "name": "Test Document",
         "description": "A test document",
-        "document_type": "one-time",
+        "document_type_id": str(doc_type_id),  # Convert UUID to string for JSON
         "category": "tax",
         "period_type": None,
         "periods_required": None,

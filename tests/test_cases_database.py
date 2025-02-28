@@ -1,12 +1,11 @@
 # cases_database_test.py
-
-import uuid
 import pytest
 import pytest_asyncio
 from datetime import datetime, date
 
-from database.documents_databse import DocumentCategory, DocumentType
+from server.database.documents_databse import DocumentCategory
 from server.database.documents_databse import (create_document, DocumentInCreate)
+from server.database.database import get_connection
 from server.database.cases_database import (
     create_case,
     get_case,
@@ -28,8 +27,6 @@ from server.database.cases_database import (
     PersonGender,
 
     create_person_relation,
-    list_person_relations,
-    delete_person_relation,
     CasePersonRelationCreate,
 
     create_case_document,
@@ -59,10 +56,36 @@ from server.database.cases_database import (
 
 @pytest_asyncio.fixture
 async def created_main_doc():
+    # Get or create document type first
+    doc_type_name = "Recurring"
+    doc_type_value = "recurring"
+    
+    conn = await get_connection()
+    try:
+        # Try to get existing document type
+        existing = await conn.fetchrow(
+            """SELECT id FROM document_types WHERE name = $1""",
+            doc_type_name
+        )
+        
+        if existing:
+            doc_type_id = existing['id']
+        else:
+            # Create a new document type
+            doc_type = await conn.fetchrow(
+                """INSERT INTO document_types (name, value) 
+                   VALUES ($1, $2) 
+                   RETURNING id""",
+                doc_type_name, doc_type_value
+            )
+            doc_type_id = doc_type['id']
+    finally:
+        await conn.close()
+        
     return await create_document(DocumentInCreate(
         name='test doc',
         description='test doc',
-        document_type=DocumentType.recurring,
+        document_type_id=doc_type_id,
         category=DocumentCategory.identification,
         period_type='quarter',
         periods_required=4,
@@ -79,9 +102,9 @@ async def created_case():
     case_data = CaseInCreate(
         name="Test Case",
         status=CaseStatus.pending,
-        activity_level=50,
+        case_purpose='system testing',
         last_active=datetime.utcnow(),
-        project_count=0
+        loan_type='load for system testing',
     )
     case_db = await create_case(case_data)
     return case_db
@@ -97,7 +120,6 @@ async def created_person(created_case):
         first_name="Alice",
         last_name="Tester",
         id_number="ID12345",
-        age=30,
         gender=PersonGender.female,
         role=PersonRole.primary,
         birth_date=date(1990, 1, 1),
@@ -156,9 +178,9 @@ class TestCases:
         new_case = CaseInCreate(
             name="New Mortgage Case",
             status=CaseStatus.active,
-            activity_level=75,
+            case_purpose='case for system testing',
             last_active=datetime.utcnow(),
-            project_count=2
+            loan_type='load for system testing',
         )
         case_db = await create_case(new_case)
         assert case_db.id is not None
@@ -179,13 +201,15 @@ class TestCases:
         update_data = CaseUpdate(
             name="Updated Case Name",
             status=CaseStatus.active,
-            activity_level=90
+            loan_type='load for system testing',
+            case_purpose='case for system testing',
         )
         updated = await update_case(created_case.id, update_data)
         assert updated is not None
         assert updated.name == "Updated Case Name"
         assert updated.status == CaseStatus.active
-        assert updated.activity_level == 90
+        assert updated.loan_type == 'load for system testing'
+        assert updated.case_purpose == 'case for system testing'
 
     async def test_delete_case(self, created_case):
         deleted = await delete_case(created_case.id)
@@ -206,7 +230,6 @@ class TestCasePersons:
             first_name="Bob",
             last_name="Example",
             id_number="ID54321",
-            age=40,
             gender=PersonGender.male,
             role=PersonRole.cosigner,
             birth_date=date(1985, 1, 1),

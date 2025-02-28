@@ -1,0 +1,223 @@
+# tests/test_related_person_relationships_types_router.py
+import pytest
+from httpx import AsyncClient
+import uuid
+from server.routers.related_person_relationships_types_router import (
+    RelatedPersonRelationshipTypeInCreate,
+    RelatedPersonRelationshipTypeInUpdate
+)
+
+
+@pytest.mark.asyncio
+class TestRelatedPersonRelationshipsTypesRouter:
+    """Tests for the related_person_relationships_types_router endpoints."""
+
+    async def test_create_relationship_type(self, async_client: AsyncClient, admin_token):
+        """Test creating a new relationship type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        new_type = {
+            "name": "Test Relationship Type",
+            "value": "test_relationship_type"
+        }
+        
+        # Create the relationship type
+        response = await async_client.post("/related_person_relationships_types/", json=new_type, headers=headers)
+        assert response.status_code == 201, response.text
+        
+        data = response.json()
+        assert data['name'] == new_type['name']
+        assert data['value'] == new_type['value']
+        assert 'id' in data
+        
+        # Clean up - delete the created relationship type
+        delete_response = await async_client.delete(f"/related_person_relationships_types/{data['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_read_relationship_types(self, async_client: AsyncClient, admin_token):
+        """Test listing all relationship types."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test relationship type first
+        new_type = {
+            "name": "Test Relationship Type List",
+            "value": "test_relationship_type_list"
+        }
+        create_response = await async_client.post("/related_person_relationships_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Get all relationship types
+        response = await async_client.get("/related_person_relationships_types/", headers=headers)
+        assert response.status_code == 200
+        
+        data = response.json()
+        assert isinstance(data, list)
+        assert len(data) > 0
+        
+        # Verify our created type is in the list
+        found = False
+        for item in data:
+            if item['id'] == created_type['id']:
+                found = True
+                assert item['name'] == new_type['name']
+                assert item['value'] == new_type['value']
+                break
+        
+        assert found, "Created relationship type not found in the list"
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/related_person_relationships_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_read_relationship_type_by_id(self, async_client: AsyncClient, admin_token):
+        """Test getting a specific relationship type by ID."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test relationship type first
+        new_type = {
+            "name": "Test Relationship Type Get",
+            "value": "test_relationship_type_get"
+        }
+        create_response = await async_client.post("/related_person_relationships_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Get the relationship type by ID
+        response = await async_client.get(f"/related_person_relationships_types/{created_type['id']}", headers=headers)
+        assert response.status_code == 200
+        
+        data = response.json()
+        assert data['id'] == created_type['id']
+        assert data['name'] == new_type['name']
+        assert data['value'] == new_type['value']
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/related_person_relationships_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_read_relationship_type_not_found(self, async_client: AsyncClient, admin_token):
+        """Test getting a non-existent relationship type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Generate a random UUID that doesn't exist
+        random_id = str(uuid.uuid4())
+        
+        # Try to get a non-existent relationship type
+        response = await async_client.get(f"/related_person_relationships_types/{random_id}", headers=headers)
+        assert response.status_code == 404
+        assert "not found" in response.json()["detail"].lower()
+
+    async def test_update_relationship_type(self, async_client: AsyncClient, admin_token):
+        """Test updating a relationship type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test relationship type first
+        new_type = {
+            "name": "Test Relationship Type Update",
+            "value": "test_relationship_type_update"
+        }
+        create_response = await async_client.post("/related_person_relationships_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Update the relationship type
+        update_data = {
+            "name": "Updated Relationship Type",
+            "value": "updated_relationship_type"
+        }
+        response = await async_client.put(f"/related_person_relationships_types/{created_type['id']}", json=update_data, headers=headers)
+        assert response.status_code == 200
+        
+        updated_type = response.json()
+        assert updated_type['id'] == created_type['id']
+        assert updated_type['name'] == update_data['name']
+        assert updated_type['value'] == update_data['value']
+        
+        # Verify the update by getting the relationship type
+        get_response = await async_client.get(f"/related_person_relationships_types/{created_type['id']}", headers=headers)
+        assert get_response.status_code == 200
+        get_data = get_response.json()
+        assert get_data['name'] == update_data['name']
+        assert get_data['value'] == update_data['value']
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/related_person_relationships_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_update_relationship_type_partial(self, async_client: AsyncClient, admin_token):
+        """Test partially updating a relationship type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test relationship type first
+        new_type = {
+            "name": "Test Relationship Type Partial Update",
+            "value": "test_relationship_type_partial_update"
+        }
+        create_response = await async_client.post("/related_person_relationships_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Update only the name
+        update_data = {
+            "name": "Partially Updated Relationship Type"
+        }
+        response = await async_client.put(f"/related_person_relationships_types/{created_type['id']}", json=update_data, headers=headers)
+        assert response.status_code == 200
+        
+        updated_type = response.json()
+        assert updated_type['id'] == created_type['id']
+        assert updated_type['name'] == update_data['name']
+        assert updated_type['value'] == new_type['value']  # Value should remain unchanged
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/related_person_relationships_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_update_relationship_type_not_found(self, async_client: AsyncClient, admin_token):
+        """Test updating a non-existent relationship type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Generate a random UUID that doesn't exist
+        random_id = str(uuid.uuid4())
+        
+        # Try to update a non-existent relationship type
+        update_data = {
+            "name": "Non-existent Relationship Type",
+            "value": "non_existent_relationship_type"
+        }
+        response = await async_client.put(f"/related_person_relationships_types/{random_id}", json=update_data, headers=headers)
+        assert response.status_code == 404
+        assert "not found" in response.json()["detail"].lower()
+
+    async def test_delete_relationship_type(self, async_client: AsyncClient, admin_token):
+        """Test deleting a relationship type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test relationship type first
+        new_type = {
+            "name": "Test Relationship Type Delete",
+            "value": "test_relationship_type_delete"
+        }
+        create_response = await async_client.post("/related_person_relationships_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Delete the relationship type
+        delete_response = await async_client.delete(f"/related_person_relationships_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+        
+        # Verify it's deleted by trying to get it
+        get_response = await async_client.get(f"/related_person_relationships_types/{created_type['id']}", headers=headers)
+        assert get_response.status_code == 404
+
+    async def test_delete_relationship_type_not_found(self, async_client: AsyncClient, admin_token):
+        """Test deleting a non-existent relationship type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Generate a random UUID that doesn't exist
+        random_id = str(uuid.uuid4())
+        
+        # Try to delete a non-existent relationship type
+        response = await async_client.delete(f"/related_person_relationships_types/{random_id}", headers=headers)
+        assert response.status_code == 404
+        assert "not found" in response.json()["detail"].lower()

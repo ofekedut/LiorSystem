@@ -6,6 +6,7 @@ from datetime import datetime
 from pydantic import BaseModel, Field
 from server.database.database import get_connection
 
+
 # -------------------------------------------------
 # 1. Document-related Enums
 # -------------------------------------------------
@@ -14,6 +15,7 @@ class DocumentType(str, enum.Enum):
     updatable = 'updatable'
     recurring = 'recurring'
 
+
 class DocumentCategory(str, enum.Enum):
     identification = 'identification'
     financial = 'financial'
@@ -21,11 +23,13 @@ class DocumentCategory(str, enum.Enum):
     employment = 'employment'
     tax = 'tax'
 
+
 class RequiredFor(str, enum.Enum):
     employees = 'employees'
     self_employed = 'self-employed'
     business_owners = 'business-owners'
     all = 'all'
+
 
 class ValidationOperator(str, enum.Enum):
     equals = 'equals'
@@ -39,20 +43,24 @@ class ValidationOperator(str, enum.Enum):
     before = 'before'
     after = 'after'
 
+
 # -------------------------------------------------
 # 2. Pydantic Models
 # -------------------------------------------------
 class DocumentBase(BaseModel):
     name: str
     description: Optional[str] = None
-    document_type: DocumentType
+    document_type_id: UUID
     category: DocumentCategory
+    category_id: Optional[UUID] = None
     period_type: Optional[str] = None
     periods_required: Optional[int] = None
     has_multiple_periods: bool
 
+
 class DocumentInCreate(DocumentBase):
     required_for: List[RequiredFor] = Field(default_factory=list)
+
 
 class DocumentInDB(DocumentBase):
     id: UUID
@@ -60,21 +68,29 @@ class DocumentInDB(DocumentBase):
     updated_at: datetime
     required_for: List[RequiredFor] = Field(default_factory=list)
 
+
 class DocumentUpdate(DocumentBase):
     required_for: Optional[List[RequiredFor]] = None
+
 
 class DocumentField(BaseModel):
     id: UUID
     document_id: UUID
     name: str
     type: str
+    field_type: str
     is_identifier: bool
+    is_required: bool
+
 
 class DocumentFieldCreate(BaseModel):
     document_id: UUID
     name: str
     type: str
+    field_type: str
     is_identifier: bool
+    is_required: bool
+
 
 class ValidationRule(BaseModel):
     id: UUID
@@ -84,12 +100,14 @@ class ValidationRule(BaseModel):
     value: Optional[dict] = None
     error_message: str
 
+
 class ValidationRuleCreate(BaseModel):
     document_id: UUID
     field: str
     operator: ValidationOperator
     value: Optional[dict] = None
     error_message: str
+
 
 # -------------------------------------------------
 # 5. CRUD Operations
@@ -100,14 +118,15 @@ async def create_document(doc_in: DocumentInCreate) -> DocumentInDB:
         async with conn.transaction():
             record = await conn.fetchrow(
                 """INSERT INTO documents (
-                    name, description, document_type, category,
-                    period_type, periods_required, has_multiple_periods
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7)
+                    name, description, document_type_id, category,
+                    category_id, period_type, periods_required, has_multiple_periods
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                 RETURNING *""",
                 doc_in.name,
                 doc_in.description,
-                doc_in.document_type.value,
+                doc_in.document_type_id,
                 doc_in.category.value,
+                doc_in.category_id,
                 doc_in.period_type,
                 doc_in.periods_required,
                 doc_in.has_multiple_periods
@@ -125,6 +144,7 @@ async def create_document(doc_in: DocumentInCreate) -> DocumentInDB:
     finally:
         await conn.close()
 
+
 async def get_document(document_id: UUID) -> Optional[DocumentInDB]:
     conn = await get_connection()
     try:
@@ -140,6 +160,7 @@ async def get_document(document_id: UUID) -> Optional[DocumentInDB]:
     finally:
         await conn.close()
 
+
 async def update_document(document_id: UUID, doc_update: DocumentUpdate) -> Optional[DocumentInDB]:
     existing = await get_document(document_id)
     if not existing:
@@ -153,17 +174,19 @@ async def update_document(document_id: UUID, doc_update: DocumentUpdate) -> Opti
                 """UPDATE documents SET
                     name = $1,
                     description = $2,
-                    document_type = $3,
+                    document_type_id = $3,
                     category = $4,
-                    period_type = $5,
-                    periods_required = $6,
-                    has_multiple_periods = $7
-                WHERE id = $8
+                    category_id = $5,
+                    period_type = $6,
+                    periods_required = $7,
+                    has_multiple_periods = $8
+                WHERE id = $9
                 RETURNING *""",
                 updated_data.name,
                 updated_data.description,
-                updated_data.document_type.value,
+                updated_data.document_type_id,
                 updated_data.category.value,
+                updated_data.category_id,
                 updated_data.period_type,
                 updated_data.periods_required,
                 updated_data.has_multiple_periods,
@@ -190,6 +213,7 @@ async def update_document(document_id: UUID, doc_update: DocumentUpdate) -> Opti
     finally:
         await conn.close()
 
+
 async def delete_document(document_id: UUID) -> bool:
     conn = await get_connection()
     try:
@@ -198,6 +222,7 @@ async def delete_document(document_id: UUID) -> bool:
             return "DELETE 1" in result
     finally:
         await conn.close()
+
 
 async def list_documents() -> List[DocumentInDB]:
     conn = await get_connection()
@@ -213,22 +238,26 @@ async def list_documents() -> List[DocumentInDB]:
     finally:
         await conn.close()
 
+
 # Document Fields CRUD
 async def create_document_field(field: DocumentFieldCreate) -> DocumentField:
     conn = await get_connection()
     try:
         row = await conn.fetchrow(
-            """INSERT INTO document_fields (document_id, name, type, is_identifier)
-            VALUES ($1, $2, $3, $4)
+            """INSERT INTO document_fields (document_id, name, type, is_identifier, field_type, is_required)
+            VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING *""",
             field.document_id,
             field.name,
             field.type,
-            field.is_identifier
+            field.is_identifier,
+            field.field_type,
+            field.is_required
         )
         return DocumentField(**dict(row))
     finally:
         await conn.close()
+
 
 async def get_document_fields(document_id: UUID) -> List[DocumentField]:
     conn = await get_connection()
@@ -241,6 +270,7 @@ async def get_document_fields(document_id: UUID) -> List[DocumentField]:
     finally:
         await conn.close()
 
+
 async def delete_document_field(field_id: UUID) -> bool:
     conn = await get_connection()
     try:
@@ -251,6 +281,7 @@ async def delete_document_field(field_id: UUID) -> bool:
         return "DELETE 1" in result
     finally:
         await conn.close()
+
 
 # Validation Rules CRUD
 async def create_validation_rule(rule: ValidationRuleCreate) -> ValidationRule:
@@ -274,6 +305,7 @@ async def create_validation_rule(rule: ValidationRuleCreate) -> ValidationRule:
     finally:
         await conn.close()
 
+
 async def get_validation_rules(document_id: UUID) -> List[ValidationRule]:
     conn = await get_connection()
     try:
@@ -291,6 +323,7 @@ async def get_validation_rules(document_id: UUID) -> List[ValidationRule]:
     finally:
         await conn.close()
 
+
 async def delete_validation_rule(rule_id: UUID) -> bool:
     conn = await get_connection()
     try:
@@ -301,6 +334,7 @@ async def delete_validation_rule(rule_id: UUID) -> bool:
         return "DELETE 1" in result
     finally:
         await conn.close()
+
 
 # Utility: List Tables
 async def list_tables() -> List[str]:

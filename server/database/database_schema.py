@@ -1,25 +1,10 @@
 CREATE_SCHEMA_QUERIES = [
-    """
-    CREATE EXTENSION IF NOT EXISTS pgvector;
-"""
     """CREATE OR REPLACE FUNCTION set_updated_at() RETURNS TRIGGER AS $$
     BEGIN
       NEW.updated_at = NOW();
       RETURN NEW;
     END;
     $$ LANGUAGE plpgsql;""",
-
-    # =====================================
-    # 1. Enum Types
-    # =====================================
-    """DO $$ BEGIN 
-       CREATE TYPE document_type AS ENUM ('one-time','updatable','recurring'); 
-       EXCEPTION WHEN duplicate_object THEN null; 
-       END$$;""",
-    """DO $$ BEGIN 
-       CREATE TYPE document_category AS ENUM ('identification','financial','property','employment','tax'); 
-       EXCEPTION WHEN duplicate_object THEN null; 
-       END$$;""",
     """DO $$ BEGIN 
        CREATE TYPE required_for AS ENUM ('employees','self-employed','business-owners','all'); 
        EXCEPTION WHEN duplicate_object THEN null; 
@@ -33,10 +18,6 @@ CREATE_SCHEMA_QUERIES = [
        END$$;""",
     """DO $$ BEGIN 
        CREATE TYPE case_status AS ENUM ('active', 'inactive', 'pending'); 
-       EXCEPTION WHEN duplicate_object THEN null; 
-       END$$;""",
-    """DO $$ BEGIN 
-       CREATE TYPE person_role AS ENUM ('primary', 'cosigner', 'guarantor'); 
        EXCEPTION WHEN duplicate_object THEN null; 
        END$$;""",
     """DO $$ BEGIN 
@@ -55,10 +36,206 @@ CREATE_SCHEMA_QUERIES = [
        CREATE TYPE loan_status AS ENUM ('active', 'closed', 'defaulted'); 
        EXCEPTION WHEN duplicate_object THEN null; 
        END$$;""",
-
     # =====================================
     # 2. Utility Tables (Tokens, Attempts)
     # =====================================
+    """create table if not exists document_types (
+        id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+        name text not null unique,
+        value text not null unique,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );""",
+    """DO $$ BEGIN
+      IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'update_document_types_timestamp'
+      ) THEN
+        CREATE TRIGGER update_document_types_timestamp
+        BEFORE UPDATE ON document_types
+        FOR EACH ROW
+        EXECUTE PROCEDURE set_updated_at();
+      END IF;
+    END$$;""",
+    """INSERT INTO document_types (name, value) 
+       VALUES ('One Time', 'one-time'), ('Updatable', 'updatable'), ('Recurring', 'recurring')
+       ON CONFLICT (value) DO NOTHING;""",
+    """CREATE TABLE IF NOT EXISTS person_roles (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        name text not null unique ,
+        value text not null  unique 
+    );""",
+    """INSERT INTO person_roles (id, name, value)
+    VALUES 
+        (gen_random_uuid(), 'Primary', 'primary'),
+        (gen_random_uuid(), 'Cosigner', 'cosigner'),
+        (gen_random_uuid(), 'Guarantor', 'guarantor')
+    ON CONFLICT (value) DO NOTHING;""",
+    """
+    create table if not exists fin_org_types (
+        id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+        name text not null unique,
+        value text not null unique,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );
+    """,
+    """DO $$ BEGIN
+      IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'update_fin_org_types_timestamp'
+      ) THEN
+        CREATE TRIGGER update_fin_org_types_timestamp
+        BEFORE UPDATE ON fin_org_types
+        FOR EACH ROW
+        EXECUTE PROCEDURE set_updated_at();
+      END IF;
+    END$$;""",
+    """
+    create table if not exists loan_types (
+        id uuid PRIMARY KEY,
+        name text not null  unique ,
+        value text not null unique 
+    );
+    """,
+    """INSERT INTO loan_types (id, name, value)
+    VALUES 
+        (gen_random_uuid(), 'Single Family Home', 'single_family_home'),
+        (gen_random_uuid(), 'Multi Family Home', 'multi_family_home'),
+        (gen_random_uuid(), 'Condominium', 'condominium'),
+        (gen_random_uuid(), 'Townhouse', 'townhouse'),
+        (gen_random_uuid(), 'Personal Loan', 'personal_loan'),
+        (gen_random_uuid(), 'Auto Loan', 'auto_loan'),
+        (gen_random_uuid(), 'Business Loan', 'business_loan')
+    ON CONFLICT (value) DO NOTHING;""",
+    """create table if not exists loan_goals (
+        id uuid PRIMARY KEY,
+        name text not null  unique ,
+        value text not null unique 
+    );
+    """,
+    """INSERT INTO loan_goals (id, name, value)
+    VALUES 
+        (gen_random_uuid(), 'Primary Residence', 'primary_residence'),
+        (gen_random_uuid(), 'Secondary Residence', 'secondary_residence'),
+        (gen_random_uuid(), 'Investment Property', 'investment_property'),
+        (gen_random_uuid(), 'Refinance', 'refinance'),
+        (gen_random_uuid(), 'Home Improvement', 'home_improvement'),
+        (gen_random_uuid(), 'Debt Consolidation', 'debt_consolidation')
+    ON CONFLICT (value) DO NOTHING;""",
+    """create table if not exists person_martial_statuses (
+        id uuid PRIMARY KEY,
+        name text not null  unique ,
+        value text not null unique 
+    );
+    """,
+    """INSERT INTO person_martial_statuses (id, name, value)
+    VALUES 
+        (gen_random_uuid(), 'Single', 'single'),
+        (gen_random_uuid(), 'Married', 'married'),
+        (gen_random_uuid(), 'Divorced', 'divorced'),
+        (gen_random_uuid(), 'Widowed', 'widowed'),
+        (gen_random_uuid(), 'Separated', 'separated')
+    ON CONFLICT (value) DO NOTHING;""",
+    """create table if not exists employment_types(
+        id uuid PRIMARY KEY,
+        name text not null  unique ,
+        value text not null unique 
+    );
+    """,
+    """INSERT INTO employment_types (id, name, value)
+    VALUES 
+        (gen_random_uuid(), 'Full Time', 'full_time'),
+        (gen_random_uuid(), 'Part Time', 'part_time'),
+        (gen_random_uuid(), 'Self Employed', 'self_employed'),
+        (gen_random_uuid(), 'Contractor', 'contractor'),
+        (gen_random_uuid(), 'Unemployed', 'unemployed'),
+        (gen_random_uuid(), 'Retired', 'retired')
+    ON CONFLICT (value) DO NOTHING;""",
+    """create table if not exists bank_account_type(
+        id uuid PRIMARY KEY,
+        name text not null  unique ,
+        value text not null unique 
+    );
+    """,
+    """create table if not exists credit_card_types(
+        id uuid PRIMARY KEY,
+        name text not null  unique ,
+        value text not null unique 
+    );
+    """,
+    """create table if not exists loan_types(
+        id uuid PRIMARY KEY,
+        name text not null  unique ,
+        value text not null unique 
+    );
+    """,
+    """create table if not exists income_sources_types(
+        id uuid PRIMARY KEY,
+        name text not null  unique ,
+        value text not null unique 
+    );
+    """,
+    """create table if not exists related_person_relationships_types(
+        id uuid PRIMARY KEY,
+        name text not null  unique ,
+        value text not null unique 
+    );
+    """,
+    """create table if not exists company_types (
+        id uuid PRIMARY KEY,
+        name text not null  unique ,
+        value text not null unique 
+    );
+    """,
+    """create table if not exists asset_types (
+        id uuid PRIMARY KEY,
+        name text not null unique,
+        value text not null unique 
+    );
+    """,
+    """INSERT INTO asset_types (id, name, value)
+    VALUES 
+        (gen_random_uuid(), 'Car', 'car'),
+        (gen_random_uuid(), 'Real Estate', 'real_estate'),
+        (gen_random_uuid(), 'Cash', 'cash'),
+        (gen_random_uuid(), 'Stock', 'stock'),
+        (gen_random_uuid(), 'Jewelry', 'jewelry'),
+        (gen_random_uuid(), 'Cryptocurrency', 'crypto'),
+        (gen_random_uuid(), 'Art', 'art'),
+        (gen_random_uuid(), 'Collectibles', 'collectibles')
+    ON CONFLICT (value) DO NOTHING;""",
+    """create table if not exists document_categories (
+        id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+        name text not null unique,
+        value text not null unique,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );
+    """,
+    """DO $$ BEGIN
+      IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'update_document_categories_timestamp'
+      ) THEN
+        CREATE TRIGGER update_document_categories_timestamp
+        BEFORE UPDATE ON document_categories
+        FOR EACH ROW
+        EXECUTE PROCEDURE set_updated_at();
+      END IF;
+    END$$;""",
+    """INSERT INTO document_categories (name, value) 
+       VALUES ('Identification', 'identification'), ('Financial', 'financial'), ('Property', 'property'), ('Employment', 'employment'), ('Tax', 'tax')
+       ON CONFLICT (value) DO NOTHING;""",
+    """CREATE OR REPLACE FUNCTION get_category_id_by_value(category_value TEXT) 
+       RETURNS UUID AS $$
+       DECLARE
+         category_id UUID;
+       BEGIN
+         SELECT id INTO category_id FROM document_categories WHERE value = category_value;
+         RETURN category_id;
+       END;
+       $$ LANGUAGE plpgsql;""",
     """CREATE TABLE IF NOT EXISTS token_blacklist (
         jti UUID PRIMARY KEY,
         user_id UUID NOT NULL,
@@ -165,10 +342,11 @@ CREATE_SCHEMA_QUERIES = [
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         name TEXT NOT NULL CHECK (length(name) > 0),
         description TEXT,
+        document_type_id UUID NOT NULL REFERENCES document_types(id),
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-        document_type document_type NOT NULL,
-        category document_category NOT NULL,
+        category TEXT NOT NULL,
+        category_id UUID REFERENCES document_categories(id),
         period_type TEXT,
         periods_required INTEGER CHECK (periods_required > 0),
         has_multiple_periods BOOLEAN NOT NULL,
@@ -190,7 +368,9 @@ CREATE_SCHEMA_QUERIES = [
         name TEXT NOT NULL CHECK (length(name) > 0),
         type TEXT NOT NULL CHECK (type = ANY(ARRAY['string','number','date','currency'])),
         is_identifier BOOLEAN NOT NULL DEFAULT false,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        field_type text not null,
+        is_required BOOLEAN NOT NULL DEFAULT false
     );""",
 
     """CREATE TABLE IF NOT EXISTS validation_rules (
@@ -203,9 +383,34 @@ CREATE_SCHEMA_QUERIES = [
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
     );""",
 
+    # ----- Trigger to populate category_id from category -----
+    """CREATE OR REPLACE FUNCTION set_category_id() RETURNS TRIGGER AS $$
+    BEGIN
+      IF NEW.category_id IS NULL THEN
+        SELECT id INTO NEW.category_id FROM document_categories WHERE value = NEW.category;
+      END IF;
+      RETURN NEW;
+    END;
+    $$ LANGUAGE plpgsql;""",
+    
+    """DO $$ BEGIN
+      IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'update_documents_category_id'
+      ) THEN
+        CREATE TRIGGER update_documents_category_id
+        BEFORE INSERT OR UPDATE ON documents
+        FOR EACH ROW
+        EXECUTE PROCEDURE set_category_id();
+      END IF;
+    END$$;""",
+
+    # Also create index on the new category_id field
+    """CREATE INDEX IF NOT EXISTS idx_documents_category_id ON documents(category_id);""",
+
     # ----- Indexes for Document Tables -----
     """CREATE INDEX IF NOT EXISTS idx_documents_name ON documents(name);""",
-    """CREATE INDEX IF NOT EXISTS idx_documents_type_category ON documents(document_type, category);""",
+    """CREATE INDEX IF NOT EXISTS idx_documents_type_category ON documents(document_type_id, category);""",
     """CREATE INDEX IF NOT EXISTS idx_document_fields_document_id ON document_fields(document_id);""",
     """CREATE INDEX IF NOT EXISTS idx_validation_rules_document_id ON validation_rules(document_id);""",
     """CREATE INDEX IF NOT EXISTS idx_validation_rules_field ON validation_rules(field);""",
@@ -224,37 +429,157 @@ CREATE_SCHEMA_QUERIES = [
       END IF;
     END$$;""",
 
+    """CREATE TABLE IF NOT EXISTS document_entity_relations (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
+        entity_type TEXT NOT NULL, -- 'person_asset', 'bank_account', 'credit_card', 'loan', 'income_source', 'employment', 'company'
+        entity_id UUID NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        CONSTRAINT unique_document_entity UNIQUE (document_id, entity_type, entity_id)
+    );""",
+    
+    """CREATE INDEX IF NOT EXISTS idx_document_entity_relations_document_id 
+    ON document_entity_relations(document_id);""",
+    
+    """CREATE INDEX IF NOT EXISTS idx_document_entity_relations_entity 
+    ON document_entity_relations(entity_type, entity_id);""",
+
     # =====================================
     # 6. Cases & Related Tables (Using UUID)
     # =====================================
     """CREATE TABLE IF NOT EXISTS cases (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         name TEXT NOT NULL CHECK (length(name) > 0),
-        status case_status NOT NULL,
-        activity_level SMALLINT NOT NULL CHECK (activity_level BETWEEN 0 AND 100),
-        last_active TIMESTAMP WITH TIME ZONE NOT NULL,
-        project_count INTEGER NOT NULL DEFAULT 0 CHECK (project_count >= 0),
+        status case_status NOT NULL DEFAULT 'active',
+        is_default BOOLEAN NOT NULL DEFAULT FALSE,
+        primary_contact_id UUID,
+        title TEXT,
+        description TEXT,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        last_active TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        case_purpose TEXT,
+        loan_type TEXT
     );""",
-
     """CREATE TABLE IF NOT EXISTS case_persons (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
-        first_name VARCHAR(50) NOT NULL CHECK (length(first_name) >= 2),
-        last_name VARCHAR(50) NOT NULL CHECK (length(last_name) >= 2),
-        id_number VARCHAR(50) NOT NULL UNIQUE CHECK (length(id_number) >= 5),
-        age SMALLINT CHECK (age BETWEEN 0 AND 150),
+        case_id UUID REFERENCES cases(id) ON DELETE CASCADE,
+        first_name VARCHAR(50) NOT NULL CHECK (LENGTH(first_name) >= 2),
+        last_name VARCHAR(50) NOT NULL CHECK (LENGTH(last_name) >= 2),
+        id_number VARCHAR(50) NOT NULL UNIQUE CHECK (LENGTH(id_number) >= 5),
         gender person_gender NOT NULL,
-        role person_role NOT NULL,
+        role TEXT NOT NULL,
+        role_id UUID REFERENCES person_roles(id),
         birth_date DATE NOT NULL,
         phone VARCHAR(20) CHECK (phone ~ '^\\+?[0-9]{8,15}$'),
         email VARCHAR(255) CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$'),
-        status VARCHAR(10) NOT NULL CHECK (status IN ('active', 'inactive')),
+        marital_status TEXT,
+        status VARCHAR(10) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'inactive')),
+        marital_status_id UUID REFERENCES person_martial_statuses(id),
+        address TEXT,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
     );""",
+    """
+    create table if not exists case_assets (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    case_id uuid not null references cases(id),
+    value text not null
+    );
+    """,
+    """CREATE TABLE IF NOT EXISTS person_assets (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    person_id UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
+    asset_type_id UUID NOT NULL REFERENCES asset_types(id),
+    description TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );
+    """,
+    """CREATE TABLE IF NOT EXISTS person_employment_history (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    person_id UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
+    employer_name TEXT NOT NULL,
+    position TEXT NOT NULL,
+    employment_type_id UUID NOT NULL REFERENCES employment_types(id),
+    current_employer BOOLEAN NOT NULL DEFAULT false,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );
+    """,
+    """CREATE TABLE IF NOT EXISTS person_income_sources (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    person_id UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
+    label TEXT NOT NULL,
+    income_source_type_id UUID NOT NULL REFERENCES income_sources_types(id),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );
+    """,
+    """CREATE TABLE IF NOT EXISTS person_bank_accounts (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    person_id UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
+    account_type_id UUID NOT NULL REFERENCES bank_account_type(id),
+    bank_name TEXT NOT NULL,
+    account_number TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );
+    """,
+    """CREATE TABLE IF NOT EXISTS person_credit_cards (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    person_id UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
+    issuer TEXT NOT NULL,
+    card_type_id UUID NOT NULL REFERENCES credit_card_types(id),
+    last_four INTEGER NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );
+    """,
+    """CREATE TABLE IF NOT EXISTS person_loans (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    person_id UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
+    loan_type_id UUID NOT NULL REFERENCES loan_types(id),
+    lender TEXT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );
+    """,
+    """CREATE TABLE IF NOT EXISTS cases_monday_relation (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        case_id UUID NOT NULL REFERENCES cases(id),
+        monday_id UUID NOT NULL
+    );""",
 
+    """CREATE OR REPLACE FUNCTION set_role_id() RETURNS TRIGGER AS $$
+    BEGIN
+      IF NEW.role_id IS NULL THEN
+        SELECT id INTO NEW.role_id FROM person_roles WHERE value = NEW.role;
+      END IF;
+      RETURN NEW;
+    END;
+    $$ LANGUAGE plpgsql;""",
+    """CREATE TRIGGER set_role_id_trigger
+    BEFORE INSERT OR UPDATE ON case_persons
+    FOR EACH ROW
+    EXECUTE FUNCTION set_role_id();
+    """,
+    """CREATE OR REPLACE FUNCTION set_marital_status_id() RETURNS TRIGGER AS $$
+    BEGIN
+      IF NEW.marital_status_id IS NULL AND NEW.marital_status IS NOT NULL THEN
+        SELECT id INTO NEW.marital_status_id FROM person_martial_statuses WHERE value = NEW.marital_status;
+      END IF;
+      RETURN NEW;
+    END;
+    $$ LANGUAGE plpgsql;""",
+    """CREATE TRIGGER set_marital_status_id_trigger
+    BEFORE INSERT OR UPDATE ON case_persons
+    FOR EACH ROW
+    EXECUTE FUNCTION set_marital_status_id();
+    """,
+    '''alter table cases add column if not exists primary_contact_id uuid references case_persons(id);
+    '''
     """CREATE TABLE IF NOT EXISTS case_person_relations (
         from_person_id UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
         to_person_id   UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
@@ -270,6 +595,7 @@ CREATE_SCHEMA_QUERIES = [
         uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         reviewed_at TIMESTAMP WITH TIME ZONE,
         uploaded_by UUID REFERENCES users(id),
+        file_path TEXT default null,
         PRIMARY KEY (case_id, document_id)
     );""",
 
@@ -280,6 +606,25 @@ CREATE_SCHEMA_QUERIES = [
         status loan_status NOT NULL,
         start_date DATE NOT NULL,
         end_date DATE,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );""",
+
+    """CREATE TABLE IF NOT EXISTS case_companies (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
+        name TEXT NOT NULL,
+        company_type_id UUID NOT NULL REFERENCES company_types(id),
+        role TEXT NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );""",
+    
+    """CREATE TABLE IF NOT EXISTS case_desired_products (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
+        loan_type_id UUID NOT NULL REFERENCES loan_types(id),
+        loan_goal_id UUID NOT NULL REFERENCES loan_goals(id),
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
     );""",
@@ -346,49 +691,61 @@ CREATE_SCHEMA_QUERIES = [
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     processing_state_id UUID NOT NULL REFERENCES processing_states(id) ON DELETE CASCADE,
     result JSONB NOT NULL,
-    embedding_prop vector(1536),  -- Adjust the dimension (e.g., 1536) as needed; nullable by default.
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
     UNIQUE(processing_state_id)
 );
 ''',
+    """CREATE INDEX IF NOT EXISTS idx_pending_processing_document_case_id
+    ON pending_processing_documents(case_id);""",
+    """ALTER TABLE cases 
+       ADD CONSTRAINT fk_cases_primary_contact_id 
+       FOREIGN KEY (primary_contact_id) REFERENCES case_persons(id);"""
 ]
 
 DROP_ALL_QUERIES = """
 DO $$
-DECLARE
-    _stmt TEXT;
 BEGIN
-    -- Drop relationships first
-    DROP TABLE IF EXISTS case_person_relations CASCADE;
-    DROP TABLE IF EXISTS case_loans CASCADE;
-    DROP TABLE IF EXISTS case_documents CASCADE;
-    DROP TABLE IF EXISTS case_persons CASCADE;
-    DROP TABLE IF EXISTS cases CASCADE;
-
-    -- Drop enum types associated with cases
-    DROP TYPE IF EXISTS loan_status CASCADE;
-    DROP TYPE IF EXISTS document_status CASCADE;
-    DROP TYPE IF EXISTS person_gender CASCADE;
-    DROP TYPE IF EXISTS person_role CASCADE;
-    DROP TYPE IF EXISTS case_status CASCADE;
-
-    -- Drop document-related tables
+    DROP TABLE IF EXISTS pending_processing_documents CASCADE;
+    DROP TABLE IF EXISTS document_processing_errors CASCADE;
+    DROP TABLE IF EXISTS document_processing_steps CASCADE;
+    DROP TABLE IF EXISTS documents_data CASCADE;
+    DROP TABLE IF EXISTS documents_required_for CASCADE;
     DROP TABLE IF EXISTS validation_rules CASCADE;
     DROP TABLE IF EXISTS document_fields CASCADE;
-    DROP TABLE IF EXISTS documents_required_for CASCADE;
     DROP TABLE IF EXISTS documents CASCADE;
-
-    -- Drop FinOrg & FinOrgContacts
-    DROP TABLE IF EXISTS fin_org_contacts CASCADE;
-    DROP TABLE IF EXISTS fin_orgs CASCADE;
-
-    -- Drop users & utility
-    DROP TABLE IF EXISTS users CASCADE;
-    DROP FUNCTION IF EXISTS set_updated_at() CASCADE;
+    DROP TABLE IF EXISTS document_entity_relations CASCADE;
+    DROP TABLE IF EXISTS case_person_relations CASCADE;
+    DROP TABLE IF EXISTS person_loans CASCADE;
+    DROP TABLE IF EXISTS person_credit_cards CASCADE;
+    DROP TABLE IF EXISTS person_bank_accounts CASCADE;
+    DROP TABLE IF EXISTS person_income_sources CASCADE;
+    DROP TABLE IF EXISTS person_employment_history CASCADE;
+    DROP TABLE IF EXISTS case_assets CASCADE;
+    DROP TABLE IF EXISTS person_assets CASCADE;
+    DROP TABLE IF EXISTS asset_types CASCADE;
+    DROP TABLE IF EXISTS case_companies CASCADE;
+    DROP TABLE IF EXISTS case_desired_products CASCADE;
+    DROP TABLE IF EXISTS case_persons CASCADE;
+    DROP TABLE IF EXISTS cases CASCADE;
+    DROP TABLE IF EXISTS loan_types CASCADE;
+    DROP TABLE IF EXISTS loan_goals CASCADE;
+    DROP TABLE IF EXISTS person_martial_statuses CASCADE;
+    DROP TABLE IF EXISTS employment_types CASCADE;
+    DROP TABLE IF EXISTS bank_account_type CASCADE;
+    DROP TABLE IF EXISTS document_categories CASCADE;
+    DROP TABLE IF EXISTS document_types CASCADE;
+    DROP TABLE IF EXISTS finorg_contacts CASCADE;
+    DROP TABLE IF EXISTS finorgs CASCADE;
+    DROP TABLE IF EXISTS login_attempts CASCADE;
+    DROP TABLE IF EXISTS users CASCADE; 
+    DROP TYPE IF EXISTS document_processing_state CASCADE;
+    DROP TYPE IF EXISTS user_role CASCADE;
+    DROP TYPE IF EXISTS person_gender CASCADE;
+    DROP TYPE IF EXISTS case_status CASCADE;
+    DROP TYPE IF EXISTS case_person_relation CASCADE;
     DROP TYPE IF EXISTS validation_operator CASCADE;
     DROP TYPE IF EXISTS required_for CASCADE;
     DROP TYPE IF EXISTS document_category CASCADE;
-    DROP TYPE IF EXISTS document_type CASCADE;
 END$$;
 """

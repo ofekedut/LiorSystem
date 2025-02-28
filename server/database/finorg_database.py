@@ -236,3 +236,128 @@ async def delete_fin_org_contact(contact_id: UUID) -> bool:
             return "DELETE 1" in result
     finally:
         await conn.close()
+
+
+# -----------------------------------------------------------------------------
+# 5. Pydantic Models for FinOrgType
+# -----------------------------------------------------------------------------
+
+class FinOrgTypeBase(BaseModel):
+    name: str
+    value: str
+
+
+class FinOrgTypeCreate(FinOrgTypeBase):
+    pass
+
+
+class FinOrgTypeUpdate(BaseModel):
+    name: Optional[str] = None
+    value: Optional[str] = None
+
+
+class FinOrgTypeInDB(FinOrgTypeBase):
+    id: UUID
+    created_at: datetime
+    updated_at: datetime
+
+
+# -----------------------------------------------------------------------------
+# 6. CRUD Functions for FinOrgType
+# -----------------------------------------------------------------------------
+
+async def create_fin_org_type(type_in: FinOrgTypeCreate) -> FinOrgTypeInDB:
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            row = await conn.fetchrow(
+                """
+                INSERT INTO fin_org_types (name, value, created_at, updated_at)
+                VALUES ($1, $2, NOW(), NOW())
+                RETURNING id, name, value, created_at, updated_at
+                """,
+                type_in.name,
+                type_in.value
+            )
+            return FinOrgTypeInDB(**dict(row))
+    finally:
+        await conn.close()
+
+
+async def get_fin_org_type(type_id: UUID) -> Optional[FinOrgTypeInDB]:
+    conn = await get_connection()
+    try:
+        row = await conn.fetchrow(
+            """
+            SELECT id, name, value, created_at, updated_at 
+            FROM fin_org_types 
+            WHERE id = $1
+            """, 
+            type_id
+        )
+        return FinOrgTypeInDB(**dict(row)) if row else None
+    finally:
+        await conn.close()
+
+
+async def list_fin_org_types() -> List[FinOrgTypeInDB]:
+    conn = await get_connection()
+    try:
+        rows = await conn.fetch(
+            """
+            SELECT id, name, value, created_at, updated_at 
+            FROM fin_org_types 
+            ORDER BY name
+            """
+        )
+        return [FinOrgTypeInDB(**dict(row)) for row in rows]
+    finally:
+        await conn.close()
+
+
+async def update_fin_org_type(type_id: UUID, type_update: FinOrgTypeUpdate) -> Optional[FinOrgTypeInDB]:
+    # Build the update sets dynamically based on what fields are provided
+    update_fields = []
+    values = [type_id]
+    counter = 2  # Start from $2 since $1 is type_id
+    
+    if type_update.name is not None:
+        update_fields.append(f"name = ${counter}")
+        values.append(type_update.name)
+        counter += 1
+    
+    if type_update.value is not None:
+        update_fields.append(f"value = ${counter}")
+        values.append(type_update.value)
+        counter += 1
+    
+    if not update_fields:
+        # If no fields to update, just return the current fin_org type
+        return await get_fin_org_type(type_id)
+    
+    # Always update the updated_at timestamp
+    update_fields.append("updated_at = NOW()")
+    
+    query = f"""
+    UPDATE fin_org_types
+    SET {", ".join(update_fields)}
+    WHERE id = $1
+    RETURNING id, name, value, created_at, updated_at
+    """
+    
+    conn = await get_connection()
+    try:
+        row = await conn.fetchrow(query, *values)
+        return FinOrgTypeInDB(**dict(row)) if row else None
+    finally:
+        await conn.close()
+
+
+async def delete_fin_org_type(type_id: UUID) -> bool:
+    conn = await get_connection()
+    try:
+        async with conn.transaction():
+            result = await conn.execute("DELETE FROM fin_org_types WHERE id = $1", type_id)
+            return "DELETE 1" in result
+    finally:
+        await conn.close()

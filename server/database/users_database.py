@@ -396,16 +396,19 @@ async def authenticate_user(email: str, password: str) -> UserInDB:
 
 async def delete_user(user_id: uuid.UUID) -> None:
     conn = await get_connection()
-    async with conn.transaction():
-        result = await conn.execute("""
-               delete from users where id =$1
-               """, user_id)
+    try:
+        async with conn.transaction():
+            result = await conn.execute("""
+                   delete from users where id =$1
+                   """, user_id)
 
-        if result == "UPDATE 0":
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="User not found or already deleted"
-            )
+            if result == "UPDATE 0":
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="User not found or already deleted"
+                )
+    finally:
+        await conn.close()
 
 
 async def update_user_preferences(user_id: uuid.UUID, preferences_update: UserPreferences) -> UserPublic:

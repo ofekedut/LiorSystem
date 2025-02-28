@@ -3,7 +3,7 @@ from typing import List
 from pdf2image import convert_from_path
 import pytesseract
 import fitz
-from server.pdf_parsing.pdf_parser.pdf_result import PDFPageResult, Content, TextBlock, Position, PageDimensions, ProcessingInfo
+from pdf_parsing.pdf_parser.pdf_result import PDFPageResult, Content, TextBlock, Position, PageDimensions, ProcessingInfo
 
 
 class PDFProcessor:

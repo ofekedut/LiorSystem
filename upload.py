@@ -11,8 +11,10 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # Connection & Project Details
 # -------------------------
 hostname = "35.159.254.211"  # Change to your target IP/hostname
+# hostname = "3.77.245.140"
 username = "ubuntu"  # Change as needed
 key_file = "/Users/ofekedut/Downloads/OfekMacForMortagesServer.pem"  # Update as needed
+# key_file = "/Users/ofekedut/.ssh/perlakey.pem"  # Update as needed
 
 abs_path = os.path.abspath(os.getcwd())
 local_directory = os.path.join(abs_path, "server")  # path to your local server directory

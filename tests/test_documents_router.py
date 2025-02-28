@@ -4,8 +4,9 @@ import pytest_asyncio
 from httpx import AsyncClient
 from fastapi import status
 
-# Adjust the import below to match your actual project structure:
 from server.api import app
+from server.database.database import get_connection
+
 
 # =============================================================================
 # Fixtures
@@ -94,11 +95,37 @@ class TestDocumentsEndpoints:
         created_doc = create_resp.json()
         doc_id = created_doc["id"]
 
+        # Get or create a recurring document type for the update
+        doc_type_name = "Recurring"
+        doc_type_value = "recurring"
+        
+        conn = await get_connection()
+        try:
+            # Try to get existing document type
+            existing = await conn.fetchrow(
+                """SELECT id FROM document_types WHERE name = $1""",
+                doc_type_name
+            )
+            
+            if existing:
+                recurring_type_id = existing['id']
+            else:
+                # Create a new document type
+                recurring_type = await conn.fetchrow(
+                    """INSERT INTO document_types (name, value) 
+                       VALUES ($1, $2) 
+                       RETURNING id""",
+                    doc_type_name, doc_type_value
+                )
+                recurring_type_id = recurring_type['id']
+        finally:
+            await conn.close()
+        
         # Prepare update payload. Ensure all required fields are provided.
         update_payload = {
             "name": "Updated Document Name",
             "description": "Updated description",
-            "document_type": "recurring",  # Change type from one-time to recurring
+            "document_type_id": str(recurring_type_id),  # Change to a different document type
             "category": "financial",
             "period_type": "month",
             "periods_required": 12,
@@ -110,7 +137,7 @@ class TestDocumentsEndpoints:
 
         updated_doc = update_resp.json()
         assert updated_doc["name"] == update_payload["name"]
-        assert updated_doc["document_type"] == update_payload["document_type"]
+        assert updated_doc["document_type_id"] == update_payload["document_type_id"]
         assert updated_doc["required_for"] == update_payload["required_for"]
 
     async def test_delete_document(self, async_client: AsyncClient, new_document_payload: dict):
@@ -129,6 +156,7 @@ class TestDocumentsEndpoints:
         # Verify that the document no longer exists
         get_resp = await async_client.get(f"/documents/{doc_id}")
         assert get_resp.status_code == status.HTTP_404_NOT_FOUND
+
 
 # =============================================================================
 # Tests for Document Fields Endpoints
@@ -153,7 +181,9 @@ class TestDocumentFieldsEndpoints:
             "document_id": doc_id,
             "name": "Test Field",
             "type": "string",
-            "is_identifier": False
+            "is_identifier": False,
+            "field_type": "document_field",
+            "is_required": True,
         }
         resp = await async_client.post(f"/documents/{doc_id}/fields", json=field_payload)
         assert resp.status_code == status.HTTP_201_CREATED
@@ -175,9 +205,12 @@ class TestDocumentFieldsEndpoints:
                 "document_id": doc_id,
                 "name": f"Field {i}",
                 "type": "string",
-                "is_identifier": False
+                "is_identifier": False,
+                "is_required": False,
+                'field_type': 'document_field',
             }
-            await async_client.post(f"/documents/{doc_id}/fields", json=field_payload)
+            resp = await async_client.post(f"/documents/{doc_id}/fields", json=field_payload)
+            assert resp.status_code == status.HTTP_201_CREATED
 
         # Retrieve document fields
         resp = await async_client.get(f"/documents/{doc_id}/fields")
@@ -197,7 +230,9 @@ class TestDocumentFieldsEndpoints:
             "document_id": doc_id,
             "name": "Field to Delete",
             "type": "string",
-            "is_identifier": True
+            "is_identifier": True,
+            "is_required": False,
+            'field_type': 'document_field',
         }
         create_resp = await async_client.post(f"/documents/{doc_id}/fields", json=field_payload)
         field_id = create_resp.json()["id"]
@@ -210,6 +245,7 @@ class TestDocumentFieldsEndpoints:
         list_resp = await async_client.get(f"/documents/{doc_id}/fields")
         fields_list = list_resp.json()
         assert all(field["id"] != field_id for field in fields_list)
+
 
 # =============================================================================
 # Tests for Validation Rules Endpoints

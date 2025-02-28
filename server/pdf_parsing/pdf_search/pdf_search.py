@@ -5,8 +5,8 @@ from pathlib import Path
 import io
 from PyPDF2 import PdfReader
 
-from server.pdf_parsing.pdf_parser.main import process_single_pdf
-from server.pdf_parsing.pdf_parser.pdf_result import PDFPageResult, TextBlock, Content, ProcessingInfo
+from pdf_parsing.pdf_parser.main import process_single_pdf
+from pdf_parsing.pdf_parser.pdf_result import PDFPageResult, TextBlock, Content, ProcessingInfo
 
 
 @dataclass

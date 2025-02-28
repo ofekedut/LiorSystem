@@ -327,33 +327,37 @@ async def upload_case_document_file(
     """
     Upload the actual file for a case document. The file will be stored on the
     filesystem in a path like:
-        /home/mortgage_system/uploaded_files/{user_id}/{case_id}/{file.filename}
+        /mortgage_system/uploaded_files/{user_id}/{case_id}/{file.filename}
 
-    We then update the case_documents table with a file_path (if such a column
-    exists). For this example, we assume you have added a 'file_path' column
-    in 'case_documents' to store the local path. If not, you'll need to
-    modify your schema accordingly.
+    Then we update the `file_path` in the `case_documents` table.
     """
     # 1. Check that the case_document link exists
     doc_link = await get_case_document(case_id, document_id)
     if not doc_link:
         raise HTTPException(status_code=404, detail="Case document link not found")
 
-    # 2. Define a local upload path. Adjust the base directory to your preference.
+    # 2. Define a local upload path
     base_dir = "./mortgage_system/uploaded_files"
     upload_dir = os.path.join(base_dir, str(user_id), str(case_id))
-    os.makedirs(upload_dir, exist_ok=True)  # Create directories if needed
+    os.makedirs(upload_dir, exist_ok=True)
 
     # 3. Save the file to disk
     file_path = os.path.join(upload_dir, file.filename)
     try:
+        content = await file.read()
         with open(file_path, "wb") as out_file:
-            content = await file.read()
             out_file.write(content)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"File upload failed: {e}")
 
-    return JSONResponse({"success": True}, status_code=201)
+    # 4. Update the DB record so `file_path` is stored
+    doc_update = CaseDocumentUpdate(file_path=file_path)
+    updated_doc = await update_case_document(case_id, document_id, doc_update)
+    if not updated_doc:
+        raise HTTPException(status_code=404, detail="Could not update file path")
+
+    # Return the updated record to the client
+    return updated_doc
 
 
 # =============================================================================

@@ -55,8 +55,10 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
 
 class RefreshTokenRequest(BaseModel):
     refresh_token: str
+
+
 @router.post("/refresh")
-async def refresh(req : RefreshTokenRequest):
+async def refresh(req: RefreshTokenRequest):
     try:
         payload = jwt.decode(req.refresh_token, SECRET_KEY, algorithms=[ALGORITHM])
         verify_token_type(payload, "refresh")

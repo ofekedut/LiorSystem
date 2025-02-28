@@ -1,0 +1,220 @@
+# tests/test_company_types_router.py
+import pytest
+from httpx import AsyncClient
+import uuid
+from server.routers.company_types_router import CompanyTypeInCreate, CompanyTypeInUpdate
+
+
+@pytest.mark.asyncio
+class TestCompanyTypesRouter:
+    """Tests for the company_types_router endpoints."""
+
+    async def test_create_company_type(self, async_client: AsyncClient, admin_token):
+        """Test creating a new company type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        new_type = {
+            "name": "Test Company Type",
+            "value": "test_company_type"
+        }
+        
+        # Create the company type
+        response = await async_client.post("/company_types/", json=new_type, headers=headers)
+        assert response.status_code == 201, response.text
+        
+        data = response.json()
+        assert data['name'] == new_type['name']
+        assert data['value'] == new_type['value']
+        assert 'id' in data
+        
+        # Clean up - delete the created company type
+        delete_response = await async_client.delete(f"/company_types/{data['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_read_company_types(self, async_client: AsyncClient, admin_token):
+        """Test listing all company types."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test company type first
+        new_type = {
+            "name": "Test Company Type List",
+            "value": "test_company_type_list"
+        }
+        create_response = await async_client.post("/company_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Get all company types
+        response = await async_client.get("/company_types/", headers=headers)
+        assert response.status_code == 200
+        
+        data = response.json()
+        assert isinstance(data, list)
+        assert len(data) > 0
+        
+        # Verify our created type is in the list
+        found = False
+        for item in data:
+            if item['id'] == created_type['id']:
+                found = True
+                assert item['name'] == new_type['name']
+                assert item['value'] == new_type['value']
+                break
+        
+        assert found, "Created company type not found in the list"
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/company_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_read_company_type_by_id(self, async_client: AsyncClient, admin_token):
+        """Test getting a specific company type by ID."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test company type first
+        new_type = {
+            "name": "Test Company Type Get",
+            "value": "test_company_type_get"
+        }
+        create_response = await async_client.post("/company_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Get the company type by ID
+        response = await async_client.get(f"/company_types/{created_type['id']}", headers=headers)
+        assert response.status_code == 200
+        
+        data = response.json()
+        assert data['id'] == created_type['id']
+        assert data['name'] == new_type['name']
+        assert data['value'] == new_type['value']
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/company_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_read_company_type_not_found(self, async_client: AsyncClient, admin_token):
+        """Test getting a non-existent company type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Generate a random UUID that doesn't exist
+        random_id = str(uuid.uuid4())
+        
+        # Try to get a non-existent company type
+        response = await async_client.get(f"/company_types/{random_id}", headers=headers)
+        assert response.status_code == 404
+        assert "not found" in response.json()["detail"].lower()
+
+    async def test_update_company_type(self, async_client: AsyncClient, admin_token):
+        """Test updating a company type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test company type first
+        new_type = {
+            "name": "Test Company Type Update",
+            "value": "test_company_type_update"
+        }
+        create_response = await async_client.post("/company_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Update the company type
+        update_data = {
+            "name": "Updated Company Type",
+            "value": "updated_company_type"
+        }
+        response = await async_client.put(f"/company_types/{created_type['id']}", json=update_data, headers=headers)
+        assert response.status_code == 200
+        
+        updated_type = response.json()
+        assert updated_type['id'] == created_type['id']
+        assert updated_type['name'] == update_data['name']
+        assert updated_type['value'] == update_data['value']
+        
+        # Verify the update by getting the company type
+        get_response = await async_client.get(f"/company_types/{created_type['id']}", headers=headers)
+        assert get_response.status_code == 200
+        get_data = get_response.json()
+        assert get_data['name'] == update_data['name']
+        assert get_data['value'] == update_data['value']
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/company_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_update_company_type_partial(self, async_client: AsyncClient, admin_token):
+        """Test partially updating a company type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test company type first
+        new_type = {
+            "name": "Test Company Type Partial Update",
+            "value": "test_company_type_partial_update"
+        }
+        create_response = await async_client.post("/company_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Update only the name
+        update_data = {
+            "name": "Partially Updated Company Type"
+        }
+        response = await async_client.put(f"/company_types/{created_type['id']}", json=update_data, headers=headers)
+        assert response.status_code == 200
+        
+        updated_type = response.json()
+        assert updated_type['id'] == created_type['id']
+        assert updated_type['name'] == update_data['name']
+        assert updated_type['value'] == new_type['value']  # Value should remain unchanged
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/company_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_update_company_type_not_found(self, async_client: AsyncClient, admin_token):
+        """Test updating a non-existent company type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Generate a random UUID that doesn't exist
+        random_id = str(uuid.uuid4())
+        
+        # Try to update a non-existent company type
+        update_data = {
+            "name": "Non-existent Company Type",
+            "value": "non_existent_company_type"
+        }
+        response = await async_client.put(f"/company_types/{random_id}", json=update_data, headers=headers)
+        assert response.status_code == 404
+        assert "not found" in response.json()["detail"].lower()
+
+    async def test_delete_company_type(self, async_client: AsyncClient, admin_token):
+        """Test deleting a company type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test company type first
+        new_type = {
+            "name": "Test Company Type Delete",
+            "value": "test_company_type_delete"
+        }
+        create_response = await async_client.post("/company_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Delete the company type
+        delete_response = await async_client.delete(f"/company_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+        
+        # Verify it's deleted by trying to get it
+        get_response = await async_client.get(f"/company_types/{created_type['id']}", headers=headers)
+        assert get_response.status_code == 404
+
+    async def test_delete_company_type_not_found(self, async_client: AsyncClient, admin_token):
+        """Test deleting a non-existent company type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Generate a random UUID that doesn't exist
+        random_id = str(uuid.uuid4())
+        
+        # Try to delete a non-existent company type
+        response = await async_client.delete(f"/company_types/{random_id}", headers=headers)
+        assert response.status_code == 404
+        assert "not found" in response.json()["detail"].lower()

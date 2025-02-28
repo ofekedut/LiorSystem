@@ -1,8 +1,8 @@
 import os
 from PyPDF2 import PdfReader
-from server.pdf_parsing.pdf_parser.check_pdf import check_pdf_text
-from server.pdf_parsing.pdf_parser.pdf_ocr import PDFProcessor
-from server.pdf_parsing.pdf_parser.pdf_result import (
+from pdf_parsing.pdf_parser.check_pdf import check_pdf_text
+from pdf_parsing.pdf_parser.pdf_ocr import PDFProcessor
+from pdf_parsing.pdf_parser.pdf_result import (
     PDFPageResult,
     Content,
     TextBlock,

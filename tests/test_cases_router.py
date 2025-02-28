@@ -7,6 +7,7 @@ from datetime import datetime, date
 from httpx import AsyncClient
 from fastapi import status
 from pathlib import Path
+from server.database.database import get_connection
 
 # Import your main FastAPI app that includes the cases_router.
 # Adjust the import below to match your project's structure.
@@ -21,13 +22,39 @@ async def seeded_document():
     Creates an entry in the 'documents' table so that case_documents can reference it.
     Adjust the fields as needed for your 'documents' schema.
     """
-    # This code is purely illustrative—adapt to your actual create_document logic or direct DB insertion.
-    from server.database.documents_databse import create_document, DocumentInCreate
+    # First, create or get a document type
+    conn = await get_connection()
+    try:
+        # Try to get existing document type
+        doc_type_name = "One Time"
+        doc_type_value = "one-time"
+        
+        existing = await conn.fetchrow(
+            """SELECT id FROM document_types WHERE name = $1""",
+            doc_type_name
+        )
+        
+        if existing:
+            doc_type_id = existing['id']
+        else:
+            # Create a new document type
+            doc_type = await conn.fetchrow(
+                """INSERT INTO document_types (name, value) 
+                   VALUES ($1, $2) 
+                   RETURNING id""",
+                doc_type_name, doc_type_value
+            )
+            doc_type_id = doc_type['id']
+    finally:
+        await conn.close()
+        
+    # Now create the document with the document_type_id
+    from server.database.documents_databse import create_document, DocumentInCreate, DocumentCategory, RequiredFor
     doc_data = DocumentInCreate(
         name="Router Test Doc",
         description="Used for case_documents foreign key tests",
-        document_type="one-time",
-        category="tax",
+        document_type_id=doc_type_id,  # Use the UUID from the document_types table
+        category=DocumentCategory.tax,
         period_type=None,
         periods_required=None,
         has_multiple_periods=False,
@@ -57,9 +84,9 @@ class TestCasesRouter:
         return {
             "name": "Test Case Router",
             "status": "pending",
-            "activity_level": 25,
             "last_active": datetime.utcnow().isoformat(),
-            "project_count": 0
+            "case_purpose": "Testing case purpose",
+            "loan_type": "Personal Loan"
         }
 
     async def test_create_case(self, async_client: AsyncClient, new_case_payload: dict):
@@ -106,7 +133,8 @@ class TestCasesRouter:
         update_payload = {
             "name": "Updated Router Case",
             "status": "active",
-            "activity_level": 99
+            'loan_type': 'Personal Loan',
+            'case_purpose': 'Testing case purpose',
         }
         update_resp = await async_client.put(f"/cases/{case_id}", json=update_payload)
         assert update_resp.status_code == status.HTTP_200_OK
@@ -114,8 +142,8 @@ class TestCasesRouter:
         updated = update_resp.json()
         assert updated["name"] == "Updated Router Case"
         assert updated["status"] == "active"
-        assert updated["activity_level"] == 99
-
+        assert updated['loan_type'] =='Personal Loan'
+        assert updated['case_purpose']== 'Testing case purpose'
     async def test_delete_case(self, async_client: AsyncClient, new_case_payload: dict):
         # Create
         create_resp = await async_client.post("/cases", json=new_case_payload)
@@ -143,7 +171,9 @@ class TestCasePersonsRouter:
             "status": "pending",
             "activity_level": 10,
             "last_active": datetime.utcnow().isoformat(),
-            "project_count": 1
+            "project_count": 1,
+            "case_purpose": "Purpose for Persons",
+            "loan_type": "Type for Persons"
         }
         resp = await async_client.post("/cases", json=payload)
         return resp.json()["id"]
@@ -252,7 +282,9 @@ class TestCaseDocumentsRouter:
             "status": "pending",
             "activity_level": 5,
             "last_active": datetime.utcnow().isoformat(),
-            "project_count": 0
+            "project_count": 0,
+            "case_purpose": "Purpose for Documents",
+            "loan_type": "Type for Documents"
         }
         resp = await async_client.post("/cases", json=payload)
         return resp.json()["id"]
@@ -370,7 +402,9 @@ class TestCaseLoansRouter:
             "status": "pending",
             "activity_level": 15,
             "last_active": datetime.utcnow().isoformat(),
-            "project_count": 0
+            "project_count": 0,
+            "case_purpose": "Purpose for Loans",
+            "loan_type": "Type for Loans"
         }
         resp = await async_client.post("/cases", json=payload)
         return resp.json()["id"]
