@@ -2,16 +2,19 @@
 from typing import List
 from uuid import UUID
 import os
+import logging
+
+from server.features.docs_processing.detect_doc_type import classify_document
+from server.features.docs_processing.document_processing_db import get_labels
 
 from fastapi import (
     APIRouter,
+    BackgroundTasks,
+    File,
     HTTPException,
     UploadFile,
-    File,
-    Depends
 )
 from starlette import status
-from starlette.responses import JSONResponse
 
 from server.database.cases_database import (
     create_case,
@@ -69,18 +72,18 @@ from server.database.cases_database import (
     CasePersonDocumentCreate,
     CasePersonDocumentInDB,
     CasePersonDocumentUpdate,
+DocumentProcessingStatus
 )
 
 
 # ----------------------------------------------------------------
-# Example placeholder function for determining current user ID.
-# In a real application, you'd extract this from a JWT or session.
+# Fixed user ID function to use instead of auth
 # ----------------------------------------------------------------
-def get_current_user_id() -> UUID:
+def get_fixed_user_id() -> UUID:
     """
-    A placeholder dependency that would normally extract the user ID from auth.
+    Returns a fixed user ID for development purposes.
     """
-    # Replace with real authentication logic
+    # Fixed user ID for testing
     return UUID("00000000-0000-0000-0000-000000000000")
 
 
@@ -269,7 +272,10 @@ async def read_case_documents(case_id: UUID) -> List[CaseDocumentInDB]:
 
 
 @router.post("/cases/{case_id}/documents", response_model=CaseDocumentInDB, status_code=201)
-async def create_document_for_case(case_id: UUID, doc_in: CaseDocumentCreate) -> CaseDocumentInDB:
+async def create_document_for_case(
+    case_id: UUID, 
+    doc_in: CaseDocumentCreate
+) -> CaseDocumentInDB:
     """
     Create a new case-document link for a given case.
     """
@@ -332,12 +338,12 @@ async def upload_case_document_file(
         case_id: UUID,
         document_id: UUID,
         file: UploadFile = File(...),
-        user_id: UUID = Depends(get_current_user_id),
+        background_tasks: BackgroundTasks = BackgroundTasks()
 ):
     """
     Upload the actual file for a case document. The file will be stored on the
     filesystem in a path like:
-        /mortgage_system/uploaded_files/{user_id}/{case_id}/{file.filename}
+        /mortgage_system/uploaded_files/{case_id}/{file.filename}
 
     Then we update the `file_path` in the `case_documents` table.
     """
@@ -348,7 +354,7 @@ async def upload_case_document_file(
 
     # 2. Define a local upload path
     base_dir = "./mortgage_system/uploaded_files"
-    upload_dir = os.path.join(base_dir, str(user_id), str(case_id))
+    upload_dir = os.path.join(base_dir, str(case_id))
     os.makedirs(upload_dir, exist_ok=True)
 
     # 3. Save the file to disk
@@ -366,8 +372,158 @@ async def upload_case_document_file(
     if not updated_doc:
         raise HTTPException(status_code=404, detail="Could not update file path")
 
+    # Run document classification in the background
+    background_tasks.add_task(classify_document_background, file_path, case_id, document_id)
+
     # Return the updated record to the client
     return updated_doc
+
+
+# -----------------------------------------------------------------------------
+# Background Task for Document Classification
+# -----------------------------------------------------------------------------
+async def classify_document_background(file_path: str, case_id: UUID, document_id: UUID):
+    """
+    Background task to classify a document and update its type based on content.
+    
+    Args:
+        file_path: Path to the uploaded file
+        case_id: UUID of the case
+        document_id: UUID of the document to update
+    """
+    logger = logging.getLogger("document_classification")
+    
+    # Configure the logger with timestamp and detailed formatting
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    if not logger.handlers:
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(formatter)
+        logger.addHandler(console_handler)
+        logger.setLevel(logging.INFO)
+    
+    try:
+        logger.info(f"======= STARTING DOCUMENT CLASSIFICATION =======")
+        logger.info(f"Case ID: {case_id}")
+        logger.info(f"Document ID: {document_id}")
+        logger.info(f"File path: {file_path}")
+        
+        # Print for console visibility
+        print(f"\n======= STARTING DOCUMENT CLASSIFICATION =======")
+        print(f"File path: {file_path}")
+        
+        if not os.path.exists(file_path):
+            logger.error(f"File does not exist: {file_path}")
+            print(f"\n❌ ERROR: File does not exist: {file_path}\n")
+            return
+            
+        file_size = os.path.getsize(file_path)
+        logger.info(f"File size: {file_size} bytes ({file_size/1024/1024:.2f} MB)")
+        print(f"File size: {file_size} bytes ({file_size/1024/1024:.2f} MB)")
+        
+        # Try to open the file for manual review
+        try:
+            logger.info(f"Opening file for manual review from background task")
+            os.system(f'open "{file_path}"')
+            print(f"\n📂 Opening file for review from background task: {file_path}\n")
+        except Exception as e:
+            logger.warning(f"Failed to open file for review: {e}")
+        
+        # Get all the available labels for classification
+        logger.info(f"Fetching available document labels for classification")
+        labels = await get_labels()
+        
+        if not labels:
+            logger.warning("No labels available for document classification")
+            return
+            
+        logger.info(f"Found {len(labels)} document type labels")
+        
+        # Classify the document
+        logger.info(f"Starting classification for document at {file_path}")
+        print(f"\nStarting classification for document: {os.path.basename(file_path)}\n")
+        
+        result = await classify_document(
+            labels=labels,
+            filepath=file_path
+        )
+        
+        if not result or "predicted_label" not in result:
+            logger.warning(f"Document classification failed or returned no prediction")
+            return
+            
+        predicted_doc_type = result.get("predicted_label")
+        confidence = result.get("confidence", 0)
+        source_used = result.get("source", "unknown")
+        
+        logger.info(f"Classification results:")
+        logger.info(f"  - Predicted document type: '{predicted_doc_type}'")
+        logger.info(f"  - Confidence: {confidence:.4f}")
+        logger.info(f"  - Text source: {source_used}")
+        
+        # Only update if confidence is high enough
+        if confidence >= 0.7:  # 70% confidence threshold
+            logger.info(f"Confidence {confidence:.4f} is above threshold (0.7), proceeding with document update")
+            # Get document ID for the predicted type
+            from server.database.documents_databse import get_document_by_name
+            
+            logger.info(f"Looking up document type ID for '{predicted_doc_type}'")
+            # Find the document type
+            doc_type = await get_document_by_name(predicted_doc_type)
+            
+            if doc_type:
+                logger.info(f"Found document type: {doc_type}")
+                # Update the case document's type
+                from server.database.cases_database import update_case_document
+                
+                # Create update payload
+                update_payload = CaseDocumentUpdate(
+                    processing_status=DocumentProcessingStatus.processed
+                )
+                
+                logger.info(f"Updating case document status to 'processed'")
+                # Update the case document
+                updated = await update_case_document(case_id, document_id, update_payload)
+                
+                if updated:
+                    logger.info(f"✅ Document successfully updated with type '{predicted_doc_type}'")
+                else:
+                    logger.error(f"❌ Failed to update document type in database")
+            else:
+                logger.warning(f"❌ Could not find document type for '{predicted_doc_type}' in the database")
+        else:
+            logger.info(f"Confidence {confidence:.4f} is below threshold (0.7), setting status to 'userActionRequired'")
+            
+            # Set processing status to userActionRequired
+            update_payload = CaseDocumentUpdate(
+                processing_status=DocumentProcessingStatus.userActionRequired
+            )
+            
+            # Update the case document
+            from server.database.cases_database import update_case_document
+            logger.info(f"Updating document status to 'userActionRequired'")
+            updated = await update_case_document(case_id, document_id, update_payload)
+            
+            if updated:
+                logger.info(f"✅ Document status updated to 'userActionRequired'")
+            else:
+                logger.error(f"❌ Failed to update document status")
+            
+    except Exception as e:
+        logger.error(f"❌ Error in document classification background task: {e}", exc_info=True)
+    finally:
+        logger.info(f"======= DOCUMENT CLASSIFICATION COMPLETE =======\n")
+        
+        try:
+            # Set processing status to error
+            from server.database.cases_database import update_case_document
+            update_payload = CaseDocumentUpdate(
+                processing_status=DocumentProcessingStatus.error
+            )
+            
+            # Update the case document
+            await update_case_document(case_id, document_id, update_payload)
+        except Exception as nested_e:
+            logger.error(f"Error updating document status after classification error: {nested_e}", exc_info=True)
 
 
 # =============================================================================

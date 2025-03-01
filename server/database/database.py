@@ -10,6 +10,7 @@ DB_CONFIG = {
     "dsn": "postgresql://lior_user:lior3412312qQ@localhost:5432/lior_system"
 }
 
+
 async def get_connection():
     try:
         conn = await asyncpg.connect(**DB_CONFIG)
@@ -17,7 +18,6 @@ async def get_connection():
     except Exception as e:
         logger.error(f"Failed to connect: {str(e)}")
         raise
-
 
 
 # -------------------------------------------------

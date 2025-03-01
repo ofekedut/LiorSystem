@@ -60,6 +60,21 @@ CREATE_SCHEMA_QUERIES = [
     """INSERT INTO document_types (name, value) 
        VALUES ('One Time', 'one-time'), ('Updatable', 'updatable'), ('Recurring', 'recurring')
        ON CONFLICT (value) DO NOTHING;""",
+    """INSERT INTO document_types (name, value) 
+       VALUES 
+           ('ID Document', 'id'),
+           ('License', 'license'),
+           ('Report', 'report'),
+           ('Certificate', 'certificate'),
+           ('Plan', 'plan'),
+           ('Contract', 'contract'),
+           ('Protocol', 'protocol'),
+           ('Permit', 'permit'),
+           ('Tax Document', 'tax'),
+           ('Loan Document', 'loan'),
+           ('Policy', 'policy'),
+           ('Other', 'other')
+       ON CONFLICT (value) DO NOTHING;""",
     """CREATE TABLE IF NOT EXISTS person_roles (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         name text not null unique ,
@@ -225,7 +240,20 @@ CREATE_SCHEMA_QUERIES = [
       END IF;
     END$$;""",
     """INSERT INTO document_categories (name, value) 
-       VALUES ('Identification', 'identification'), ('Financial', 'financial'), ('Property', 'property'), ('Employment', 'employment'), ('Tax', 'tax')
+       VALUES ('Identification', 'identification'), 
+              ('Financial', 'financial'), 
+              ('Property', 'property'), 
+              ('Employment', 'employment'), 
+              ('Tax', 'tax'),
+              ('Administrative', 'administrative'),
+              ('Asset', 'asset'),
+              ('Business', 'business'),
+              ('Company', 'company'),
+              ('Bank Account', 'bank_account'),
+              ('Credit Card', 'credit_card'), 
+              ('Loan', 'loan'),
+              ('Income', 'income'),
+              ('Personal', 'personal')
        ON CONFLICT (value) DO NOTHING;""",
     """CREATE OR REPLACE FUNCTION get_category_id_by_value(category_value TEXT) 
        RETURNS UUID AS $$
@@ -236,121 +264,9 @@ CREATE_SCHEMA_QUERIES = [
          RETURN category_id;
        END;
        $$ LANGUAGE plpgsql;""",
-    """INSERT INTO document_categories (id, name, value) 
-       VALUES 
-           (gen_random_uuid(), 'Bank Account', 'bank_account'),
-           (gen_random_uuid(), 'Credit Card', 'credit_card'),
-           (gen_random_uuid(), 'Loan', 'loan'),
-           (gen_random_uuid(), 'Asset', 'asset'),
-           (gen_random_uuid(), 'Income', 'income'),
-           (gen_random_uuid(), 'Personal', 'personal'),
-           (gen_random_uuid(), 'Company', 'company')
-       ON CONFLICT (value) DO NOTHING;""",
-    """CREATE TABLE IF NOT EXISTS token_blacklist (
-        jti UUID PRIMARY KEY,
-        user_id UUID NOT NULL,
-        expires_at TIMESTAMP WITH TIME ZONE NOT NULL
-    );""",
-    """CREATE TABLE IF NOT EXISTS login_attempts (
-        email VARCHAR(255) PRIMARY KEY,
-        attempts INT NOT NULL DEFAULT 1,
-        last_attempt TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
-        locked_until TIMESTAMP WITH TIME ZONE
-    );""",
-
-    # =====================================
-    # 3. Users Table (Already Using UUID)
-    # =====================================
-    """CREATE TABLE IF NOT EXISTS users (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        email VARCHAR(255) UNIQUE NOT NULL CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$'),
-        first_name VARCHAR(50) NOT NULL CHECK (LENGTH(first_name) >= 2),
-        last_name VARCHAR(50) NOT NULL CHECK (LENGTH(last_name) >= 2),
-        password_hash VARCHAR(255) NOT NULL,
-        role VARCHAR(10) NOT NULL CHECK (role IN ('admin', 'user')) DEFAULT 'user',
-        status VARCHAR(10) NOT NULL CHECK (status IN ('active', 'inactive', 'suspended')) DEFAULT 'active',
-        phone VARCHAR(20) CHECK (phone ~ '^\\+?[0-9]{8,15}$'),
-        department VARCHAR(100),
-        position VARCHAR(100),
-        avatar VARCHAR(255),
-        preferences JSONB NOT NULL DEFAULT '{
-                        "language": "he",
-                        "notifications": {
-                            "email": true,
-                            "system": true,
-                            "types": {
-                                "cases": true,
-                                "documents": true,
-                                "system": true
-                            }
-                        },
-                        "timezone": "UTC"
-                    }'::jsonb,
-        last_login TIMESTAMP WITH TIME ZONE,
-        last_failed_login TIMESTAMP WITH TIME ZONE,
-        failed_login_attempts INT DEFAULT 0,
-        lockout_until TIMESTAMP WITH TIME ZONE,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-        deleted_at TIMESTAMP WITH TIME ZONE,
-        email_verified BOOLEAN DEFAULT false
-    );""",
-    """CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);""",
-    """CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);""",
-    """CREATE INDEX IF NOT EXISTS idx_users_status ON users(status);""",
-    """CREATE INDEX IF NOT EXISTS idx_users_last_login ON users(last_login);""",
-    """CREATE INDEX IF NOT EXISTS idx_users_lockout ON users(lockout_until);""",
-    """CREATE INDEX IF NOT EXISTS idx_users_deleted ON users(deleted_at);""",
-
-    # =====================================
-    # 4. FinOrgs & FinOrgContacts
-    # =====================================
-    """CREATE TABLE IF NOT EXISTS fin_orgs (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        name TEXT NOT NULL CHECK (length(name) > 0),
-        type TEXT NOT NULL CHECK (length(type) > 0),
-        settings JSONB,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
-    );""",
-    """DO $$ BEGIN
-      IF NOT EXISTS (
-        SELECT 1 FROM pg_trigger
-        WHERE tgname = 'update_fin_orgs_timestamp'
-      ) THEN
-        CREATE TRIGGER update_fin_orgs_timestamp
-        BEFORE UPDATE ON fin_orgs
-        FOR EACH ROW
-        EXECUTE PROCEDURE set_updated_at();
-      END IF;
-    END$$;""",
-    """CREATE TABLE IF NOT EXISTS fin_org_contacts (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        fin_org_id UUID NOT NULL REFERENCES fin_orgs(id) ON DELETE CASCADE,
-        full_name TEXT NOT NULL CHECK (length(full_name) > 0),
-        email TEXT NOT NULL CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$'),
-        phone TEXT,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
-    );""",
-    """DO $$ BEGIN
-      IF NOT EXISTS (
-        SELECT 1 FROM pg_trigger
-        WHERE tgname = 'update_fin_org_contacts_timestamp'
-      ) THEN
-        CREATE TRIGGER update_fin_org_contacts_timestamp
-        BEFORE UPDATE ON fin_org_contacts
-        FOR EACH ROW
-        EXECUTE PROCEDURE set_updated_at();
-      END IF;
-    END$$;""",
-
-    # =====================================
-    # 5. Documents & Related Tables
-    # =====================================
     """CREATE TABLE IF NOT EXISTS documents (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        name TEXT NOT NULL CHECK (length(name) > 0),
+        name TEXT NOT NULL UNIQUE CHECK (length(name) > 0),
         description TEXT,
         document_type_id UUID NOT NULL REFERENCES document_types(id),
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
@@ -365,13 +281,153 @@ CREATE_SCHEMA_QUERIES = [
             (period_type IS NOT NULL AND periods_required IS NOT NULL)
         )
     );""",
-
+    """CREATE OR REPLACE FUNCTION set_category_id() RETURNS TRIGGER AS $$
+    BEGIN
+      -- If category_id is NULL but category is set, look up the id from document_categories
+      IF NEW.category_id IS NULL AND NEW.category IS NOT NULL THEN
+        NEW.category_id := (SELECT id FROM document_categories WHERE value = NEW.category);
+      END IF;
+      RETURN NEW;
+    END;
+    $$ LANGUAGE plpgsql;""",
+    """DO $$ BEGIN
+      IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'set_category_id_trigger'
+      ) THEN
+        CREATE TRIGGER set_category_id_trigger
+        BEFORE INSERT OR UPDATE ON documents
+        FOR EACH ROW
+        EXECUTE FUNCTION set_category_id();
+      END IF;
+    END$$;""",
+    """INSERT INTO documents (name, description, category, has_multiple_periods, document_type_id) 
+       VALUES 
+           ('DNA_ADMINISTRATIVE', 'DNA_מינהלי', 'administrative', false, (SELECT id FROM document_types WHERE value = 'other')),
+           ('DNA_OSH', 'DNA_בטיחות', 'administrative', false, (SELECT id FROM document_types WHERE value = 'other')),
+           ('NEW_ID_CARD', 'תעודת זהות חדשה', 'identification', false, (SELECT id FROM document_types WHERE value = 'id')),
+           ('DRIVERS_LICENSE', 'רישיון נהיגה', 'identification', false, (SELECT id FROM document_types WHERE value = 'license')),
+           ('RATING_REPORT', 'דו"ח דירוג', 'financial', false, (SELECT id FROM document_types WHERE value = 'report')),
+           ('COMPLETION_CERTIFICATE', 'תעודת השלמה', 'administrative', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('BDI_DATA_SUMMARY', 'BDI_סיכום נתונים', 'financial', false, (SELECT id FROM document_types WHERE value = 'report')),
+           ('DNA_INFORMATION_REQUESTS', 'DNA_בקשות מידע', 'administrative', false, (SELECT id FROM document_types WHERE value = 'other')),
+           ('DNA_GENERAL', 'DNA_כללי', 'administrative', false, (SELECT id FROM document_types WHERE value = 'other')),
+           ('RIGHTS_CONFIRMATION', 'אישור זכויות', 'property', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('HOUSE_SCRIPT', 'תסריט בית', 'property', false, (SELECT id FROM document_types WHERE value = 'plan')),
+           ('BUILDING_PLAN', 'תוכנית בניין', 'property', false, (SELECT id FROM document_types WHERE value = 'plan')),
+           ('ID_APPENDIX', 'נספח תעודת זהות', 'identification', false, (SELECT id FROM document_types WHERE value = 'id')),
+           ('BUSINESS_LICENSE', 'רישיון עסק', 'business', false, (SELECT id FROM document_types WHERE value = 'license')),
+           ('BDI_PUBLIC_ENTITIES', 'BDI_גופים ציבוריים', 'financial', false, (SELECT id FROM document_types WHERE value = 'report')),
+           ('PROPERTY_EXTRACT', 'תעודת מקרקעין', 'property', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('SALES_CONTRACT', 'חוזה מכר', 'property', false, (SELECT id FROM document_types WHERE value = 'contract')),
+           ('VEHICLE_LICENSE', 'רישיון רכב', 'asset', false, (SELECT id FROM document_types WHERE value = 'license')),
+           ('SIGNATURE_PROTOCOL', 'פרוטוקול חתימה', 'administrative', false, (SELECT id FROM document_types WHERE value = 'protocol')),
+           ('COMPANY_EXTRACT', 'תקציר חברה', 'business', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('PASSPORT', 'דרכון', 'identification', false, (SELECT id FROM document_types WHERE value = 'id')),
+           ('BDI_TRANSACTION_SUMMARY', 'BDI_סיכום עסקאות', 'financial', false, (SELECT id FROM document_types WHERE value = 'report')),
+           ('BDI_TREND_ANALYSIS', 'BDI_ניתוח מגמות', 'financial', false, (SELECT id FROM document_types WHERE value = 'report')),
+           ('LEASE_CONTRACT', 'חוזה שכירות', 'property', false, (SELECT id FROM document_types WHERE value = 'contract')),
+           ('DNA_LOANS', 'DNA הלוואות', 'financial', false, (SELECT id FROM document_types WHERE value = 'loan')),
+           ('APPRAISAL', 'שמאות', 'property', false, (SELECT id FROM document_types WHERE value = 'report')),
+           ('CREDIT_REPORT', 'דו"ח אשראי', 'financial', false, (SELECT id FROM document_types WHERE value = 'report')),
+           ('BUILDING_PERMIT', 'יתר בניה', 'property', false, (SELECT id FROM document_types WHERE value = 'permit')),
+           ('OLD_ID_CARD', 'תעודת זהות ישנה', 'identification', false, (SELECT id FROM document_types WHERE value = 'id')),
+           ('CERTIFICATE_OF_INCORPORATION', 'תעודת התאגדות', 'business', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('PROPERTY_TAX', 'ארנונה', 'tax', false, (SELECT id FROM document_types WHERE value = 'tax')),
+           
+           -- Additional document types to reach ~65 total documents
+           -- Identification documents
+           ('BIRTH_CERTIFICATE', 'תעודת לידה', 'identification', false, (SELECT id FROM document_types WHERE value = 'id')),
+           ('MARRIAGE_CERTIFICATE', 'תעודת נישואין', 'identification', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('DIVORCE_CERTIFICATE', 'תעודת גירושין', 'identification', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('IMMIGRATION_DOCUMENT', 'מסמך הגירה', 'identification', false, (SELECT id FROM document_types WHERE value = 'id')),
+           
+           -- Financial documents
+           ('BANK_STATEMENT', 'דף חשבון בנק', 'financial', true, (SELECT id FROM document_types WHERE value = 'report')),
+           ('CREDIT_CARD_STATEMENT', 'דף חשבון כרטיס אשראי', 'financial', true, (SELECT id FROM document_types WHERE value = 'report')),
+           ('INVESTMENT_STATEMENT', 'דוח השקעות', 'financial', true, (SELECT id FROM document_types WHERE value = 'report')),
+           ('RETIREMENT_ACCOUNT_STATEMENT', 'דוח חשבון פנסיה', 'financial', true, (SELECT id FROM document_types WHERE value = 'report')),
+           ('LIFE_INSURANCE_POLICY', 'פוליסת ביטוח חיים', 'financial', false, (SELECT id FROM document_types WHERE value = 'policy')),
+           ('HEALTH_INSURANCE_POLICY', 'פוליסת ביטוח בריאות', 'financial', false, (SELECT id FROM document_types WHERE value = 'policy')),
+           ('LOAN_STATEMENT', 'דוח הלוואה', 'financial', true, (SELECT id FROM document_types WHERE value = 'loan')),
+           ('MORTGAGE_STATEMENT', 'דוח משכנתא', 'financial', true, (SELECT id FROM document_types WHERE value = 'loan')),
+           ('ACCOUNT_OWNERSHIP_CONFIRMATION', 'אישור בעלות חשבון', 'financial', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('STOCK_CERTIFICATE', 'תעודת מניה', 'financial', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('BOND_CERTIFICATE', 'תעודת איגרת חוב', 'financial', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('CREDIT_HISTORY_REPORT', 'דוח היסטוריית אשראי', 'financial', false, (SELECT id FROM document_types WHERE value = 'report')),
+           ('INSURANCE_CLAIM', 'תביעת ביטוח', 'financial', false, (SELECT id FROM document_types WHERE value = 'other')),
+           
+           -- Tax documents
+           ('INCOME_TAX_RETURN', 'דוח מס הכנסה', 'tax', true, (SELECT id FROM document_types WHERE value = 'tax')),
+           ('VAT_RETURN', 'דוח מע״מ', 'tax', true, (SELECT id FROM document_types WHERE value = 'tax')),
+           ('TAX_ASSESSMENT', 'הערכת מס', 'tax', false, (SELECT id FROM document_types WHERE value = 'tax')),
+           ('TAX_WITHHOLDING_CERTIFICATE', 'אישור ניכוי מס במקור', 'tax', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           
+           -- Employment documents
+           ('EMPLOYMENT_CONTRACT', 'חוזה העסקה', 'employment', false, (SELECT id FROM document_types WHERE value = 'contract')),
+           ('SALARY_SLIP', 'תלוש שכר', 'employment', true, (SELECT id FROM document_types WHERE value = 'report')),
+           ('EMPLOYMENT_VERIFICATION', 'אישור העסקה', 'employment', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('SEVERANCE_LETTER', 'מכתב פיטורין', 'employment', false, (SELECT id FROM document_types WHERE value = 'other')),
+           
+           -- Property documents
+           ('DEED', 'שטר', 'property', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('MORTGAGE_DEED', 'שטר משכנתא', 'property', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('PROPERTY_INSURANCE_POLICY', 'פוליסת ביטוח רכוש', 'property', false, (SELECT id FROM document_types WHERE value = 'policy')),
+           ('HOMEOWNERS_ASSOCIATION_STATEMENT', 'דוח ועד בית', 'property', true, (SELECT id FROM document_types WHERE value = 'report')),
+           ('UTILITY_BILL', 'חשבון שירותים', 'property', true, (SELECT id FROM document_types WHERE value = 'report')),
+           ('SECURITY_DEED', 'שטר בטחון', 'property', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('HOME_INSPECTION_REPORT', 'דוח בדיקת בית', 'property', false, (SELECT id FROM document_types WHERE value = 'report')),
+           
+           -- Asset documents
+           ('VEHICLE_REGISTRATION', 'רישום רכב', 'asset', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('VEHICLE_INSURANCE_POLICY', 'פוליסת ביטוח רכב', 'asset', false, (SELECT id FROM document_types WHERE value = 'policy')),
+           ('ART_APPRAISAL', 'הערכת אומנות', 'asset', false, (SELECT id FROM document_types WHERE value = 'report')),
+           ('JEWELRY_APPRAISAL', 'הערכת תכשיטים', 'asset', false, (SELECT id FROM document_types WHERE value = 'report')),
+           ('VEHICLE_TITLE', 'בעלות רכב', 'asset', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           
+           -- Bank account documents
+           ('BANK_ACCOUNT_OPENING_DOCUMENTS', 'מסמכי פתיחת חשבון בנק', 'bank_account', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('BANK_REFERENCE_LETTER', 'מכתב המלצה מהבנק', 'bank_account', false, (SELECT id FROM document_types WHERE value = 'other')),
+           
+           -- Company documents
+           ('ARTICLES_OF_INCORPORATION', 'תקנון התאגדות', 'company', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('BUSINESS_PLAN', 'תוכנית עסקית', 'company', false, (SELECT id FROM document_types WHERE value = 'plan')),
+           ('FINANCIAL_STATEMENTS', 'דוחות פיננסיים', 'company', true, (SELECT id FROM document_types WHERE value = 'report')),
+           ('BUSINESS_REGISTRATION', 'רישום עסק', 'company', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('BUSINESS_FINANCIAL_STATEMENT', 'דוח פיננסי עסקי', 'company', true, (SELECT id FROM document_types WHERE value = 'report')),
+           
+           -- Credit card documents
+           ('CREDIT_CARD_AGREEMENT', 'הסכם כרטיס אשראי', 'credit_card', false, (SELECT id FROM document_types WHERE value = 'contract')),
+           
+           -- Income documents
+           ('INCOME_VERIFICATION', 'אישור הכנסה', 'income', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('PENSION_STATEMENT', 'דוח פנסיה', 'income', true, (SELECT id FROM document_types WHERE value = 'report')),
+           ('RENTAL_INCOME_STATEMENT', 'דוח הכנסות משכירות', 'income', true, (SELECT id FROM document_types WHERE value = 'report')),
+           ('DIVIDEND_STATEMENT', 'דוח דיבידנדים', 'income', true, (SELECT id FROM document_types WHERE value = 'report')),
+           
+           -- Loan documents
+           ('LOAN_AGREEMENT', 'הסכם הלוואה', 'loan', false, (SELECT id FROM document_types WHERE value = 'contract')),
+           ('LOAN_PAYMENT_SCHEDULE', 'לוח תשלומי הלוואה', 'loan', false, (SELECT id FROM document_types WHERE value = 'plan')),
+           ('LOAN_APPLICATION', 'בקשת הלוואה', 'loan', false, (SELECT id FROM document_types WHERE value = 'other')),
+           ('PROMISSORY_NOTE', 'שטר חוב', 'loan', false, (SELECT id FROM document_types WHERE value = 'contract')),
+           
+           -- Personal documents
+           ('MEDICAL_RECORD', 'רשומה רפואית', 'personal', false, (SELECT id FROM document_types WHERE value = 'other')),
+           ('MILITARY_SERVICE_RECORD', 'רשומת שירות צבאי', 'personal', false, (SELECT id FROM document_types WHERE value = 'other')),
+           ('EDUCATION_CERTIFICATE', 'תעודת השכלה', 'personal', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('POWER_OF_ATTORNEY', 'ייפוי כוח', 'personal', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('WILL', 'צוואה', 'personal', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('TRUST_DOCUMENT', 'מסמך נאמנות', 'personal', false, (SELECT id FROM document_types WHERE value = 'certificate')),
+           ('COLLEGE_TRANSCRIPT', 'גיליון ציונים אקדמי', 'personal', false, (SELECT id FROM document_types WHERE value = 'report')),
+           ('PRENUPTIAL_AGREEMENT', 'הסכם טרום נישואין', 'personal', false, (SELECT id FROM document_types WHERE value = 'contract')),
+           ('CUSTODY_AGREEMENT', 'הסכם משמורת', 'personal', false, (SELECT id FROM document_types WHERE value = 'contract')),
+           ('BENEFICIARY_DESIGNATION', 'הגדרת מוטב', 'personal', false, (SELECT id FROM document_types WHERE value = 'certificate'))
+       ON CONFLICT (name) DO NOTHING;""",
     """CREATE TABLE IF NOT EXISTS documents_required_for (
         document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
         required_for required_for NOT NULL,
         PRIMARY KEY(document_id, required_for)
     );""",
-
     """CREATE TABLE IF NOT EXISTS document_fields (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
@@ -382,7 +438,6 @@ CREATE_SCHEMA_QUERIES = [
         field_type text not null,
         is_required BOOLEAN NOT NULL DEFAULT false
     );""",
-
     """CREATE TABLE IF NOT EXISTS validation_rules (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
@@ -392,40 +447,29 @@ CREATE_SCHEMA_QUERIES = [
         error_message TEXT NOT NULL CHECK (length(error_message) > 0),
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
     );""",
-
     # ----- Trigger to populate category_id from category -----
     """CREATE OR REPLACE FUNCTION set_category_id() RETURNS TRIGGER AS $$
     BEGIN
-      IF NEW.category_id IS NULL THEN
-        SELECT id INTO NEW.category_id FROM document_categories WHERE value = NEW.category;
+      -- If category_id is NULL but category is set, look up the id from document_categories
+      IF NEW.category_id IS NULL AND NEW.category IS NOT NULL THEN
+        NEW.category_id := (SELECT id FROM document_categories WHERE value = NEW.category);
       END IF;
       RETURN NEW;
     END;
     $$ LANGUAGE plpgsql;""",
-    
     """DO $$ BEGIN
       IF NOT EXISTS (
         SELECT 1 FROM pg_trigger
-        WHERE tgname = 'update_documents_category_id'
+        WHERE tgname = 'set_category_id_trigger'
       ) THEN
-        CREATE TRIGGER update_documents_category_id
+        CREATE TRIGGER set_category_id_trigger
         BEFORE INSERT OR UPDATE ON documents
         FOR EACH ROW
-        EXECUTE PROCEDURE set_category_id();
+        EXECUTE FUNCTION set_category_id();
       END IF;
     END$$;""",
-
     # Also create index on the new category_id field
     """CREATE INDEX IF NOT EXISTS idx_documents_category_id ON documents(category_id);""",
-
-    # ----- Indexes for Document Tables -----
-    """CREATE INDEX IF NOT EXISTS idx_documents_name ON documents(name);""",
-    """CREATE INDEX IF NOT EXISTS idx_documents_type_category ON documents(document_type_id, category);""",
-    """CREATE INDEX IF NOT EXISTS idx_document_fields_document_id ON document_fields(document_id);""",
-    """CREATE INDEX IF NOT EXISTS idx_validation_rules_document_id ON validation_rules(document_id);""",
-    """CREATE INDEX IF NOT EXISTS idx_validation_rules_field ON validation_rules(field);""",
-    """CREATE INDEX IF NOT EXISTS idx_documents_required_for_document_id ON documents_required_for(document_id);""",
-
     # ----- Trigger for updating documents.updated_at -----
     """DO $$ BEGIN
       IF NOT EXISTS (
@@ -438,7 +482,6 @@ CREATE_SCHEMA_QUERIES = [
         EXECUTE PROCEDURE set_updated_at();
       END IF;
     END$$;""",
-
     """CREATE TABLE IF NOT EXISTS document_entity_relations (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
@@ -454,7 +497,6 @@ CREATE_SCHEMA_QUERIES = [
     
     """CREATE INDEX IF NOT EXISTS idx_document_entity_relations_entity 
     ON document_entity_relations(entity_type, entity_id);""",
-
     # =====================================
     # 6. Cases & Related Tables (Using UUID)
     # =====================================
@@ -561,7 +603,6 @@ CREATE_SCHEMA_QUERIES = [
         case_id UUID NOT NULL REFERENCES cases(id),
         monday_id UUID NOT NULL
     );""",
-
     """CREATE OR REPLACE FUNCTION set_role_id() RETURNS TRIGGER AS $$
     BEGIN
       IF NEW.role_id IS NULL THEN
@@ -570,11 +611,17 @@ CREATE_SCHEMA_QUERIES = [
       RETURN NEW;
     END;
     $$ LANGUAGE plpgsql;""",
-    """CREATE TRIGGER set_role_id_trigger
-    BEFORE INSERT OR UPDATE ON case_persons
-    FOR EACH ROW
-    EXECUTE FUNCTION set_role_id();
-    """,
+    """DO $$ BEGIN
+      IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'set_role_id_trigger'
+      ) THEN
+        CREATE TRIGGER set_role_id_trigger
+        BEFORE INSERT OR UPDATE ON case_persons
+        FOR EACH ROW
+        EXECUTE FUNCTION set_role_id();
+      END IF;
+    END$$;""",
     """CREATE OR REPLACE FUNCTION set_marital_status_id() RETURNS TRIGGER AS $$
     BEGIN
       IF NEW.marital_status_id IS NULL AND NEW.marital_status IS NOT NULL THEN
@@ -583,32 +630,36 @@ CREATE_SCHEMA_QUERIES = [
       RETURN NEW;
     END;
     $$ LANGUAGE plpgsql;""",
-    """CREATE TRIGGER set_marital_status_id_trigger
-    BEFORE INSERT OR UPDATE ON case_persons
-    FOR EACH ROW
-    EXECUTE FUNCTION set_marital_status_id();
-    """,
+    """DO $$ BEGIN
+      IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'set_marital_status_id_trigger'
+      ) THEN
+        CREATE TRIGGER set_marital_status_id_trigger
+        BEFORE INSERT OR UPDATE ON case_persons
+        FOR EACH ROW
+        EXECUTE FUNCTION set_marital_status_id();
+      END IF;
+    END$$;""",
     '''alter table cases add column if not exists primary_contact_id uuid references case_persons(id);
-    '''
+    ''',
     """CREATE TABLE IF NOT EXISTS case_person_relations (
         from_person_id UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
         to_person_id   UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
         relationship_type TEXT NOT NULL CHECK (length(relationship_type) > 0),
         PRIMARY KEY (from_person_id, to_person_id)
     );""",
-
     """CREATE TABLE IF NOT EXISTS case_documents (
         case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
         document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
         status document_status NOT NULL,
-        processing_status document_processing_status NOT NULL,
+        processing_status document_processing_status NOT NULL DEFAULT 'pending',
         uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         reviewed_at TIMESTAMP WITH TIME ZONE,
         uploaded_by UUID REFERENCES users(id),
         file_path TEXT default null,
         PRIMARY KEY (case_id, document_id)
     );""",
-
     """CREATE TABLE IF NOT EXISTS case_loans (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
@@ -619,7 +670,6 @@ CREATE_SCHEMA_QUERIES = [
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
     );""",
-
     """CREATE TABLE IF NOT EXISTS case_companies (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
@@ -629,7 +679,6 @@ CREATE_SCHEMA_QUERIES = [
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
     );""",
-    
     """CREATE TABLE IF NOT EXISTS case_desired_products (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
@@ -638,7 +687,6 @@ CREATE_SCHEMA_QUERIES = [
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
     );""",
-
     # ----- Indexes for Cases -----
     """CREATE INDEX IF NOT EXISTS idx_cases_status ON cases(status);""",
     """CREATE INDEX IF NOT EXISTS idx_cases_last_active ON cases(last_active);""",
@@ -647,7 +695,6 @@ CREATE_SCHEMA_QUERIES = [
     """CREATE INDEX IF NOT EXISTS idx_case_documents_status ON case_documents(status);""",
     """CREATE INDEX IF NOT EXISTS idx_case_documents_processing ON case_documents(processing_status);""",
     """CREATE INDEX IF NOT EXISTS idx_case_loans_status ON case_loans(status);""",
-
     # ----- Triggers for updating timestamps on cases/case_persons -----
     """DO $$ BEGIN
       IF NOT EXISTS (
@@ -733,6 +780,96 @@ CREATE_SCHEMA_QUERIES = [
     """CREATE INDEX IF NOT EXISTS idx_case_person_documents_case_id ON case_person_documents(case_id);""",
     """CREATE INDEX IF NOT EXISTS idx_case_person_documents_person_id ON case_person_documents(person_id);""",
     """CREATE INDEX IF NOT EXISTS idx_case_person_documents_document_id ON case_person_documents(document_id);""",
+    """CREATE TABLE IF NOT EXISTS token_blacklist (
+        jti UUID PRIMARY KEY,
+        user_id UUID NOT NULL,
+        expires_at TIMESTAMP WITH TIME ZONE NOT NULL
+    );""",
+    """CREATE TABLE IF NOT EXISTS login_attempts (
+        email VARCHAR(255) PRIMARY KEY,
+        attempts INT NOT NULL DEFAULT 1,
+        last_attempt TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+        locked_until TIMESTAMP WITH TIME ZONE
+    );""",
+    """CREATE TABLE IF NOT EXISTS users (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        email VARCHAR(255) UNIQUE NOT NULL CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$'),
+        first_name VARCHAR(50) NOT NULL CHECK (LENGTH(first_name) >= 2),
+        last_name VARCHAR(50) NOT NULL CHECK (LENGTH(last_name) >= 2),
+        password_hash VARCHAR(255) NOT NULL,
+        role VARCHAR(10) NOT NULL CHECK (role IN ('admin', 'user')) DEFAULT 'user',
+        status VARCHAR(10) NOT NULL CHECK (status IN ('active', 'inactive', 'suspended')) DEFAULT 'active',
+        phone VARCHAR(20) CHECK (phone ~ '^\\+?[0-9]{8,15}$'),
+        department VARCHAR(100),
+        position VARCHAR(100),
+        avatar VARCHAR(255),
+        preferences JSONB NOT NULL DEFAULT '{
+                        "language": "he",
+                        "notifications": {
+                            "email": true,
+                            "system": true,
+                            "types": {
+                                "cases": true,
+                                "documents": true,
+                                "system": true
+                            }
+                        },
+                        "timezone": "UTC"
+                    }'::jsonb,
+        last_login TIMESTAMP WITH TIME ZONE,
+        last_failed_login TIMESTAMP WITH TIME ZONE,
+        failed_login_attempts INT DEFAULT 0,
+        lockout_until TIMESTAMP WITH TIME ZONE,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        deleted_at TIMESTAMP WITH TIME ZONE,
+        email_verified BOOLEAN DEFAULT false
+    );""",
+    """CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);""",
+    """CREATE INDEX IF NOT EXISTS idx_users_role ON users(role);""",
+    """CREATE INDEX IF NOT EXISTS idx_users_status ON users(status);""",
+    """CREATE INDEX IF NOT EXISTS idx_users_last_login ON users(last_login);""",
+    """CREATE INDEX IF NOT EXISTS idx_users_lockout ON users(lockout_until);""",
+    """CREATE INDEX IF NOT EXISTS idx_users_deleted ON users(deleted_at);""",
+    """CREATE TABLE IF NOT EXISTS fin_orgs (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        name TEXT NOT NULL CHECK (length(name) > 0),
+        type TEXT NOT NULL CHECK (length(type) > 0),
+        settings JSONB,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );""",
+    """DO $$ BEGIN
+      IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'update_fin_orgs_timestamp'
+      ) THEN
+        CREATE TRIGGER update_fin_orgs_timestamp
+        BEFORE UPDATE ON fin_orgs
+        FOR EACH ROW
+        EXECUTE PROCEDURE set_updated_at();
+      END IF;
+    END$$;""",
+    """CREATE TABLE IF NOT EXISTS fin_org_contacts (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        fin_org_id UUID NOT NULL REFERENCES fin_orgs(id) ON DELETE CASCADE,
+        full_name TEXT NOT NULL CHECK (length(full_name) > 0),
+        email TEXT NOT NULL CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}$'),
+        phone TEXT,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );""",
+    """DO $$ BEGIN
+      IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'update_fin_org_contacts_timestamp'
+      ) THEN
+        CREATE TRIGGER update_fin_org_contacts_timestamp
+        BEFORE UPDATE ON fin_org_contacts
+        FOR EACH ROW
+        EXECUTE PROCEDURE set_updated_at();
+      END IF;
+    END$$;""",
 ]
 
 DROP_ALL_QUERIES = """

@@ -3,7 +3,7 @@ import pytest
 import pytest_asyncio
 from datetime import datetime, date
 
-from server.database.documents_databse import DocumentCategory
+# Using string-based categories instead of DocumentCategory enum
 from server.database.documents_databse import (create_document, DocumentInCreate)
 from server.database.database import get_connection
 from server.database.cases_database import (
@@ -82,11 +82,15 @@ async def created_main_doc():
     finally:
         await conn.close()
         
+    # Generate a unique document name for each test
+    import uuid
+    unique_doc_name = f"test_doc_{uuid.uuid4()}"
+        
     return await create_document(DocumentInCreate(
-        name='test doc',
+        name=unique_doc_name,
         description='test doc',
         document_type_id=doc_type_id,
-        category=DocumentCategory.identification,
+        category='identification',
         period_type='quarter',
         periods_required=4,
         has_multiple_periods=True,

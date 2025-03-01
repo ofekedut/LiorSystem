@@ -76,10 +76,13 @@ async def setup_test_data():
         await conn.close()
 
 @pytest.fixture
-def new_document_payload(setup_test_data):
-    """Fixture to provide a valid document payload."""
+def new_document_payload(setup_test_data, request):
+    """Fixture to provide a valid document payload with a unique name."""
+    # Generate a unique name based on the test function name
+    unique_suffix = request.node.name
+    
     return {
-        "name": "Test Document",
+        "name": f"Test Document {unique_suffix}",
         "description": "A test document",
         "document_type_id": str(setup_test_data["doc_type_id"]),
         "category": "financial",
@@ -386,13 +389,16 @@ class TestDocumentFieldsEndpoints:
 @pytest.mark.asyncio
 class TestValidationRulesEndpoints:
     @pytest_asyncio.fixture
-    async def document_for_rules(self, async_client: AsyncClient, new_document_payload: dict):
+    async def document_for_rules(self, async_client: AsyncClient, new_document_payload: dict, request):
         """
         Creates a new document for testing validation rules endpoints.
         """
         payload = new_document_payload.copy()
+        # Generate a unique name for validation rule tests
+        unique_suffix = f"Validation_Rule_{request.node.name}"
+        
         payload.update({
-            "name": "Validation Rule Test Document",
+            "name": f"Validation Rule Test Document {unique_suffix}",
             "document_type": "recurring",
             "category": "financial",
             "period_type": "month",

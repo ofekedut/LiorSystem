@@ -1,62 +1,263 @@
-#!/usr/bin/env python
 import os
-import re
-from collections import defaultdict
-from datetime import datetime
-
 import boto3
-
-from features.docs_processing.detect_doc_type_ollama import classify_document_ollama
-from features.docs_processing.document_processing_db import get_result_by_filename
-from features.docs_processing.utils import extract_text_from_pdf, convert_pdf_to_images
-from server.features.docs_processing.detect_doc_type_bedrock import classify_document
-
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-import asyncio
 import json
 import io
 import logging
-from typing import Optional, Dict, Any, List
+from typing import Optional, Dict, Any, List, Tuple, Union
+from pydantic import BaseModel
+from collections import defaultdict
+from datetime import datetime
 
-import pytesseract
-from PIL import Image
 from PyPDF2 import PdfReader
-from pdf2image import convert_from_bytes
+CANDIDATE_LABELS = ['תעודת זהות', 'רשיון נהיגה', 'דרכון', 'מסמך אחר']
+LABEL2CATEGORY = {}
 
-import torch
-from transformers import (
-    AutoModelForSequenceClassification,
-    AutoTokenizer,
-    Trainer,
-    TrainingArguments,
-    CLIPProcessor,
-    CLIPModel,
-    pipeline
-)
-from torch.utils.data import Dataset
+class ClassificationResult(BaseModel):
+    label: str
+    score: float
+from server.features.docs_processing.utils import extract_text_from_pdf
 
-# DB
-from document_processing_db import (
-    init_db,
-    insert_classification_result,
-    load_feedback_from_db,
-    DB_FILENAME, CANDIDATE_LABELS, ClassificationResult, LABEL2CATEGORY, labels
-)
-
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-# -------------------------------------------------------------------
-# KEY RECOMMENDATION: Dynamically detect device
-# -------------------------------------------------------------------
-device = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
-logger.info(f"Using device: {device}")
+###############################################
+# AWS Bedrock Classification Functions
+###############################################
+
+import string
+import re
 
 
+def fix_filename(filename):
+    # Step 1: Filter to keep only allowed characters
+    allowed_chars = set(string.ascii_letters + string.digits + '-()[]' + string.whitespace)
+    filtered = ''.join(char for char in filename if char in allowed_chars)
 
-def extract_image_from_file_path(file_path: str) -> Image.Image:
-    """Open an image file and return a PIL Image."""
-    return Image.open(file_path)
+    # Step 2: Replace any sequence of whitespace characters with a single space
+    fixed = re.sub(r'\s+', ' ', filtered)
+
+    return fixed
+def classify_with_bedrock(document_text: str, filename: str, filebytes: bytes, candidate_labels: List[str]) -> Tuple[str, Dict]:
+    """
+    Use AWS Bedrock's model invocation to classify document text.
+
+    The function sends a prompt containing the extracted document text and a list of candidate labels.
+    The model is expected to return valid JSON using tools, in the following format:
+
+      {
+        "category": "<category label>",
+        "confidence": <confidence score as float>,
+        "notes": "optional notes or additional info if needed"
+      }
+
+    Parameters:
+      - document_text: The text to classify.
+      - filename: The filename.
+      - filebytes: The raw file bytes.
+      - candidate_labels: A list of candidate category labels.
+
+    Returns:
+      A tuple of (response_text, usage_info) from AWS Bedrock.
+    """
+    # Print the filename we're classifying for easier troubleshooting
+    print(f"\n============= CLASSIFYING DOCUMENT: {filename} =============\n")
+    
+    # Build the tool schema for document classification
+    tools = {
+        'tools': [
+            {
+                'toolSpec': {
+                    'name': 'classify_document',
+                    'description': 'Classify the document into one of the provided categories',
+                    'inputSchema': {
+                        'json': {
+                            'type': 'object',
+                            'properties': {
+                                'document': {
+                                    'type': 'string',
+                                    'description': 'The document to be classified'
+                                },
+                                'categories': {
+                                    'type': 'array',
+                                    'items': {'type': 'string'},
+                                    'description': 'List of possible categories for classification'
+                                }
+                            },
+                            'required': ['document', 'categories']
+                        }
+                    }
+                }
+            }
+        ]
+    }
+    prompt = (
+            "You are a document classifier. Given the following extracted document text, "
+            "select the most appropriate category from the list below and provide a confidence score (0 to 1). "
+            "Use the classify_document tool to return your answer as structured data.\n\n"
+            "Candidate Categories:\n" +
+            "\n".join(f"- {label}" for label in candidate_labels) +
+            "\n\nDocument Text:\n" +
+            document_text +
+            "\n"
+    )
+    doc_part = None
+    if filebytes.startswith(b'%PDF'):
+        doc_part = {
+            'document': {"format": 'pdf', "source": {'bytes': filebytes, }, "name": fix_filename(filename.replace('.pdf', ''))}
+        }
+    elif filebytes.startswith(b'\x89PNG'):
+        doc_part = {
+            'image': {"format": 'png', "sourc e": {'bytes': filebytes, }}
+        }
+    
+    # Set up the tools configuration
+
+    payload = {
+        'system': [
+            {'text': "You are a helpful document classifier (running on Claude 3 Sonnet Lite) that specializes in financial and property documents."}
+        ],
+        "messages": [
+            {"role": "user", "content": [{'text': prompt}, *([doc_part] if doc_part else [])]}
+        ],
+        'inferenceConfig': {
+            "maxTokens": 4096,
+            "temperature": 0.1,  # Lower temperature for more predictable outputs
+            "stopSequences": [],
+            "topP": 1,
+        },
+        'toolConfig': tools,
+        'modelId': "amazon.nova-lite-v1:0",
+    }
+
+    try:
+        # Log detailed request information
+        logger.info(f"AWS Bedrock Request (Nova Lite):")
+        logger.info(f"Model ID: {payload['modelId']}")
+        logger.info(f"Max Tokens: {payload['inferenceConfig']['maxTokens']}")
+        logger.info(f"Temperature: {payload['inferenceConfig']['temperature']}")
+        logger.info(f"Prompt length: {len(prompt)} characters")
+        logger.info(f"Document format: {'PDF' if filebytes.startswith(b'%PDF') else 'PNG' if filebytes.startswith(b'\x89PNG') else 'text'}")
+        logger.info(f"Tools provided: {json.dumps(tools)}")
+        
+        # Print to console for immediate visibility
+        print(f"\n============= SENDING REQUEST TO AWS BEDROCK (NOVA LITE) =============\n")
+        print(f"Model: {payload['modelId']}")
+        print(f"Prompt length: {len(prompt)} characters")
+        print(f"Document format: {'PDF' if filebytes.startswith(b'%PDF') else 'PNG' if filebytes.startswith(b'\x89PNG') else 'text'}")
+        print(f"Using tools for structured response")
+        
+        # Create the client and send the request
+        client = boto3.client("bedrock-runtime", region_name='us-east-1')
+        
+        logger.info("Sending request to AWS Bedrock (Nova Lite)...")
+        response = client.converse(**payload)
+        
+        # Log response information
+        logger.info(f"AWS Bedrock (Nova Lite) Response received:")
+        logger.info(f"Usage information: {response['usage']}")
+        
+        print(f"\n============= RECEIVED RESPONSE FROM AWS BEDROCK (NOVA LITE) =============\n")
+        print(f"Usage: {response['usage']}")
+        
+        # Check for tool calls in the response
+        tool_result = None
+        for block in response['output']['message']['content']:
+            # Log full response content
+            logger.info(f"Response block type: {block.get('type', 'unknown')}")
+            logger.info(f"Response content: {json.dumps(block, ensure_ascii=False)}")
+            
+            # Print response for debugging
+            print(json.dumps(block, indent=2, ensure_ascii=False))
+            
+            # If this is a tool call, extract the result
+            if block.get('toolUse') :
+                tool_name = block['toolUse'].get('name')
+                tool_input = block['toolUse'].get('input', {})
+                logger.info(f"Tool used: {tool_name}")
+                logger.info(f"Tool input: {json.dumps(tool_input, ensure_ascii=False)}")
+                
+                print(f"\nTool used: {tool_name}")
+                print(f"Tool input: {json.dumps(tool_input, indent=2, ensure_ascii=False)}")
+                
+                # For Claude API, all tool outputs are processed the same way
+                tool_result = json.dumps(tool_input)
+                return tool_result, response['usage']
+        
+        # If no tool call was found, return the text from the first content block
+        if tool_result is None:
+            for block in response['output']['message']['content']:
+                if block.get('text'):
+                    return block['text'], response['usage']
+            
+            # If we got here, we didn't find any usable content
+            return '{"category": "ERROR", "confidence": 0.0, "notes": "No valid response from model"}', response['usage']
+    except Exception as e:
+        logger.error(f"Error calling AWS Bedrock API (Nova Lite): {e}")
+        print(f"\n\u274c AWS BEDROCK (NOVA LITE) ERROR: {e}\n")
+        raise e
+
+
+def parse_bedrock_response(response_text: str) -> Tuple[str, float, str]:
+    """
+    Parse the AWS Bedrock response (which should be valid JSON) to extract:
+      - category label
+      - confidence score
+      - any notes or additional information
+
+    Expected response format:
+      {
+        "category": "<string>",
+        "confidence": <float>,
+        "notes": "<string>"
+      }
+
+    Parameters:
+      - response_text: The raw JSON string from AWS Bedrock.
+
+    Returns:
+      A tuple of (category_label, confidence, full_json_response).
+
+      If parsing fails, returns ("Unknown", 0.0, "{}").
+    """
+    try:
+        logger.info("Bedrock response text: %s", response_text)
+        print(f"\nAttempting to parse JSON: {response_text}\n")
+        
+        # First try to parse it directly
+        try:
+            data = json.loads(response_text)
+        except json.JSONDecodeError:
+            # If that fails, try to extract JSON from markdown code blocks
+            if "```json" in response_text:
+                logger.info("Extracting JSON from markdown code block")
+                json_text = response_text.split("```json")[1].split("```")[0].strip()
+                data = json.loads(json_text)
+            elif "```" in response_text:
+                logger.info("Extracting content from generic code block")
+                json_text = response_text.split("```")[1].split("```")[0].strip()
+                data = json.loads(json_text)
+            else:
+                raise
+        
+        logger.info(f"Successfully parsed JSON result: {data}")
+        print(f"Successfully parsed JSON result: {json.dumps(data, indent=2, ensure_ascii=False)}")
+        
+        category = data.get("category", "Unknown")
+        confidence = float(data.get("confidence", 0.0))
+        
+        # Ensure the confidence is between 0 and 1
+        confidence = max(0.0, min(1.0, confidence))
+        
+        # Return the original response_text for detailed logging
+        return category, confidence, json.dumps(data)
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse JSON from Bedrock response: {e}")
+        print(f"\n❌ JSON PARSING ERROR: {e}\n")
+        return "Unknown", 0.0, "{}"
+    except Exception as e:
+        logger.error(f"Error parsing Bedrock response: {e}")
+        print(f"\n❌ ERROR PARSING RESPONSE: {e}\n")
+        return "Unknown", 0.0, "{}"
 
 
 class ClassificationError(Exception):
@@ -64,350 +265,220 @@ class ClassificationError(Exception):
     pass
 
 
-class DocumentClassifier:
+async def classify_document(
+        labels: Dict[str, Dict[str, Union[int, str]]],
+        filename: Optional[str] = None,
+        filepath: Optional[str] = None,
+        filebytes: Optional[bytes] = None,
+        text: Optional[str] = None
+) -> Dict[str, Any]:
+    logger.info(f"Starting document classification process")
+    logger.info(f"Input parameters: filename={filename}, filepath={filepath}, text_provided={'Yes' if text else 'No'}, filebytes_provided={'Yes' if filebytes else 'No'}")
     """
-    Document classifier that uses extracted text (optionally including filename as context)
-    to compute scores using:
-      - A zero-shot text classification pipeline.
-      - CLIP text encoder similarity.
-    The scores are combined (weighted) to determine the final predicted label.
+    Classify a document using AWS Bedrock based on one of the following inputs:
+      1. Directly provided text,
+      2. A file path from which text can be extracted,
+      3. Or a filename string used as the text.
+
+    At least one of 'text', 'filepath', 'filebytes', or 'filename' must be provided.
+
+    Parameters:
+        labels: A dictionary of label definitions, where keys are category labels.
+        filename: An optional string representing the file name.
+        filepath: An optional file path from which to extract document text.
+        filebytes: Optional raw file bytes.
+        text: Optional text content.
+
+    Returns:
+        A dictionary containing classification results.
     """
-
-    def __init__(self,
-                 model_name: str = "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli",
-                 clip_model_name: str = "openai/clip-vit-base-patch32",
-                 text_weight: float = 0.5,
-                 image_weight: float = 0.5):
-        self.device = device
-        self.text_weight = text_weight
-        self.image_weight = image_weight
-
-        logger.info(f"Loading text model '{model_name}' for zero-shot classification...")
-        text_model = AutoModelForSequenceClassification.from_pretrained(model_name)
-        text_tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.text_classifier = pipeline(
-            "zero-shot-classification",
-            model=text_model,
-            tokenizer=text_tokenizer,
-            device=0 if self.device == "cuda" else -1,
-            framework="pt"
-        )
-
-        logger.info("Loading CLIP model for text embedding similarity...")
-        self.clip_model = CLIPModel.from_pretrained(clip_model_name)
-        self.clip_processor = CLIPProcessor.from_pretrained(clip_model_name)
-        self.clip_model.to(self.device)
-
-        logger.info("Pre-computing CLIP text embeddings for candidate labels...")
-        self.clip_label_embeddings = self._encode_label_prompts(CANDIDATE_LABELS)
-
-    def _encode_label_prompts(self, labels: List[str]) -> torch.Tensor:
-        """Encode candidate labels as prompts using CLIP's text encoder."""
-        prompts = [f"This document is about {lbl}." for lbl in labels]
-        inputs = self.clip_processor(
-            text=prompts,
-            images=None,
-            return_tensors="pt",
-            padding=True,
-            truncation=True,
-            max_length=77
-        )
-        for k, v in inputs.items():
-            inputs[k] = v.to(self.device)
-        with torch.no_grad():
-            text_outputs = self.clip_model.get_text_features(**inputs)
-            text_outputs = text_outputs / text_outputs.norm(dim=-1, keepdim=True)
-        return text_outputs
-
-    def _compute_clip_text_scores(self, text: str) -> torch.Tensor:
-        """Compute similarity scores for input text using CLIP's text encoder."""
-        try:
-            inputs = self.clip_processor(
-                text=[text],
-                images=None,
-                return_tensors="pt",
-                padding=True,
-                truncation=True,
-                max_length=77
-            )
-            for k, v in inputs.items():
-                inputs[k] = v.to(self.device)
-            with torch.no_grad():
-                text_emb = self.clip_model.get_text_features(**inputs)
-                text_emb = text_emb / text_emb.norm(dim=-1, keepdim=True)
-            scores = text_emb @ self.clip_label_embeddings.T
-            probs = torch.softmax(scores, dim=-1).squeeze(0)
-            return probs
-        except Exception as e:
-            logger.warning(f"CLIP text scoring failed: {e}")
-            return torch.zeros(len(CANDIDATE_LABELS), device=self.device)
-
-    def _compute_text_scores(self, text: str) -> torch.Tensor:
-        """
-        Compute combined text scores by blending:
-          - Zero-shot text classification scores.
-          - CLIP text similarity scores.
-        """
-        try:
-            result = self.text_classifier(
-                text,
-                candidate_labels=CANDIDATE_LABELS,
-                multi_label=False
-            )
-            label2score = dict(zip(result["labels"], result["scores"]))
-            zs_scores = torch.tensor([label2score.get(lbl, 0.0) for lbl in CANDIDATE_LABELS], device=self.device)
-        except Exception as e:
-            logger.warning(f"Zero-shot classification failed: {e}")
-            zs_scores = torch.zeros(len(CANDIDATE_LABELS), device=self.device)
-
-        clip_scores = self._compute_clip_text_scores(text)
-        weight = 0.5  # Adjust to change the balance between the two scores
-        combined_scores = weight * zs_scores + (1 - weight) * clip_scores
-        return combined_scores
-
-    def _compute_image_scores(self, image: Image.Image) -> torch.Tensor:
-        """Compute similarity scores between the image and candidate labels using CLIP."""
-        try:
-            inputs = self.clip_processor(images=image, return_tensors="pt")
-            for k, v in inputs.items():
-                inputs[k] = v.to(self.device)
-            with torch.no_grad():
-                image_emb = self.clip_model.get_image_features(**inputs)
-                image_emb = image_emb / image_emb.norm(dim=-1, keepdim=True)
-            scores = image_emb @ self.clip_label_embeddings.T
-            probs = torch.softmax(scores, dim=-1).squeeze(0)
-            return probs
-        except Exception as e:
-            logger.warning(f"Image scoring with CLIP failed: {e}")
-            return torch.zeros(len(CANDIDATE_LABELS), device=self.device)
-
-    def _classify_multimodal(self, text: str, image: Optional[Image.Image]) -> Dict[str, Any]:
-        """Combine text and image scores to rank candidate labels."""
-        if not text.strip():
-            logger.warning("No text extracted; using fallback text.")
-            text = "Document with no readable text."
-        text_scores = self._compute_text_scores(text)
-        image_scores = self._compute_image_scores(image) if image else torch.zeros(len(CANDIDATE_LABELS), device=self.device)
-        combined = self.text_weight * text_scores + self.image_weight * image_scores
-        sorted_indices = torch.argsort(combined, descending=True)
-        final_labels = [CANDIDATE_LABELS[i] for i in sorted_indices.tolist()]
-        final_scores = combined[sorted_indices].tolist()
-        return {"labels": final_labels, "scores": final_scores}
-
-    async def classify_document(
-            self,
-            file_path: Optional[str] = None,
-            file_bytes: Optional[bytes] = None,
-            file_name: Optional[str] = None,
-            text: Optional[str] = None,
-            dpi: int = 200,
-            max_pages: Optional[int] = 1,
-    ) -> ClassificationResult:
-        """
-        Extract document text (and optionally an image via OCR) then classify it.
-        """
-        try:
-            file_name = os.path.basename(file_path) if file_path else (file_name or "uploaded_file")
-            extracted_text = text or ""
-            images: List[Image.Image] = []
-            page_count = 0
-
-            if file_bytes is not None:
-                if file_bytes.startswith(b"%PDF"):
+    try:
+        # Track which source of text was used last
+        source_used = "none"
+        used_text = ""
+        
+        # Get the filename from filepath if not provided directly
+        if not filename and filepath:
+            filename = os.path.basename(filepath)
+            logger.info(f"Extracted filename from filepath: {filename}")
+            
+            # Try to open the file for manual review
+            if os.path.exists(filepath):
+                try:
+                    logger.info(f"Opening file for manual review: {filepath}")
+                    os.system(f'open "{filepath}"')
+                    print(f"\n📂 Opening file for review: {filepath}\n")
+                except Exception as e:
+                    logger.warning(f"Failed to open file for review: {e}")
+        
+        # Fallback filename
+        if not filename:
+            filename = "unknown_document"
+        
+        # Extract text from the file if available and no text was provided
+        if text:
+            used_text = text
+            source_used = "text"
+            logger.info(f"Using provided text, length: {len(text)} characters")
+            print(f"\nUsing provided text, length: {len(text)} characters\n")
+        
+        # If we have file bytes, try to extract text
+        if filebytes and not used_text:
+            # Try extracting text from PDF
+            if filebytes.startswith(b'%PDF'):
+                try:
+                    logger.info("Detected PDF from file bytes, attempting to extract text")
+                    reader = PdfReader(io.BytesIO(filebytes))
+                    extracted_text = ""
+                    pages_with_text = 0
+                    total_pages = len(reader.pages)
+                    
+                    logger.info(f"PDF has {total_pages} pages")
+                    print(f"\n📄 PDF has {total_pages} pages\n")
+                    
+                    for i, page in enumerate(reader.pages):
+                        try:
+                            page_text = page.extract_text()
+                            if page_text:
+                                extracted_text += page_text + "\n"
+                                pages_with_text += 1
+                                print(f"Extracted text from page {i+1}: {len(page_text)} characters")
+                        except Exception as e:
+                            logger.warning(f"Failed to extract text from page {i+1}: {e}")
+                            print(f"Failed to extract text from page {i+1}: {e}")
+                    
+                    logger.info(f"Successfully extracted text from {pages_with_text}/{total_pages} pages")
+                    
+                    if extracted_text.strip():
+                        used_text = extracted_text
+                        source_used = "filebytes (PDF text)"
+                        logger.info(f"Using extracted PDF text, length: {len(used_text)} characters")
+                    else:
+                        logger.warning("No text was extracted from PDF bytes")
+                except Exception as e:
+                    logger.warning(f"Error extracting text from PDF bytes: {e}", exc_info=True)
+        
+        # If we have a filepath and no text yet, try extracting from the file
+        if filepath and not used_text:
+            logger.info(f"Attempting to extract text from file at path: {filepath}")
+            if os.path.exists(filepath):
+                filesize = os.path.getsize(filepath)
+                logger.info(f"File exists, size: {filesize} bytes ({bytes_to_mb(filesize):.2f} MB)")
+                
+                if filepath.lower().endswith(".pdf"):
                     try:
-                        reader = PdfReader(io.BytesIO(file_bytes))
-                        pages_text = [page.extract_text() or "" for page in reader.pages]
-                        pdf_text = "\n".join(pages_text)
+                        logger.info("Extracting text from PDF file")
+                        pdf_text = extract_text_from_pdf(filepath)
                         if pdf_text.strip():
-                            extracted_text = pdf_text if not extracted_text else f"{extracted_text}\n{pdf_text}"
+                            used_text = pdf_text
+                            source_used = "filepath (PDF)"
+                            logger.info(f"Successfully extracted text from PDF, length: {len(used_text)} characters")
+                        else:
+                            logger.warning("No text was extracted from PDF file")
                     except Exception as e:
-                        logger.warning(f"PDF text extraction failed: {e}")
-                    try:
-                        pdf_pages = convert_from_bytes(file_bytes, dpi=dpi)
-                        if max_pages is not None:
-                            pdf_pages = pdf_pages[:max_pages]
-                        images = pdf_pages
-                        page_count = len(pdf_pages)
-                    except Exception as e:
-                        logger.warning(f"PDF->Image conversion failed: {e}")
+                        logger.warning(f"Error extracting text from PDF file: {e}", exc_info=True)
                 else:
-                    try:
-                        image = Image.open(io.BytesIO(file_bytes))
-                        ocr_text = pytesseract.image_to_string(image, lang='heb')
-                        if ocr_text.strip():
-                            extracted_text = (extracted_text + "\n" + ocr_text) if extracted_text else ocr_text
-                        images = [image]
-                        page_count = 1
-                    except Exception as e:
-                        raise ClassificationError(f"Failed to process image bytes: {e}")
-            elif file_path is not None:
-                if not os.path.exists(file_path):
-                    raise FileNotFoundError(f"File not found: {file_path}")
-                if file_path.lower().endswith(".pdf"):
-                    try:
-                        pdf_text = extract_text_from_pdf(file_path)
-                        if pdf_text.strip():
-                            extracted_text = (extracted_text + "\n" + pdf_text) if extracted_text else pdf_text
-                    except Exception as e:
-                        logger.warning(f"PDF text extraction fallback: {e}")
-                    try:
-                        pdf_pages = convert_pdf_to_images(file_path, dpi, max_pages)
-                        images = pdf_pages
-                        page_count = len(pdf_pages)
-                    except Exception as e:
-                        logger.warning(f"PDF->Image conversion failed: {e}")
-                else:
-                    try:
-                        image = extract_image_from_file_path(file_path)
-                        ocr_text = pytesseract.image_to_string(image, lang='heb')
-                        if ocr_text.strip():
-                            extracted_text = (extracted_text + "\n" + ocr_text) if extracted_text else ocr_text
-                        images = [image]
-                        page_count = 1
-                    except Exception as e:
-                        raise ClassificationError(f"Failed to process image file: {e}")
+                    logger.info(f"File is not a PDF, extension: {os.path.splitext(filepath)[1]}")
             else:
-                raise ClassificationError("No file path or file bytes provided.")
-
-            # Optionally, append the filename as additional context.
-            combined_text = extracted_text + "\nFilename: " + file_name
-
-            main_image = images[0] if images else None
-            result_dict = await asyncio.to_thread(self._classify_multimodal, combined_text, main_image)
-            top_label = result_dict["labels"][0]
-            top_score = result_dict["scores"][0]
-            category_code = LABEL2CATEGORY.get(top_label, labels["ERROR"]["code"])
-            reasons = f"Document classification => '{top_label}' (score={top_score:.2f})."
-            return ClassificationResult(
-                category=category_code,
-                confidence=top_score,
-                reasons=reasons,
-                page_count=page_count,
-                file_name=file_name
-            )
-        except (FileNotFoundError, ClassificationError) as e:
-            raise
-        except Exception as e:
-            logger.error(f"Unexpected error during classification: {e}", exc_info=True)
-            raise ClassificationError(f"Document classification failed: {str(e)}")
-
-
-# -------------------------------------------------------------------
-# HUMAN FEEDBACK & TRAINING FUNCTIONS (DB-based only)
-# -------------------------------------------------------------------
-def collect_human_feedback(results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    feedback_results = []
-    for entry in results:
-        corrected = entry.get("correct_category", "").strip()
-        if corrected:
-            entry["category"]["id"] = corrected
-            entry["category"]["name"] = corrected
-        feedback_results.append(entry)
-    return feedback_results
-
-
-class FeedbackDataset(Dataset):
-    def __init__(self, feedback_data: List[Dict[str, Any]], tokenizer, max_length: int = 512):
-        self.data = feedback_data
-        self.tokenizer = tokenizer
-        self.max_length = max_length
-
-    def __len__(self):
-        return len(self.data)
-
-    def __getitem__(self, idx):
-        item = self.data[idx]
-        text = item.get("reasons", "")
-        inputs = self.tokenizer(
-            text,
-            truncation=True,
-            max_length=self.max_length,
-            padding="max_length",
-            return_tensors="pt"
-        )
-        label_id = int(item["category"]["id"])
-        inputs = {k: v.squeeze(0) for k, v in inputs.items()}
-        inputs["labels"] = torch.tensor(label_id, dtype=torch.long)
-        return inputs
-
-
-def train_model_from_db(db_path: str = DB_FILENAME,
-                        output_model_dir: str = "fine_tuned_model",
-                        model_name: str = "MoritzLaurer/mDeBERTa-v3-base-mnli-xnli"):
-    feedback_data = load_feedback_from_db(db_path)
-    if not feedback_data:
-        return "No data found for training."
-    num_labels = len(labels)
-    model = AutoModelForSequenceClassification.from_pretrained(model_name, num_labels=num_labels)
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    dataset = FeedbackDataset(feedback_data, tokenizer)
-    training_args = TrainingArguments(
-        output_dir=output_model_dir,
-        num_train_epochs=3,
-        per_device_train_batch_size=4,
-        learning_rate=5e-5,
-        logging_steps=10,
-        save_steps=50,
-        evaluation_strategy="no",
-        disable_tqdm=False,
-        push_to_hub=False
-    )
-    trainer = Trainer(
-        model=model,
-        args=training_args,
-        train_dataset=dataset
-    )
-    trainer.train()
-    trainer.save_model(output_model_dir)
-    return f"DB-based model fine-tuned and saved to {output_model_dir}"
-
-
-# -------------------------------------------------------------------
-# MAIN FLOW
-# -------------------------------------------------------------------
-async def process_files():
-    """
-    Processes files from a directory, classifies them using DocumentClassifier,
-    inserts the results into the DB, and visualizes outcomes.
-    """
-    init_db()
-    classifier = DocumentClassifier(
-        model_name="MoritzLaurer/mDeBERTa-v3-base-mnli-xnli"
-    )
-    base_dir = "./monday_assets"  # Adjust as needed
-    for root, _, files in os.walk(base_dir):
-        for f_name in files:
-            file_path = os.path.join(root, f_name)
-            print(f"\nProcessing file: {file_path}")
+                logger.warning(f"File not found: {filepath}")
+        
+        # If still no text, use the filename as a last resort
+        if not used_text:
+            used_text = f"Document filename: {filename}"
+            source_used = "filename"
+            logger.warning("No text extracted from document; using filename as fallback.")
+        
+        # Get the file bytes for sending to Bedrock if not already provided
+        if not filebytes and filepath and os.path.exists(filepath):
+            logger.info(f"Reading file bytes from {filepath}")
             try:
-                result = await classifier.classify_document(file_path=file_path, max_pages=1)
-                result_dict = result.to_dict()
-                insert_classification_result(result_dict, result.reasons)
-                print(f"Category  : {result_dict['category_name']}")
-                print(f"Confidence: {result_dict['confidence']:.2f}")
-                print(f"Pages     : {result_dict['metadata']['page_count']}")
+                with open(filepath, 'rb') as f:
+                    filebytes = f.read()
+                logger.info(f"Successfully read file bytes, size: {len(filebytes)} bytes")
+                print(f"\nRead file bytes: {len(filebytes)} bytes ({len(filebytes)/1024/1024:.2f} MB)\n")
             except Exception as e:
-                print(f"Error processing '{file_path}': {e}")
-
-
-def human_feedback_loop():
-    """
-    Simulates a human feedback loop:
-      - Classifies documents.
-      - Retrieves feedback from the DB.
-      - Fine-tunes the model using the feedback.
-    """
-    print("Retraining from DB feedback...")
-    msg = train_model_from_db()
-    print(msg)
-    print("You can now re-classify with the newly trained model if desired.")
+                logger.error(f"Error reading file bytes: {e}")
+                print(f"\n❌ Error reading file: {e}\n")
+        
+        # If we don't have file bytes, create an empty bytes object
+        if not filebytes:
+            filebytes = b''
+        
+        # Call AWS Bedrock for classification
+        logger.info(f"Sending document to AWS Bedrock for classification")
+        logger.info(f"Text source: {source_used}, Text preview: {used_text[:100]}...")
+        logger.info(f"Using {len(labels)} candidate labels for classification")
+        
+        # Print information to console for easier debugging
+        print(f"\nDocument text source: {source_used}")
+        print(f"Text preview: {used_text[:200]}...")
+        print(f"Candidate labels: {list(labels.keys())}\n")
+        
+        response_text, usage_info = classify_with_bedrock(
+            document_text=used_text,
+            filename=filename,
+            filebytes=filebytes,
+            candidate_labels=list(labels.keys())
+        )
+        
+        logger.info(f"Received response from AWS Bedrock")
+        
+        # Parse the response
+        logger.info(f"Parsing Bedrock response")
+        category_label, confidence, raw_response = parse_bedrock_response(response_text)
+        logger.info(f"Parsed result: category={category_label}, confidence={confidence:.4f}")
+        
+        # Print results for debugging
+        print(f"\n============= CLASSIFICATION RESULT =============\n")
+        print(f"Category: {category_label}")
+        print(f"Confidence: {confidence:.4f}")
+        print(f"Raw response: {raw_response}\n")
+        
+        # Get the corresponding category info from labels dict
+        if category_label in labels:
+            category_info = labels[category_label]
+            category_code = category_info.get("code", -1)
+            logger.info(f"Found matching category in labels: {category_label}, code={category_code}")
+        else:
+            # Fallback to ERROR if the category is not found
+            category_info = labels.get("ERROR", {"code": -1, "label": "Error"})
+            category_code = category_info.get("code", -1)
+            logger.warning(f"Category {category_label} not found in available labels. Using fallback.")
+        
+        result = {
+            "filename": filename,
+            "source": source_used,
+            "used_text": used_text[:500] + ("..." if len(used_text) > 500 else ""),  # Truncate for readability
+            "predicted_label": category_label,
+            "category_info": category_info,
+            "category_code": category_code,
+            "confidence": confidence,
+            "bedrock_response": raw_response,
+            "usage_info": usage_info
+        }
+        
+        logger.info(f"Document classification complete: {filename} -> {category_label} (confidence: {confidence:.4f})")
+        return result
+    
+    except Exception as e:
+        logger.error(f"Error during document classification: {e}")
+        # Return error information
+        return {
+            "filename": filename or "unknown",
+            "source": "error",
+            "used_text": "",
+            "predicted_label": "ERROR",
+            "category_info": labels.get("ERROR", {"code": -1, "label": "Error"}),
+            "category_code": -1,
+            "confidence": 0.0,
+            "bedrock_response": "{}",
+            "error": str(e)
+        }
 
 
 # -------------------------------------------------------------------
-# ENTRY POINT
+# UTILITY FUNCTIONS
 # -------------------------------------------------------------------
-i = 0
-
 
 def get_filesize(filepath):
     """
@@ -487,5 +558,3 @@ def average_files_per_month(data):
     # Calculate average = total files / number of distinct (year, month) groups
     average = total_files / len(month_counts)
     return average
-
-

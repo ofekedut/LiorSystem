@@ -7,21 +7,10 @@ from pydantic import BaseModel, Field
 from server.database.database import get_connection
 
 
-# -------------------------------------------------
-# 1. Document-related Enums
-# -------------------------------------------------
 class DocumentType(str, enum.Enum):
     one_time = 'one-time'
     updatable = 'updatable'
     recurring = 'recurring'
-
-
-class DocumentCategory(str, enum.Enum):
-    identification = 'identification'
-    financial = 'financial'
-    property = 'property'
-    employment = 'employment'
-    tax = 'tax'
 
 
 class RequiredFor(str, enum.Enum):
@@ -43,7 +32,6 @@ class ValidationOperator(str, enum.Enum):
     before = 'before'
     after = 'after'
 
-
 # -------------------------------------------------
 # 2. Pydantic Models
 # -------------------------------------------------
@@ -51,7 +39,7 @@ class DocumentBase(BaseModel):
     name: str
     description: Optional[str] = None
     document_type_id: UUID
-    category: DocumentCategory
+    category: str  # Use string instead of enum
     category_id: Optional[UUID] = None
     period_type: Optional[str] = None
     periods_required: Optional[int] = None
@@ -147,7 +135,7 @@ async def create_document(doc_in: DocumentInCreate) -> DocumentInDB:
                 doc_in.name,
                 doc_in.description,
                 doc_in.document_type_id,
-                doc_in.category.value,
+                doc_in.category,
                 doc_in.category_id,
                 doc_in.period_type,
                 doc_in.periods_required,
@@ -159,7 +147,7 @@ async def create_document(doc_in: DocumentInCreate) -> DocumentInDB:
                     await conn.execute(
                         "INSERT INTO documents_required_for VALUES ($1, $2)",
                         new_doc.id,
-                        rf.value
+                        rf if isinstance(rf, str) else rf.value
                     )
             new_doc.required_for = doc_in.required_for.copy()
             return new_doc
@@ -170,15 +158,47 @@ async def create_document(doc_in: DocumentInCreate) -> DocumentInDB:
 async def get_document(document_id: UUID) -> Optional[DocumentInDB]:
     conn = await get_connection()
     try:
-        row = await conn.fetchrow(
-            """SELECT d.*, array_agg(rf.required_for) as required_for
-            FROM documents d
-            LEFT JOIN documents_required_for rf ON d.id = rf.document_id
-            WHERE d.id = $1
-            GROUP BY d.id""",
+        # Get the document
+        doc = await conn.fetchrow(
+            """SELECT * FROM documents WHERE id = $1""",
             document_id
         )
-        return DocumentInDB(**dict(row)) if row else None
+
+        if not doc:
+            return None
+
+        # Convert to dict
+        doc_dict = dict(doc)
+
+        # Validate category exists in database
+        if 'category' in doc_dict and isinstance(doc_dict['category'], str):
+            # No need to convert to enum anymore, just verify it's valid
+            valid_category = await conn.fetchval(
+                """SELECT value FROM document_categories WHERE value = $1""",
+                doc_dict['category']
+            )
+
+            if not valid_category:
+                print(f"Invalid category: {doc_dict['category']}")
+                # Default to financial if category is invalid
+                doc_dict['category'] = 'financial'
+
+        # Get required_for values
+        required_for_rows = await conn.fetch(
+            """SELECT required_for FROM documents_required_for 
+               WHERE document_id = $1""",
+            document_id
+        )
+
+        # Parse required_for values
+        if required_for_rows:
+            # Use strings directly instead of converting to RequiredFor enum
+            doc_dict['required_for'] = [row['required_for'] for row in required_for_rows]
+        else:
+            doc_dict['required_for'] = []
+
+        # Create DocumentInDB object
+        return DocumentInDB(**doc_dict)
     finally:
         await conn.close()
 
@@ -207,7 +227,7 @@ async def update_document(document_id: UUID, doc_update: DocumentUpdate) -> Opti
                 updated_data.name,
                 updated_data.description,
                 updated_data.document_type_id,
-                updated_data.category.value,
+                updated_data.category,
                 updated_data.category_id,
                 updated_data.period_type,
                 updated_data.periods_required,
@@ -224,7 +244,7 @@ async def update_document(document_id: UUID, doc_update: DocumentUpdate) -> Opti
                     await conn.execute(
                         "INSERT INTO documents_required_for VALUES ($1, $2)",
                         document_id,
-                        rf.value
+                        rf if isinstance(rf, str) else rf.value
                     )
 
             if record is not None:
@@ -249,14 +269,53 @@ async def delete_document(document_id: UUID) -> bool:
 async def list_documents() -> List[DocumentInDB]:
     conn = await get_connection()
     try:
-        rows = await conn.fetch(
-            """SELECT d.*, array_agg(rf.required_for) as required_for
-            FROM documents d
-            LEFT JOIN documents_required_for rf ON d.id = rf.document_id
-            GROUP BY d.id
-            ORDER BY d.id"""
+        # First get all documents
+        documents = await conn.fetch(
+            """SELECT * FROM documents ORDER BY name"""
         )
-        return [DocumentInDB(**dict(row)) for row in rows]
+
+        result = []
+        for doc in documents:
+            # Convert row to dict 
+            doc_dict = dict(doc)
+
+            # Validate category against database
+            if 'category' in doc_dict and isinstance(doc_dict['category'], str):
+                # Check if the category exists in the database
+                valid_category = await conn.fetchval(
+                    """SELECT value FROM document_categories WHERE value = $1""",
+                    doc_dict['category']
+                )
+
+                if not valid_category:
+                    # Get valid categories from database
+                    valid_categories = await conn.fetch("""SELECT value FROM document_categories""")
+                    valid_category_values = [row['value'] for row in valid_categories]
+
+                    print(f"Invalid category: {doc_dict['category']}")
+                    print(f"Valid categories: {valid_category_values}")
+
+                    # Default to financial if category is invalid
+                    doc_dict['category'] = 'financial'
+
+            # Get required_for values for this document
+            required_for_rows = await conn.fetch(
+                """SELECT required_for FROM documents_required_for 
+                   WHERE document_id = $1""",
+                doc_dict['id']
+            )
+
+            # Parse required_for values
+            if required_for_rows:
+                # Use strings directly instead of converting to RequiredFor enum
+                doc_dict['required_for'] = [row['required_for'] for row in required_for_rows]
+            else:
+                doc_dict['required_for'] = []
+
+            # Create DocumentInDB object
+            result.append(DocumentInDB(**doc_dict))
+
+        return result
     finally:
         await conn.close()
 
@@ -430,3 +489,48 @@ async def verify_case_access(user_id: UUID, case_id: UUID) -> bool:
         return bool(result)
     finally:
         await conn.close()
+
+
+async def get_document_by_name(name: str) -> Optional[DocumentInDB]:
+    """
+    Get a document by its name
+    
+    Args:
+        name: The name of the document to retrieve
+        
+    Returns:
+        The document if found, None otherwise
+    """
+    try:
+        async with get_connection() as conn:
+            async with conn.cursor() as cursor:
+                query = """
+                SELECT id, name, description, document_type_id, category, category_id, 
+                       period_type, periods_required, has_multiple_periods,
+                       required_for, created_at, updated_at
+                FROM documents
+                WHERE name = %s
+                """
+                await cursor.execute(query, (name,))
+                result = await cursor.fetchone()
+
+                if not result:
+                    return None
+
+                return DocumentInDB(
+                    id=result[0],
+                    name=result[1],
+                    description=result[2],
+                    document_type_id=result[3],
+                    category=result[4],
+                    category_id=result[5],
+                    period_type=result[6],
+                    periods_required=result[7],
+                    has_multiple_periods=result[8],
+                    required_for=result[9],
+                    created_at=result[10],
+                    updated_at=result[11]
+                )
+    except Exception as e:
+        print(f"Error getting document by name: {e}")
+        return None

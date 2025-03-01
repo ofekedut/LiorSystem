@@ -116,7 +116,7 @@ class TestDocumentCategoriesRouter:
 
         # Update it
         response = client.put(
-            f"/document_categories/{created_data['id']}",
+            f"/document_categories/{created_data['id']}?cascade_updates=true",
             json={"name": "Personal Documents", "value": "personal-docs"},
         )
         assert response.status_code == status.HTTP_200_OK
@@ -180,3 +180,4 @@ class TestDocumentCategoriesRouter:
         """Test deleting a document category that doesn't exist."""
         response = client.delete("/document_categories/00000000-0000-0000-0000-000000000000")
         assert response.status_code == status.HTTP_404_NOT_FOUND
+

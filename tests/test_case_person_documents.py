@@ -18,7 +18,6 @@ from server.database.cases_database import (
 from server.database.documents_databse import (
     create_document,
     DocumentInCreate,
-    DocumentCategory,
 )
 from server.database.database import get_connection
 
@@ -67,11 +66,14 @@ async def created_main_doc():
     finally:
         await conn.close()
         
+    # Generate a unique document name using uuid
+    unique_name = f'test doc {uuid.uuid4()}'
+    
     return await create_document(DocumentInCreate(
-        name='test doc',
+        name=unique_name,
         description='test doc',
         document_type_id=doc_type_id,
-        category="identification",
+        category='identification',
         period_type='quarter',
         periods_required=4,
         has_multiple_periods=True,

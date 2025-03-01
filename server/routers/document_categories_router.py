@@ -15,7 +15,7 @@ from server.database.document_categories_database import (
     get_document_category_by_value,
 )
 
-router = APIRouter(prefix="/document_categories", tags=["document_categories"])
+router = APIRouter(prefix="/document_categories", tags=["document-categories"])
 
 
 @router.post("/", response_model=DocumentCategory, status_code=status.HTTP_201_CREATED)
@@ -57,12 +57,12 @@ async def read_document_category(document_category_id: uuid.UUID):
 
 
 @router.put("/{document_category_id}", response_model=DocumentCategory)
-async def update_document_category_endpoint(document_category_id: uuid.UUID, payload: DocumentCategoryInUpdate):
+async def update_document_category_endpoint(document_category_id: uuid.UUID, payload: DocumentCategoryInUpdate, cascade_updates: bool = False):
     """
     Update a document category.
     """
     try:
-        document_category = await update_document_category(document_category_id, payload)
+        document_category = await update_document_category(document_category_id, payload, cascade_updates=cascade_updates)
         if document_category is None:
             raise HTTPException(status_code=404, detail="Document category not found")
         return document_category
@@ -71,11 +71,14 @@ async def update_document_category_endpoint(document_category_id: uuid.UUID, pay
 
 
 @router.delete("/{document_category_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_document_category_endpoint(document_category_id: uuid.UUID):
+async def delete_document_category_endpoint(document_category_id: uuid.UUID, cascade_delete: bool = False):
     """
     Delete a document category.
     """
-    deleted = await delete_document_category(document_category_id)
-    if not deleted:
-        raise HTTPException(status_code=404, detail="Document category not found")
-    return None
+    try:
+        deleted = await delete_document_category(document_category_id, cascade_delete=cascade_delete)
+        if not deleted:
+            raise HTTPException(status_code=404, detail="Document category not found")
+        return None
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail=str(e))

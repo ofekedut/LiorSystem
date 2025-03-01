@@ -49,12 +49,14 @@ async def seeded_document():
         await conn.close()
         
     # Now create the document with the document_type_id
-    from server.database.documents_databse import create_document, DocumentInCreate, DocumentCategory, RequiredFor
+    from server.database.documents_databse import create_document, DocumentInCreate, RequiredFor
+    import uuid
+    unique_doc_name = f"Router_Test_Doc_{uuid.uuid4()}"
     doc_data = DocumentInCreate(
-        name="Router Test Doc",
+        name=unique_doc_name,
         description="Used for case_documents foreign key tests",
         document_type_id=doc_type_id,  # Use the UUID from the document_types table
-        category=DocumentCategory.tax,
+        category='tax',
         period_type=None,
         periods_required=None,
         has_multiple_periods=False,

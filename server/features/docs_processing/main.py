@@ -1,9 +1,17 @@
 import json
 import os
 import re
+import asyncio
 
 from features.docs_processing.detect_doc_type_ollama import classify_document_ollama
-from features.docs_processing.document_processing_db import init_db, get_result_by_filename, labels, save_bedrock_result_to_db
+from features.docs_processing.document_processing_db import (
+    init_db, 
+    get_result_by_filename, 
+    get_all_results,
+    insert_classification_result,
+    get_labels, 
+    save_bedrock_result_to_db
+)
 from typing import List, Optional, Dict, Any
 from pydantic import BaseModel, root_validator, model_validator
 
@@ -177,30 +185,39 @@ class Case(BaseModel):
 
 
 async def create_data():
-    cases = []
-    basedir_bar = f"./monday_assets_bar/1720649847_הכנת_תיק_לקוח"
-    basedir_lior = f"./monday_assets_lior/1652348338_Subitems_of_הכנת_תיק_לקוח"
-    for basedir in [basedir_lior, basedir_bar]:
-        for item_dir in os.listdir(basedir):
-            if item_dir == '.DS_Store':
-                continue
-            metadata = json.load(open(f"{basedir}/{item_dir}/metadata.json", "r"))
-            c = Case(**metadata)
-            first_name, last_name = extract_first_last(c.main_contact)
+    """Test function to create sample data in the database"""
+    results = await get_all_results()
+    print(f"Database has {len(results)} results.")
 
-    statuses = {x.case_status for x in cases}
-    print(statuses)
-    # call_bedrock(
-    #     json.dumps(c.to_dict()),
-    # )
-    # if not os.path.isdir(f"./{basedir}/{board_dir}/{item_dir}/subitems"): continue
-    # for subitem_dir in os.listdir(f'./{basedir}/{board_dir}/{item_dir}/subitems'):
-    #     for filename in os.listdir(f'./{basedir}/{board_dir}/{item_dir}/subitems/{subitem_dir}'):
+    try:
+        # Test inserting a data entry
+        # Get labels from database
+        labels = await get_labels()
+        # Find a document type by name
+        document_key = next(iter(labels.keys()))
+        document_info = labels[document_key]
+        
+        test_result = {
+            "category": {"id": document_info['code'], "name": document_key},
+            "confidence": 0.95,
+            "reasons": "This is a test entry",
+            "metadata": {"page_count": 1, "file_name": "test_file.pdf"},
+            "error": None
+        }
+        await insert_classification_result(test_result, "Test extracted text")
+        print("Test data inserted successfully")
+    except Exception as e:
+        print(f"Error inserting test data: {e}")
 
 
-if __name__ == "__main__":
-    init_db()
-    # create_data()
+async def main():
+    """Main function to run the document processing pipeline"""
+    # Initialize the database
+    await init_db()
+    
+    # Get labels from database
+    labels = await get_labels()
+    
     i = 0
     outputTokens = 0
     inputTokens = 0
@@ -213,9 +230,10 @@ if __name__ == "__main__":
                 for filename in os.listdir(f'./{basedir}/{board_dir}/{item_dir}/subitems/{subitem_dir}'):
                     if not 'pdf' in filename: continue
                     filepath = f'./{basedir}/{board_dir}/{item_dir}/subitems/{subitem_dir}/{filename}'
-                    # if get_result_by_filename(filename):
-                    #     print(f"skipped {filename}")
-                    #     continue
+                    # Check for existing results - need to use asyncio.run for the async function
+                    if await get_result_by_filename(filename):
+                        print(f"skipped {filename}")
+                        continue
                     metadata = json.load(open(f'./{basedir}/{board_dir}/{item_dir}/subitems/{subitem_dir}/metadata.json', 'r'))
                     if not is_containing_hebrew_letters(filename): continue
                     print(filename)
@@ -224,12 +242,17 @@ if __name__ == "__main__":
                         filename=filename,
                         filepath=filepath
                     )
-                    # if result:
-                    #     save_bedrock_result_to_db(result, filepath)
-                    #     with open(filepath + '_result.json', 'w') as f:
-                    #         json.dump(result, f)
-                    #     i += 1
-                    # if usage:
-                    #     outputTokens += usage['outputTokens']
-                    #     inputTokens += usage['inputTokens']
-#
+                    if result:
+                        await save_bedrock_result_to_db(result, filepath)
+                        with open(filepath + '_result.json', 'w') as f:
+                            json.dump(result, f)
+                        i += 1
+                    if usage:
+                        outputTokens += usage['outputTokens']
+                        inputTokens += usage['inputTokens']
+
+
+if __name__ == "__main__":
+    # Run the async main function
+    asyncio.run(main())
+    # asyncio.run(create_data())
