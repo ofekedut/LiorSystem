@@ -3,7 +3,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, HTTPException, Depends
 
-from server.database.documents_databse import (
+from server.database.documents_database import (
     list_documents,
     get_document,
     create_document,

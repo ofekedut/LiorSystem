@@ -10,7 +10,8 @@ from starlette.responses import HTMLResponse
 
 from server.database.users_database import UserCreate, create_user, update_user_role, UserRole
 from server.database.database import create_schema_if_not_exists, drop_all_tables
-from server.database.documents_databse import list_tables
+from server.database.d_migrations import run_migrations
+from server.database.documents_database import list_tables
 from server.routers.documents_router import router as documents_router
 from server.routers.users_router import router as users_router
 from server.routers.cases_router import router as cases_router
@@ -24,11 +25,12 @@ from server.routers.employment_types_router import router as employment_types_ro
 from server.routers.income_sources_types_router import router as income_sources_types_router
 from server.routers.loan_goals_router import router as loan_goals_router
 from server.routers.loan_types_router import router as loan_types_router
-from server.routers.person_martial_statuses_router import router as person_martial_statuses_router
+from server.routers.person_marital_statuses_router import router as person_marital_statuses_router
 from server.routers.related_person_relationships_types_router import router as related_person_relationships_types_router
 from server.routers.document_types_router import router as document_types_router
 from server.routers.document_categories_router import router as document_categories_router
 from server.routers.asset_types_router import router as asset_types_router
+from server.routers.person_assets_router import router as person_assets_router
 from server.features.docs_processing.docs_processing_router import router as docs_processing_router
 
 
@@ -86,17 +88,20 @@ app.include_router(employment_types_router)
 app.include_router(income_sources_types_router)
 app.include_router(loan_goals_router)
 app.include_router(loan_types_router)
-app.include_router(person_martial_statuses_router)
+app.include_router(person_marital_statuses_router)
 app.include_router(related_person_relationships_types_router)
 app.include_router(document_types_router)
 app.include_router(document_categories_router)
 app.include_router(asset_types_router)
+app.include_router(person_assets_router)
 app.include_router(docs_processing_router)
 
 
 async def create_schema_and_admin():
     await drop_all_tables()
     await create_schema_if_not_exists()
+    await run_migrations()
+    
 
 
 if __name__ == "__main__":

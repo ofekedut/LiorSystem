@@ -4,7 +4,7 @@ import pytest_asyncio
 from datetime import datetime, date
 
 # Using string-based categories instead of DocumentCategory enum
-from server.database.documents_databse import (create_document, DocumentInCreate)
+from server.database.documents_database import (create_document, DocumentInCreate)
 from server.database.database import get_connection
 from server.database.cases_database import (
     create_case,
@@ -125,7 +125,7 @@ async def created_person(created_case):
         last_name="Tester",
         id_number="ID12345",
         gender=PersonGender.female,
-        role=PersonRole.primary,
+        role="primary",
         birth_date=date(1990, 1, 1),
         phone="+123456789",
         email="alice@example.com",
@@ -235,7 +235,7 @@ class TestCasePersons:
             last_name="Example",
             id_number="ID54321",
             gender=PersonGender.male,
-            role=PersonRole.cosigner,
+            role="cosigner",
             birth_date=date(1985, 1, 1),
             phone="+987654321",
             email="bob@example.com",
@@ -260,12 +260,12 @@ class TestCasePersons:
     async def test_update_case_person(self, created_person):
         update_data = CasePersonUpdate(
             phone="+999999999",
-            role=PersonRole.guarantor
+            role="guarantor"
         )
         updated = await update_case_person(created_person.id, update_data)
         assert updated is not None
         assert updated.phone == "+999999999"
-        assert updated.role == PersonRole.guarantor
+        assert updated.role == "guarantor"
         await delete_case_person(created_person.id)
 
     async def test_delete_case_person(self, created_person):

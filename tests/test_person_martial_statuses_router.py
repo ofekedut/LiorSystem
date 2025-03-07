@@ -1,13 +1,13 @@
-# tests/test_person_martial_statuses_router.py
+# tests/test_person_marital_statuses_router.py
 import pytest
 from httpx import AsyncClient
 import uuid
-from server.routers.person_martial_statuses_router import PersonMaritalStatusInCreate, PersonMaritalStatusInUpdate
+from server.routers.person_marital_statuses_router import PersonMaritalStatusInCreate, PersonMaritalStatusInUpdate
 
 
 @pytest.mark.asyncio
 class TestPersonMaritalStatusRouter:
-    """Tests for the person_martial_statuses_router endpoints."""
+    """Tests for the person_marital_statuses_router endpoints."""
 
     async def test_create_person_martial_status(self, async_client: AsyncClient, admin_token):
         """Test creating a new person marital status."""
@@ -18,7 +18,7 @@ class TestPersonMaritalStatusRouter:
         }
         
         # Create the marital status
-        response = await async_client.post("/person_martial_statuses/", json=new_status, headers=headers)
+        response = await async_client.post("/person_marital_statuses/", json=new_status, headers=headers)
         assert response.status_code == 201, response.text
         
         data = response.json()
@@ -27,10 +27,10 @@ class TestPersonMaritalStatusRouter:
         assert 'id' in data
         
         # Clean up - delete the created marital status
-        delete_response = await async_client.delete(f"/person_martial_statuses/{data['id']}", headers=headers)
+        delete_response = await async_client.delete(f"/person_marital_statuses/{data['id']}", headers=headers)
         assert delete_response.status_code == 204
 
-    async def test_read_person_martial_statuses(self, async_client: AsyncClient, admin_token):
+    async def test_read_person_marital_statuses(self, async_client: AsyncClient, admin_token):
         """Test listing all person marital statuses."""
         headers = {"Authorization": f"Bearer {admin_token}"}
         
@@ -39,12 +39,12 @@ class TestPersonMaritalStatusRouter:
             "name": "Test Marital Status List",
             "value": "test_marital_status_list"
         }
-        create_response = await async_client.post("/person_martial_statuses/", json=new_status, headers=headers)
+        create_response = await async_client.post("/person_marital_statuses/", json=new_status, headers=headers)
         assert create_response.status_code == 201
         created_status = create_response.json()
         
         # Get all marital statuses
-        response = await async_client.get("/person_martial_statuses/", headers=headers)
+        response = await async_client.get("/person_marital_statuses/", headers=headers)
         assert response.status_code == 200
         
         data = response.json()
@@ -63,7 +63,7 @@ class TestPersonMaritalStatusRouter:
         assert found, "Created marital status not found in the list"
         
         # Clean up
-        delete_response = await async_client.delete(f"/person_martial_statuses/{created_status['id']}", headers=headers)
+        delete_response = await async_client.delete(f"/person_marital_statuses/{created_status['id']}", headers=headers)
         assert delete_response.status_code == 204
 
     async def test_read_person_martial_status_by_id(self, async_client: AsyncClient, admin_token):
@@ -75,12 +75,12 @@ class TestPersonMaritalStatusRouter:
             "name": "Test Marital Status Get",
             "value": "test_marital_status_get"
         }
-        create_response = await async_client.post("/person_martial_statuses/", json=new_status, headers=headers)
+        create_response = await async_client.post("/person_marital_statuses/", json=new_status, headers=headers)
         assert create_response.status_code == 201
         created_status = create_response.json()
         
         # Get the marital status by ID
-        response = await async_client.get(f"/person_martial_statuses/{created_status['id']}", headers=headers)
+        response = await async_client.get(f"/person_marital_statuses/{created_status['id']}", headers=headers)
         assert response.status_code == 200
         
         data = response.json()
@@ -89,7 +89,7 @@ class TestPersonMaritalStatusRouter:
         assert data['value'] == new_status['value']
         
         # Clean up
-        delete_response = await async_client.delete(f"/person_martial_statuses/{created_status['id']}", headers=headers)
+        delete_response = await async_client.delete(f"/person_marital_statuses/{created_status['id']}", headers=headers)
         assert delete_response.status_code == 204
 
     async def test_read_person_martial_status_not_found(self, async_client: AsyncClient, admin_token):
@@ -100,7 +100,7 @@ class TestPersonMaritalStatusRouter:
         random_id = str(uuid.uuid4())
         
         # Try to get a non-existent marital status
-        response = await async_client.get(f"/person_martial_statuses/{random_id}", headers=headers)
+        response = await async_client.get(f"/person_marital_statuses/{random_id}", headers=headers)
         assert response.status_code == 404
         assert "not found" in response.json()["detail"].lower()
 
@@ -113,7 +113,7 @@ class TestPersonMaritalStatusRouter:
             "name": "Test Marital Status Update",
             "value": "test_marital_status_update"
         }
-        create_response = await async_client.post("/person_martial_statuses/", json=new_status, headers=headers)
+        create_response = await async_client.post("/person_marital_statuses/", json=new_status, headers=headers)
         assert create_response.status_code == 201
         created_status = create_response.json()
         
@@ -122,7 +122,7 @@ class TestPersonMaritalStatusRouter:
             "name": "Updated Marital Status",
             "value": "updated_marital_status"
         }
-        response = await async_client.put(f"/person_martial_statuses/{created_status['id']}", json=update_data, headers=headers)
+        response = await async_client.put(f"/person_marital_statuses/{created_status['id']}", json=update_data, headers=headers)
         assert response.status_code == 200
         
         updated_status = response.json()
@@ -131,14 +131,14 @@ class TestPersonMaritalStatusRouter:
         assert updated_status['value'] == update_data['value']
         
         # Verify the update by getting the marital status
-        get_response = await async_client.get(f"/person_martial_statuses/{created_status['id']}", headers=headers)
+        get_response = await async_client.get(f"/person_marital_statuses/{created_status['id']}", headers=headers)
         assert get_response.status_code == 200
         get_data = get_response.json()
         assert get_data['name'] == update_data['name']
         assert get_data['value'] == update_data['value']
         
         # Clean up
-        delete_response = await async_client.delete(f"/person_martial_statuses/{created_status['id']}", headers=headers)
+        delete_response = await async_client.delete(f"/person_marital_statuses/{created_status['id']}", headers=headers)
         assert delete_response.status_code == 204
 
     async def test_update_person_martial_status_partial(self, async_client: AsyncClient, admin_token):
@@ -150,7 +150,7 @@ class TestPersonMaritalStatusRouter:
             "name": "Test Marital Status Partial Update",
             "value": "test_marital_status_partial_update"
         }
-        create_response = await async_client.post("/person_martial_statuses/", json=new_status, headers=headers)
+        create_response = await async_client.post("/person_marital_statuses/", json=new_status, headers=headers)
         assert create_response.status_code == 201
         created_status = create_response.json()
         
@@ -158,7 +158,7 @@ class TestPersonMaritalStatusRouter:
         update_data = {
             "name": "Partially Updated Marital Status"
         }
-        response = await async_client.put(f"/person_martial_statuses/{created_status['id']}", json=update_data, headers=headers)
+        response = await async_client.put(f"/person_marital_statuses/{created_status['id']}", json=update_data, headers=headers)
         assert response.status_code == 200
         
         updated_status = response.json()
@@ -167,7 +167,7 @@ class TestPersonMaritalStatusRouter:
         assert updated_status['value'] == new_status['value']  # Value should remain unchanged
         
         # Clean up
-        delete_response = await async_client.delete(f"/person_martial_statuses/{created_status['id']}", headers=headers)
+        delete_response = await async_client.delete(f"/person_marital_statuses/{created_status['id']}", headers=headers)
         assert delete_response.status_code == 204
 
     async def test_update_person_martial_status_not_found(self, async_client: AsyncClient, admin_token):
@@ -182,7 +182,7 @@ class TestPersonMaritalStatusRouter:
             "name": "Non-existent Marital Status",
             "value": "non_existent_marital_status"
         }
-        response = await async_client.put(f"/person_martial_statuses/{random_id}", json=update_data, headers=headers)
+        response = await async_client.put(f"/person_marital_statuses/{random_id}", json=update_data, headers=headers)
         assert response.status_code == 404
         assert "not found" in response.json()["detail"].lower()
 
@@ -195,16 +195,16 @@ class TestPersonMaritalStatusRouter:
             "name": "Test Marital Status Delete",
             "value": "test_marital_status_delete"
         }
-        create_response = await async_client.post("/person_martial_statuses/", json=new_status, headers=headers)
+        create_response = await async_client.post("/person_marital_statuses/", json=new_status, headers=headers)
         assert create_response.status_code == 201
         created_status = create_response.json()
         
         # Delete the marital status
-        delete_response = await async_client.delete(f"/person_martial_statuses/{created_status['id']}", headers=headers)
+        delete_response = await async_client.delete(f"/person_marital_statuses/{created_status['id']}", headers=headers)
         assert delete_response.status_code == 204
         
         # Verify it's deleted by trying to get it
-        get_response = await async_client.get(f"/person_martial_statuses/{created_status['id']}", headers=headers)
+        get_response = await async_client.get(f"/person_marital_statuses/{created_status['id']}", headers=headers)
         assert get_response.status_code == 404
 
     async def test_delete_person_martial_status_not_found(self, async_client: AsyncClient, admin_token):
@@ -215,6 +215,6 @@ class TestPersonMaritalStatusRouter:
         random_id = str(uuid.uuid4())
         
         # Try to delete a non-existent marital status
-        response = await async_client.delete(f"/person_martial_statuses/{random_id}", headers=headers)
+        response = await async_client.delete(f"/person_marital_statuses/{random_id}", headers=headers)
         assert response.status_code == 404
         assert "not found" in response.json()["detail"].lower()

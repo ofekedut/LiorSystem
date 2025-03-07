@@ -29,7 +29,11 @@ async def create_schema_if_not_exists() -> None:
     try:
         async with conn.transaction():
             for query in CREATE_SCHEMA_QUERIES:
+                # print(query)
                 await conn.execute(query)
+    except Exception as e:
+        logger.error(f"Failed to create schema: {str(e)}")
+        raise
     finally:
         await conn.close()
 

@@ -269,52 +269,52 @@ async def delete_document(document_id: UUID) -> bool:
 async def list_documents() -> List[DocumentInDB]:
     conn = await get_connection()
     try:
-        # First get all documents
-        documents = await conn.fetch(
-            """SELECT * FROM documents ORDER BY name"""
+        # Get all documents with a single query
+        # Join with document_categories to verify categories in a single query
+        # Left join with documents_required_for to get required_for values
+        query = """
+        WITH valid_categories AS (
+            SELECT value FROM document_categories
+        ),
+        doc_with_category AS (
+            SELECT d.*,
+                   CASE WHEN vc.value IS NULL THEN 'financial' ELSE d.category END AS validated_category
+            FROM documents d
+            LEFT JOIN valid_categories vc ON d.category = vc.value
         )
-
+        SELECT d.id, d.name, d.description, d.document_type_id, 
+               d.validated_category AS category, d.category_id, 
+               d.period_type, d.periods_required, d.has_multiple_periods,
+               d.created_at, d.updated_at,
+               ARRAY_AGG(drf.required_for) FILTER (WHERE drf.required_for IS NOT NULL) AS required_for
+        FROM doc_with_category d
+        LEFT JOIN documents_required_for drf ON d.id = drf.document_id
+        GROUP BY d.id, d.name, d.description, d.document_type_id, 
+                 d.validated_category, d.category_id, d.period_type, 
+                 d.periods_required, d.has_multiple_periods, d.created_at, d.updated_at
+        ORDER BY d.name
+        """
+        
+        records = await conn.fetch(query)
+        
         result = []
-        for doc in documents:
-            # Convert row to dict 
-            doc_dict = dict(doc)
-
-            # Validate category against database
-            if 'category' in doc_dict and isinstance(doc_dict['category'], str):
-                # Check if the category exists in the database
-                valid_category = await conn.fetchval(
-                    """SELECT value FROM document_categories WHERE value = $1""",
-                    doc_dict['category']
-                )
-
-                if not valid_category:
-                    # Get valid categories from database
-                    valid_categories = await conn.fetch("""SELECT value FROM document_categories""")
-                    valid_category_values = [row['value'] for row in valid_categories]
-
-                    print(f"Invalid category: {doc_dict['category']}")
-                    print(f"Valid categories: {valid_category_values}")
-
-                    # Default to financial if category is invalid
-                    doc_dict['category'] = 'financial'
-
-            # Get required_for values for this document
-            required_for_rows = await conn.fetch(
-                """SELECT required_for FROM documents_required_for 
-                   WHERE document_id = $1""",
-                doc_dict['id']
-            )
-
-            # Parse required_for values
-            if required_for_rows:
-                # Use strings directly instead of converting to RequiredFor enum
-                doc_dict['required_for'] = [row['required_for'] for row in required_for_rows]
-            else:
-                doc_dict['required_for'] = []
-
+        for record in records:
+            doc_dict = dict(record)
+            
+            # Handle the required_for array from the query
+            required_for_list = doc_dict.get('required_for', [])
+            # Remove None values if any
+            if required_for_list and None in required_for_list:
+                required_for_list = [rf for rf in required_for_list if rf is not None]
+            # Handle empty arrays
+            if not required_for_list or required_for_list == [None]:
+                required_for_list = []
+                
+            doc_dict['required_for'] = required_for_list
+            
             # Create DocumentInDB object
             result.append(DocumentInDB(**doc_dict))
-
+            
         return result
     finally:
         await conn.close()

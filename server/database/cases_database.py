@@ -4,8 +4,9 @@ from typing import List, Optional
 from datetime import datetime, date
 from uuid import UUID
 
-from pydantic import BaseModel, Field, conint
+from pydantic import BaseModel, Field, validator
 from server.database.database import get_connection
+from server.database.person_roles_database import get_person_role_by_value
 
 
 class CaseStatus(str, enum.Enum):
@@ -14,11 +15,19 @@ class CaseStatus(str, enum.Enum):
     pending = "pending"
 
 
+class PersonRole(str):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
 
-class PersonRole(str, enum.Enum):
-    primary = "primary"
-    cosigner = "cosigner"
-    guarantor = "guarantor"
+    @classmethod
+    def validate(cls, v):
+        if not isinstance(v, str):
+            raise TypeError("Person role must be a string")
+        role = get_person_role_by_value(v)
+        if role is None:
+            raise ValueError("Invalid person role")
+        return v
 
 
 class PersonGender(str, enum.Enum):
@@ -106,11 +115,19 @@ class CasePersonBase(BaseModel):
     last_name: str
     id_number: str
     gender: PersonGender
-    role: PersonRole
+    role: str  # Changed from PersonRole enum to str
     birth_date: date
+    marital_status_id: Optional[UUID] = None  # Added marital_status_id field
     phone: Optional[str] = None
     email: Optional[str] = None
     status: str  # e.g., 'active' or 'inactive'
+
+    @validator('role')
+    def validate_role(cls, v):
+        # This will be validated at runtime when data is processed
+        # We can't do async validation in Pydantic v1 validators,
+        # so we'll do the actual DB check in CRUD functions
+        return v
 
 
 class CasePersonCreate(CasePersonBase):
@@ -139,7 +156,16 @@ class CasePersonUpdate(BaseModel):
     last_name: Optional[str] = None
     id_number: Optional[str] = None
     gender: Optional[PersonGender] = None
-    role: Optional[PersonRole] = None
+    role: Optional[str] = None  # Changed from Optional[PersonRole] to Optional[str]
+    marital_status_id: Optional[UUID] = None  # Added marital_status_id field
+
+    @validator('role')
+    def validate_role(cls, v):
+        if v is None:
+            return v
+        # This will be validated at runtime when data is processed
+        # We can't do async validation in Pydantic validators
+        return v
     birth_date: Optional[date] = None
     phone: Optional[str] = None
     email: Optional[str] = None
@@ -422,30 +448,40 @@ async def create_case_person(person_in: CasePersonCreate) -> CasePersonInDB:
     """
     Create a new person record tied to a specific case.
     """
+    # Validate role against database
+    role_obj = await get_person_role_by_value(person_in.role)
+    if not role_obj:
+        raise ValueError(f"Invalid person role: {person_in.role}")
+    
+    query = """
+    INSERT INTO case_persons (
+        case_id, first_name, last_name, id_number, gender, 
+        role, role_id, birth_date, marital_status_id, phone, email, status
+    )
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+    RETURNING 
+        id, case_id, first_name, last_name, id_number, gender, 
+        role, role_id, birth_date, marital_status_id, phone, email, status, created_at, updated_at
+    """
+    values = [
+        person_in.case_id,
+        person_in.first_name,
+        person_in.last_name,
+        person_in.id_number,
+        person_in.gender.value,
+        person_in.role,  # Now a string
+        role_obj.id,     # Set role_id from the validated role object
+        person_in.birth_date,
+        person_in.marital_status_id,  # Added marital_status_id
+        person_in.phone,
+        person_in.email,
+        person_in.status
+    ]
+    
     conn = await get_connection()
     try:
-        async with conn.transaction():
-            row = await conn.fetchrow(
-                """
-                INSERT INTO case_persons (
-                    case_id, first_name, last_name, id_number, 
-                    gender, role, birth_date, phone, email, status
-                )
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-                RETURNING *
-                """,
-                person_in.case_id,
-                person_in.first_name,
-                person_in.last_name,
-                person_in.id_number,
-                person_in.gender.value,
-                person_in.role.value,
-                person_in.birth_date,
-                person_in.phone,
-                person_in.email,
-                person_in.status,
-            )
-            return CasePersonInDB(**dict(row))
+        row = await conn.fetchrow(query, *values)
+        return CasePersonInDB.model_validate(dict(row))
     finally:
         await conn.close()
 
@@ -474,46 +510,104 @@ async def list_case_persons(case_id: UUID) -> List[CasePersonInDB]:
         await conn.close()
 
 
-async def update_case_person(person_id: UUID, person_update: CasePersonUpdate) -> Optional[CasePersonInDB]:
+async def update_case_person(person_id: UUID, person_update: CasePersonUpdate) -> CasePersonInDB:
     """
     Update an existing case person record by ID.
     """
-    existing = await get_case_person(person_id)
-    if not existing:
+    # Validate role if provided
+    role_obj = None
+    if person_update.role is not None:
+        role_obj = await get_person_role_by_value(person_update.role)
+        if not role_obj:
+            raise ValueError(f"Invalid person role: {person_update.role}")
+    
+    # Get current data
+    current_person = await get_case_person(person_id)
+    if not current_person:
         return None
-
-    updated_data = existing.copy(update=person_update.dict(exclude_unset=True))
+    
+    # Build update query dynamically
+    update_parts = []
+    values = [person_id]  # First param is always the ID
+    param_index = 2
+    
+    # For each field in the update model, add it to the query if it's not None
+    if person_update.first_name is not None:
+        update_parts.append(f"first_name = ${param_index}")
+        values.append(person_update.first_name)
+        param_index += 1
+        
+    if person_update.last_name is not None:
+        update_parts.append(f"last_name = ${param_index}")
+        values.append(person_update.last_name)
+        param_index += 1
+        
+    if person_update.id_number is not None:
+        update_parts.append(f"id_number = ${param_index}")
+        values.append(person_update.id_number)
+        param_index += 1
+        
+    if person_update.gender is not None:
+        update_parts.append(f"gender = ${param_index}")
+        values.append(person_update.gender.value)
+        param_index += 1
+        
+    if person_update.role is not None:
+        # Update both role and role_id
+        update_parts.append(f"role = ${param_index}")
+        values.append(person_update.role)  # Now a string
+        param_index += 1
+        
+        update_parts.append(f"role_id = ${param_index}")
+        values.append(role_obj.id)  # Set role_id from the validated role object
+        param_index += 1
+        
+    if person_update.birth_date is not None:
+        update_parts.append(f"birth_date = ${param_index}")
+        values.append(person_update.birth_date)
+        param_index += 1
+        
+    if person_update.marital_status_id is not None:
+        update_parts.append(f"marital_status_id = ${param_index}")
+        values.append(person_update.marital_status_id)
+        param_index += 1
+        
+    if person_update.phone is not None:
+        update_parts.append(f"phone = ${param_index}")
+        values.append(person_update.phone)
+        param_index += 1
+        
+    if person_update.email is not None:
+        update_parts.append(f"email = ${param_index}")
+        values.append(person_update.email)
+        param_index += 1
+        
+    if person_update.status is not None:
+        update_parts.append(f"status = ${param_index}")
+        values.append(person_update.status)
+        param_index += 1
+    
+    # If nothing to update, return the current data
+    if not update_parts:
+        return current_person
+    
+    # Build the final query
+    update_clause = ", ".join(update_parts)
+    query = f"""
+    UPDATE case_persons
+    SET {update_clause}, updated_at = NOW()
+    WHERE id = $1
+    RETURNING 
+        id, case_id, first_name, last_name, id_number, gender, 
+        role, role_id, birth_date, marital_status_id, phone, email, status, created_at, updated_at
+    """
+    
     conn = await get_connection()
     try:
-        async with conn.transaction():
-            row = await conn.fetchrow(
-                """
-                UPDATE case_persons
-                SET first_name = $1,
-                    last_name = $2,
-                    id_number = $3,
-                    gender = $4,
-                    role = $5,
-                    birth_date = $6,
-                    phone = $7,
-                    email = $8,
-                    status = $9,
-                    updated_at = NOW()
-                WHERE id = $10
-                RETURNING *
-                """,
-                updated_data.first_name,
-                updated_data.last_name,
-                updated_data.id_number,
-                updated_data.gender.value if updated_data.gender else existing.gender.value,
-                updated_data.role.value if updated_data.role else existing.role.value,
-                updated_data.birth_date,
-                updated_data.phone,
-                updated_data.email,
-                updated_data.status,
-                person_id,
-            )
-            return CasePersonInDB(**dict(row)) if row else None
+        row = await conn.fetchrow(query, *values)
+        if row:
+            return CasePersonInDB.model_validate(dict(row))
+        return None
     finally:
         await conn.close()
 

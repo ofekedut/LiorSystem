@@ -15,7 +15,7 @@ from server.database.cases_database import (
     create_case,
     create_case_person,
 )
-from server.database.documents_databse import (
+from server.database.documents_database import (
     create_document,
     DocumentInCreate,
 )
@@ -108,7 +108,7 @@ async def created_person(created_case):
         last_name="Doe",
         id_number=unique_id_number,
         gender=PersonGender.male,
-        role=PersonRole.primary,
+        role="primary",
         birth_date="1980-01-01",
         phone="1234567890",
         email="johndoe@example.com",

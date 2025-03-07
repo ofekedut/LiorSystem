@@ -2,6 +2,7 @@ import uuid
 import pytest
 import pytest_asyncio
 
+from database.d_migrations import FIN_ORG_TYPES_BANK_UID
 from server.database.finorg_database import (
     create_fin_org,
     get_fin_org,
@@ -16,18 +17,23 @@ from server.database.finorg_database import (
     update_fin_org_contact,
     delete_fin_org_contact,
     FinOrgContactCreate,
-    FinOrgContactUpdate,
+    FinOrgContactUpdate, create_fin_org_type, FinOrgTypeCreate,
 )
 
 
-# -----------------------------------------------------------------------------
-# Fixtures for FinOrg
-# -----------------------------------------------------------------------------
 @pytest_asyncio.fixture
-async def new_finorg_payload() -> dict:
+async def created_fin_org_type():
+    return await create_fin_org_type(FinOrgTypeCreate(
+        name='bank',
+        value='bank',
+    ))
+
+
+@pytest_asyncio.fixture
+async def new_finorg_payload(created_fin_org_type: any) -> dict:
     return {
         "name": "Test Financial Org " + str(uuid.uuid4())[:8],
-        "type": "bank",
+        "type_id": created_fin_org_type.id,
         "settings": {"currency": "USD", "region": "North America"},
     }
 

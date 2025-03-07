@@ -1,6 +1,14 @@
 import uuid
+import logging
 from fastapi.testclient import TestClient
 from server.api import app
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 client = TestClient(app)
 
@@ -138,20 +146,28 @@ def test_delete_asset_type():
         "value": "test_commodity_type"
     }
     
+    logger.info("Creating test asset type")
     create_response = client.post("/asset-types", json=test_asset_type)
     assert create_response.status_code == 201
     created_asset_type = create_response.json()
     asset_type_id = created_asset_type["id"]
+    logger.info(f"Created asset type with ID: {asset_type_id}")
     
     # Delete the asset type
+    logger.info(f"Deleting asset type with ID: {asset_type_id}")
     response = client.delete(f"/asset-types/{asset_type_id}")
+    logger.info(f"Delete response status code: {response.status_code}")
     assert response.status_code == 204
     
     # Verify that it's deleted by trying to get it
+    logger.info(f"Verifying deletion by getting asset type with ID: {asset_type_id}")
     response = client.get(f"/asset-types/{asset_type_id}")
+    logger.info(f"Get response status code: {response.status_code}")
     assert response.status_code == 404
     
     # Try to delete a non-existent asset type
     non_existent_id = str(uuid.uuid4())
+    logger.info(f"Attempting to delete non-existent asset type with ID: {non_existent_id}")
     response = client.delete(f"/asset-types/{non_existent_id}")
+    logger.info(f"Delete non-existent response status code: {response.status_code}, response text: {response.text}")
     assert response.status_code == 404

@@ -135,6 +135,8 @@ async def delete_asset_type(asset_type_id: uuid.UUID) -> bool:
         row = await conn.fetchrow(query, asset_type_id)
         await conn.close()
         return row is not None
+    except Exception as e:
+        print(e)
     finally:
         await conn.close()
         return  False

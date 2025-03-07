@@ -464,7 +464,7 @@ async def classify_document_background(file_path: str, case_id: UUID, document_i
         if confidence >= 0.7:  # 70% confidence threshold
             logger.info(f"Confidence {confidence:.4f} is above threshold (0.7), proceeding with document update")
             # Get document ID for the predicted type
-            from server.database.documents_databse import get_document_by_name
+            from server.database.documents_database import get_document_by_name
             
             logger.info(f"Looking up document type ID for '{predicted_doc_type}'")
             # Find the document type

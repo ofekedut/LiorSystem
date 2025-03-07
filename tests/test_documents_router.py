@@ -268,7 +268,7 @@ class TestDocumentsEndpoints:
         category_id = uuid.UUID(setup_test_data["categories"]["financial"])
         
         # 2. Directly call the database function
-        from server.database.documents_databse import list_case_documents_by_category
+        from server.database.documents_database import list_case_documents_by_category
         try:
             documents = await list_case_documents_by_category(case_id, category_id)
             print(f"Documents found: {len(documents)}")
@@ -283,7 +283,7 @@ class TestDocumentsEndpoints:
         assert str(documents[0].id) == doc1_id
         
         # Test with non-existing category
-        from server.database.documents_databse import get_document_category_by_value
+        from server.database.documents_database import get_document_category_by_value
         invalid_category = await get_document_category_by_value("invalid_category")
         assert invalid_category is None
         

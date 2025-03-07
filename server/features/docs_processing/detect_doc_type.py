@@ -37,6 +37,7 @@ def fix_filename(filename):
     fixed = re.sub(r'\s+', ' ', filtered)
 
     return fixed
+    
 def classify_with_bedrock(document_text: str, filename: str, filebytes: bytes, candidate_labels: List[str]) -> Tuple[str, Dict]:
     """
     Use AWS Bedrock's model invocation to classify document text.
@@ -114,7 +115,25 @@ def classify_with_bedrock(document_text: str, filename: str, filebytes: bytes, c
 
     payload = {
         'system': [
-            {'text': "You are a helpful document classifier (running on Claude 3 Sonnet Lite) that specializes in financial and property documents."}
+            {'text': """אתה מומחה בסיווג מסמכים פיננסיים ומשפטיים. נתח את תוכן הטקסט וסווג אותו לאחת מהקטגוריות הבאות:
+
+<document_categories>
+{doc_categories}
+</document_categories>
+
+הנחיות:
+1. קרא את כל הטקסט בקפידה - גם פרטים קטנים חשובים
+2. שקול את מטרת המסמך, הפורמט והישויות המרכזיות
+3. החזר רק את ערך הקטגוריה מהרשימה
+4. אם אינך בטוח, החזר 'other' עם רמת ביטחון 0.0
+5. רמת הביטחון חייבת להיות בין 0.0 ל-1.0
+
+פורמט תשובה:
+{{
+  "document_type": "category_value",
+  "confidence": 0.95,
+  "text_source": "first_50_chars" 
+}}"""}
         ],
         "messages": [
             {"role": "user", "content": [{'text': prompt}, *([doc_part] if doc_part else [])]}

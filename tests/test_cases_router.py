@@ -49,7 +49,7 @@ async def seeded_document():
         await conn.close()
         
     # Now create the document with the document_type_id
-    from server.database.documents_databse import create_document, DocumentInCreate, RequiredFor
+    from server.database.documents_database import create_document, DocumentInCreate, RequiredFor
     import uuid
     unique_doc_name = f"Router_Test_Doc_{uuid.uuid4()}"
     doc_data = DocumentInCreate(
