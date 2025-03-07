@@ -100,7 +100,7 @@ app.include_router(docs_processing_router)
 async def create_schema_and_admin():
     await drop_all_tables()
     await create_schema_if_not_exists()
-    await run_migrations()
+    # await run_migrations()
     
 
 

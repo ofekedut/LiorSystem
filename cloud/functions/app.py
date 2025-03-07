@@ -1,7 +1,6 @@
 import os
 import rest_handler
 from https_helper import create_response_body
-import tasks.email_sending
 
 prefix = os.getenv("Prefix")
 

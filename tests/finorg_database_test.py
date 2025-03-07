@@ -22,14 +22,6 @@ from server.database.finorg_database import (
 
 
 @pytest_asyncio.fixture
-async def created_fin_org_type():
-    return await create_fin_org_type(FinOrgTypeCreate(
-        name='bank',
-        value='bank',
-    ))
-
-
-@pytest_asyncio.fixture
 async def new_finorg_payload(created_fin_org_type: any) -> dict:
     return {
         "name": "Test Financial Org " + str(uuid.uuid4())[:8],

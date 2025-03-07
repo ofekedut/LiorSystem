@@ -43,18 +43,24 @@ async def read_loan_type(loan_type_id: uuid.UUID):
     finally:
         await conn.close()
 
+
+class LoanTypeDb:
+    @classmethod
+    async def create_loan_type(cls, load_type: LoanTypeInCreate):
+        new_id = uuid.uuid4()
+        conn = await get_connection()
+        try:
+            row = await conn.fetchrow(
+                "INSERT INTO loan_types (id, name, value) VALUES ($1, $2, $3) RETURNING id, name, value",
+                str(new_id), load_type.name, load_type.value
+            )
+            return dict(row)
+        finally:
+            await conn.close()
+
 @router.post("/", response_model=LoanTypeInDB, status_code=status.HTTP_201_CREATED)
 async def create_loan_type(payload: LoanTypeInCreate):
-    new_id = uuid.uuid4()
-    conn = await get_connection()
-    try:
-        row = await conn.fetchrow(
-            "INSERT INTO loan_types (id, name, value) VALUES ($1, $2, $3) RETURNING id, name, value",
-            str(new_id), payload.name, payload.value
-        )
-        return dict(row)
-    finally:
-        await conn.close()
+    return LoanTypeDb.create_loan_type(payload)
 
 @router.put("/{loan_type_id}", response_model=LoanTypeInDB)
 async def update_loan_type(loan_type_id: uuid.UUID, payload: LoanTypeInUpdate):

@@ -178,13 +178,13 @@ async def created_loan(created_case):
 
 @pytest.mark.asyncio
 class TestCases:
-    async def test_create_case(self):
+    async def test_create_case(self, created_load_type):
         new_case = CaseInCreate(
             name="New Mortgage Case",
             status=CaseStatus.active,
             case_purpose='case for system testing',
             last_active=datetime.utcnow(),
-            loan_type='load for system testing',
+            loan_type_id=created_load_type['id'],
         )
         case_db = await create_case(new_case)
         assert case_db.id is not None

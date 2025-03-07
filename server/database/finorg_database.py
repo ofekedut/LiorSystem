@@ -36,6 +36,7 @@ class FinOrgUpdate(BaseModel):
     settings: Optional[Dict[str, Any]] = None
     type_id: UUID = None
 
+
 # -----------------------------------------------------------------------------
 # 2. Pydantic Models for FinOrgContact
 # -----------------------------------------------------------------------------
@@ -152,11 +153,12 @@ async def delete_fin_org(org_id: UUID) -> bool:
     conn = await get_connection()
     try:
         async with conn.transaction():
-            result = await conn.execute("DELETE FROM fin_orgs WHERE id = $1", org_id)
-            return "DELETE 1" in result
+            result = await conn.fetchrow("DELETE FROM fin_orgs WHERE id = $1 returning id", org_id)
+            return bool(result)
+    except Exception as e:
+        print(e)
     finally:
         await conn.close()
-        return False
 
 
 # -----------------------------------------------------------------------------

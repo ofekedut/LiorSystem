@@ -1,7 +1,11 @@
+import uuid
+
 import pytest
 import pytest_asyncio
 from fastapi.testclient import TestClient
 from httpx import AsyncClient
+
+from database.finorg_database import create_fin_org_type, FinOrgTypeCreate
 from server.api import app
 from server.database.database import drop_all_tables, create_schema_if_not_exists, get_connection
 from server.database.users_database import create_user, UserCreate, update_user_role, UserRole, delete_user, get_user, get_user_by_email
@@ -99,7 +103,7 @@ async def new_document_payload() -> dict:
     # Check if the document type already exists, and if not, create it
     doc_type_name = "One Time"
     doc_type_value = "one-time"
-    
+
     conn = await get_connection()
     try:
         # Try to get existing document type
@@ -107,7 +111,7 @@ async def new_document_payload() -> dict:
             """SELECT id FROM document_types WHERE name = $1""",
             doc_type_name
         )
-        
+
         if existing:
             doc_type_id = existing['id']
         else:
@@ -121,7 +125,7 @@ async def new_document_payload() -> dict:
             doc_type_id = doc_type['id']
     finally:
         await conn.close()
-    
+
     return {
         "name": "Test Document",
         "description": "A test document",
@@ -132,3 +136,12 @@ async def new_document_payload() -> dict:
         "has_multiple_periods": False,
         "required_for": ["all"]
     }
+
+
+@pytest_asyncio.fixture
+async def created_fin_org_type():
+    uid = str(uuid.uuid4())
+    return await create_fin_org_type(FinOrgTypeCreate(
+        name='bank' + uid,
+        value='bank' + uid,
+    ))

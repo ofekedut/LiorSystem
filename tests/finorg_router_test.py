@@ -11,6 +11,7 @@ from fastapi import status
 # Adjust the import below to match your project structure.
 from server.api import app
 
+
 # -----------------------------------------------------------------------------
 # Fixtures for Async Client and Payloads
 # -----------------------------------------------------------------------------
@@ -19,19 +20,22 @@ async def async_client():
     async with AsyncClient(app=app, base_url="http://testserver") as client:
         yield client
 
+
 @pytest.fixture
-def new_finorg_payload():
+def new_finorg_payload(created_fin_org_type: any):
     return {
         "name": "Router Test FinOrg " + str(uuid.uuid4())[:8],
-        "type": "bank",
+        "type_id": str(created_fin_org_type.id),
         "settings": {"currency": "USD", "region": "NA"}
     }
+
 
 @pytest_asyncio.fixture
 async def created_finorg(async_client: AsyncClient, new_finorg_payload: dict):
     resp = await async_client.post("/fin_orgs", json=new_finorg_payload)
     assert resp.status_code == status.HTTP_201_CREATED
     return resp.json()
+
 
 @pytest.fixture
 def new_contact_payload(created_finorg):
@@ -43,12 +47,14 @@ def new_contact_payload(created_finorg):
         "phone": "+15551234567"
     }
 
+
 @pytest_asyncio.fixture
 async def created_contact(async_client: AsyncClient, created_finorg, new_contact_payload: dict):
     url = f"/fin_orgs/{created_finorg['id']}/contacts"
     resp = await async_client.post(url, json=new_contact_payload)
     assert resp.status_code == status.HTTP_201_CREATED
     return resp.json()
+
 
 # -----------------------------------------------------------------------------
 # Tests for FinOrg Router Endpoints
@@ -91,6 +97,7 @@ class TestFinOrgRouter:
         assert del_resp.status_code == status.HTTP_204_NO_CONTENT
         get_resp = await async_client.get(f"/fin_orgs/{org_id}")
         assert get_resp.status_code == status.HTTP_404_NOT_FOUND
+
 
 # -----------------------------------------------------------------------------
 # Tests for FinOrgContact Router Endpoints

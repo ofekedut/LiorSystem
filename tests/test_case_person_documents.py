@@ -4,6 +4,7 @@ import pytest_asyncio
 from httpx import AsyncClient
 from fastapi import status
 
+from routers.loan_types_router import LoanTypeInCreate, create_loan_type, LoanTypeDb
 from server.api import app
 from server.database.cases_database import (
     CasePersonDocumentCreate,
@@ -43,7 +44,7 @@ async def created_main_doc():
     # Get or create document type first
     doc_type_name = "Recurring"
     doc_type_value = "recurring"
-    
+
     conn = await get_connection()
     try:
         # Try to get existing document type
@@ -51,7 +52,7 @@ async def created_main_doc():
             """SELECT id FROM document_types WHERE name = $1""",
             doc_type_name
         )
-        
+
         if existing:
             doc_type_id = existing['id']
         else:
@@ -65,10 +66,10 @@ async def created_main_doc():
             doc_type_id = doc_type['id']
     finally:
         await conn.close()
-        
+
     # Generate a unique document name using uuid
     unique_name = f'test doc {uuid.uuid4()}'
-    
+
     return await create_document(DocumentInCreate(
         name=unique_name,
         description='test doc',
@@ -79,10 +80,19 @@ async def created_main_doc():
         has_multiple_periods=True,
         required_for=[],
     ))
+@pytest_asyncio.fixture
+async def created_load_type():
+    """
+    Creates a test load type for use in testing.
+    """
+    return LoanTypeDb.create_loan_type(LoanTypeInCreate(
+        name="Mortgage",
+        value="mortgage"
+    ))
 
 
 @pytest_asyncio.fixture
-async def created_case():
+async def created_case(created_load_type):
     """
     Creates a new case for testing and returns the resulting CaseInDB.
     """
@@ -90,7 +100,7 @@ async def created_case():
         name="Test Case",
         status=CaseStatus.active,
         case_purpose="Testing",
-        loan_type="Mortgage",
+        loan_type_id=created_load_type['id'],
     ))
 
 
@@ -101,14 +111,14 @@ async def created_person(created_case):
     """
     # Generate a random ID number to avoid unique constraint violations
     unique_id_number = str(uuid.uuid4().int)[:9]
-    
+
     return await create_case_person(CasePersonCreate(
         case_id=created_case.id,
         first_name="John",
         last_name="Doe",
         id_number=unique_id_number,
         gender=PersonGender.male,
-        role="primary",
+        role_id="primary",
         birth_date="1980-01-01",
         phone="1234567890",
         email="johndoe@example.com",
@@ -136,13 +146,13 @@ class TestCasePersonDocumentsEndpoints:
             }
         )
         assert response.status_code == status.HTTP_201_CREATED
-        
+
         data = response.json()
         assert data["case_id"] == str(created_case.id)
         assert data["person_id"] == str(created_person.id)
         assert data["document_id"] == str(created_main_doc.id)
         assert data["is_primary"] == True
-        
+
         # Test attempting to create with mismatched IDs
         response = await async_client.post(
             f"/cases/{created_case.id}/persons/{created_person.id}/documents",
@@ -170,19 +180,19 @@ class TestCasePersonDocumentsEndpoints:
             }
         )
         assert response.status_code == status.HTTP_201_CREATED
-        
+
         # Now retrieve it
         response = await async_client.get(
             f"/cases/{created_case.id}/persons/{created_person.id}/documents/{created_main_doc.id}"
         )
         assert response.status_code == status.HTTP_200_OK
-        
+
         data = response.json()
         assert data["case_id"] == str(created_case.id)
         assert data["person_id"] == str(created_person.id)
         assert data["document_id"] == str(created_main_doc.id)
         assert data["is_primary"] == True
-        
+
         # Test retrieving a non-existent link
         non_existent_doc_id = str(uuid.uuid4())
         response = await async_client.get(
@@ -205,17 +215,17 @@ class TestCasePersonDocumentsEndpoints:
             }
         )
         assert response.status_code == status.HTTP_201_CREATED
-        
+
         # Now list all documents
         response = await async_client.get(
             f"/cases/{created_case.id}/persons/{created_person.id}/documents"
         )
         assert response.status_code == status.HTTP_200_OK
-        
+
         data = response.json()
         assert isinstance(data, list)
         assert len(data) >= 1
-        
+
         # Verify the document we just created is in the list
         found = False
         for doc in data:
@@ -225,7 +235,7 @@ class TestCasePersonDocumentsEndpoints:
                 assert doc["person_id"] == str(created_person.id)
                 assert doc["is_primary"] == True
                 break
-        
+
         assert found, "Created document link not found in the list"
 
     async def test_update_case_person_document(self, async_client, created_case, created_person, created_main_doc):
@@ -243,7 +253,7 @@ class TestCasePersonDocumentsEndpoints:
             }
         )
         assert response.status_code == status.HTTP_201_CREATED
-        
+
         # Now update it
         response = await async_client.patch(
             f"/cases/{created_case.id}/persons/{created_person.id}/documents/{created_main_doc.id}",
@@ -252,13 +262,13 @@ class TestCasePersonDocumentsEndpoints:
             }
         )
         assert response.status_code == status.HTTP_200_OK
-        
+
         data = response.json()
         assert data["case_id"] == str(created_case.id)
         assert data["person_id"] == str(created_person.id)
         assert data["document_id"] == str(created_main_doc.id)
         assert data["is_primary"] == False
-        
+
         # Test updating a non-existent link
         non_existent_doc_id = str(uuid.uuid4())
         response = await async_client.patch(
@@ -284,19 +294,19 @@ class TestCasePersonDocumentsEndpoints:
             }
         )
         assert response.status_code == status.HTTP_201_CREATED
-        
+
         # Now delete it
         response = await async_client.delete(
             f"/cases/{created_case.id}/persons/{created_person.id}/documents/{created_main_doc.id}"
         )
         assert response.status_code == status.HTTP_200_OK
-        
+
         # Confirm it's deleted by trying to get it
         response = await async_client.get(
             f"/cases/{created_case.id}/persons/{created_person.id}/documents/{created_main_doc.id}"
         )
         assert response.status_code == status.HTTP_404_NOT_FOUND
-        
+
         # Test deleting a non-existent link
         non_existent_doc_id = str(uuid.uuid4())
         response = await async_client.delete(
