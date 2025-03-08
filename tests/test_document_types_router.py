@@ -47,6 +47,18 @@ class TestDocumentTypesRouter:
             "/document_types/",
             json={"name": "Quarterly", "value": "quarterly"},
         )
+        create_response = client.post(
+            "/document_types/",
+            json={"name": "Monthly", "value": "monthly"},
+        )
+        create_response = client.post(
+            "/document_types/",
+            json={"name": "Yearly", "value": "yearly"},
+        )
+        create_response = client.post(
+            "/document_types/",
+            json={"name": "Dynamic", "value": "Dynamic"},
+        )
         created_data = create_response.json()
 
         # Get all document types
@@ -94,19 +106,19 @@ class TestDocumentTypesRouter:
         )
         created_data = create_response.json()
 
-        # Update it
+        # Update it with a unique name
         response = client.put(
             f"/document_types/{created_data['id']}",
-            json={"name": "Yearly", "value": "yearly"},
+            json={"name": "Annual Report", "value": "annual-report"},
         )
         assert response.status_code == status.HTTP_200_OK
         data = response.json()
         assert data["id"] == created_data["id"]
-        assert data["name"] == "Yearly"
-        assert data["value"] == "yearly"
+        assert data["name"] == "Annual Report"
+        assert data["value"] == "annual-report"
 
         # Cleanup
-        client.delete(f"/document_types/{created_data['id']}")
+        client.delete(f"/document_types/{data['id']}")
 
     def test_update_document_type_partial(self, client):
         """Test partial update of a document type."""

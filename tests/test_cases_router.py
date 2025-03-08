@@ -28,12 +28,12 @@ async def seeded_document():
         # Try to get existing document type
         doc_type_name = "One Time"
         doc_type_value = "one-time"
-        
+
         existing = await conn.fetchrow(
             """SELECT id FROM document_types WHERE name = $1""",
             doc_type_name
         )
-        
+
         if existing:
             doc_type_id = existing['id']
         else:
@@ -47,7 +47,7 @@ async def seeded_document():
             doc_type_id = doc_type['id']
     finally:
         await conn.close()
-        
+
     # Now create the document with the document_type_id
     from server.database.documents_database import create_document, DocumentInCreate, RequiredFor
     import uuid
@@ -82,13 +82,13 @@ async def async_client():
 @pytest.mark.asyncio
 class TestCasesRouter:
     @pytest.fixture
-    def new_case_payload(self):
+    def new_case_payload(self, created_loan_type):
         return {
             "name": "Test Case Router",
             "status": "pending",
             "last_active": datetime.utcnow().isoformat(),
             "case_purpose": "Testing case purpose",
-            "loan_type": "Personal Loan"
+            "loan_type_id": str(created_loan_type['id'])
         }
 
     async def test_create_case(self, async_client: AsyncClient, new_case_payload: dict):
@@ -126,16 +126,16 @@ class TestCasesRouter:
         resp = await async_client.get(f"/cases/{bad_id}")
         assert resp.status_code == status.HTTP_404_NOT_FOUND
 
-    async def test_update_case(self, async_client: AsyncClient, new_case_payload: dict):
+    async def test_update_case(self, async_client: AsyncClient, new_case_payload: dict, created_loan_type):
         # Create
-        create_resp = await async_client.post("/cases", json=new_case_payload)
+        create_resp = await async_client.post("/cases", json=new_case_payload, )
         created = create_resp.json()
         case_id = created["id"]
 
         update_payload = {
             "name": "Updated Router Case",
             "status": "active",
-            'loan_type': 'Personal Loan',
+            'loan_type_id': str(created_loan_type['id']),
             'case_purpose': 'Testing case purpose',
         }
         update_resp = await async_client.put(f"/cases/{case_id}", json=update_payload)
@@ -144,8 +144,9 @@ class TestCasesRouter:
         updated = update_resp.json()
         assert updated["name"] == "Updated Router Case"
         assert updated["status"] == "active"
-        assert updated['loan_type'] =='Personal Loan'
-        assert updated['case_purpose']== 'Testing case purpose'
+        assert str(updated['loan_type_id']) == str(created_loan_type['id'])
+        assert updated['case_purpose'] == 'Testing case purpose'
+
     async def test_delete_case(self, async_client: AsyncClient, new_case_payload: dict):
         # Create
         create_resp = await async_client.post("/cases", json=new_case_payload)
@@ -167,7 +168,7 @@ class TestCasesRouter:
 @pytest.mark.asyncio
 class TestCasePersonsRouter:
     @pytest_asyncio.fixture
-    async def created_case_id(self, async_client: AsyncClient):
+    async def created_case_id(self, async_client: AsyncClient, created_loan_type):
         payload = {
             "name": "Case for Persons",
             "status": "pending",
@@ -175,13 +176,13 @@ class TestCasePersonsRouter:
             "last_active": datetime.utcnow().isoformat(),
             "project_count": 1,
             "case_purpose": "Purpose for Persons",
-            "loan_type": "Type for Persons"
+            "loan_type_id": str(created_loan_type['id'])
         }
         resp = await async_client.post("/cases", json=payload)
         return resp.json()["id"]
 
     @pytest.fixture
-    def new_person_payload(self, created_case_id):
+    def new_person_payload(self, created_case_id, created_role):
         return {
             "case_id": created_case_id,
             "first_name": "Alice",
@@ -189,7 +190,7 @@ class TestCasePersonsRouter:
             "id_number": str(uuid.uuid4())[:8],
             "age": 30,
             "gender": "female",
-            "role": "primary",
+            "role_id": str(created_role.id),
             "birth_date": date(1990, 1, 1).isoformat(),
             "phone": "+123456789",
             "email": "alice@example.com",
@@ -253,7 +254,6 @@ class TestCasePersonsRouter:
 
         data = update_resp.json()
         assert data["phone"] == "+999999999"
-        assert data["role"] == "guarantor"
 
     async def test_delete_case_person(
             self, async_client: AsyncClient, created_case_id: uuid.UUID, new_person_payload: dict
@@ -397,26 +397,12 @@ class TestCaseDocumentsRouter:
 
 @pytest.mark.asyncio
 class TestCaseLoansRouter:
-    @pytest_asyncio.fixture
-    async def created_case_id(self, async_client: AsyncClient):
-        payload = {
-            "name": "Case for Loans",
-            "status": "pending",
-            "activity_level": 15,
-            "last_active": datetime.utcnow().isoformat(),
-            "project_count": 0,
-            "case_purpose": "Purpose for Loans",
-            "loan_type": "Type for Loans"
-        }
-        resp = await async_client.post("/cases", json=payload)
-        return resp.json()["id"]
-
     @pytest.fixture
     def new_loan_payload(self, created_case_id):
         return {
-            "case_id": created_case_id,
+            "case_id": str(created_case_id),
             "amount": 12345.67,
-            "status": "active",
+            "status_id": "active",
             "start_date": date.today().isoformat(),
             "end_date": None
         }

@@ -1,10 +1,8 @@
 import uuid
+from typing import Any
+
 import pytest
 import pytest_asyncio
-from uuid import UUID
-import json
-import os
-import httpx
 from httpx import AsyncClient
 from fastapi import status
 
@@ -25,76 +23,26 @@ async def async_client():
         yield client
 
 
-@pytest_asyncio.fixture
-async def setup_test_data():
-    """Setup test data needed for document tests"""
-    conn = await get_connection()
-    try:
-        # Create document type
-        doc_type = await conn.fetchrow(
-            """
-            INSERT INTO document_types (name, value)
-            VALUES ($1, $2)
-            ON CONFLICT (value) DO UPDATE 
-            SET name = $1
-            RETURNING id
-            """, 
-            "Test Type", "test_type"
-        )
-        
-        # Create document categories
-        categories = {}
-        for category in ["financial", "asset", "bank_account"]:
-            category_record = await conn.fetchrow(
-                """
-                INSERT INTO document_categories (name, value)
-                VALUES ($1, $2)
-                ON CONFLICT (value) DO UPDATE 
-                SET name = $1
-                RETURNING id, value
-                """,
-                category.capitalize(), category
-            )
-            categories[category] = str(category_record["id"])
-            
-        # Create test case
-        case = await conn.fetchrow(
-            """
-            INSERT INTO cases (name, description, status)
-            VALUES ($1, $2, $3)
-            RETURNING id
-            """,
-            "Test Case", "Test case for documents", "active"
-        )
-        
-        return {
-            "doc_type_id": doc_type["id"],
-            "case_id": case["id"],
-            "categories": categories
-        }
-    finally:
-        await conn.close()
-
 @pytest.fixture
-def new_document_payload(setup_test_data, request):
-    """Fixture to provide a valid document payload with a unique name."""
-    # Generate a unique name based on the test function name
+def new_document_payload(setup_test_data: Any, request):
+    assert setup_test_data
     unique_suffix = request.node.name
-    
+
     return {
         "name": f"Test Document {unique_suffix}",
         "description": "A test document",
         "document_type_id": str(setup_test_data["doc_type_id"]),
         "category": "financial",
         "category_id": setup_test_data["categories"]["financial"],
-        "period_type": "month", 
+        "period_type": "month",
         "periods_required": 12,
         "has_multiple_periods": False,
         "required_for": ["employees"]
     }
 
+
 @pytest_asyncio.fixture
-async def test_case_id(setup_test_data):
+async def test_case_id(setup_test_data: Any):
     """Create a test case for document tests."""
     return setup_test_data["case_id"]
 
@@ -176,7 +124,7 @@ class TestDocumentsEndpoints:
         # Get or create a recurring document type for the update
         doc_type_name = "Recurring"
         doc_type_value = "recurring"
-        
+
         conn = await get_connection()
         try:
             # Try to get existing document type
@@ -184,7 +132,7 @@ class TestDocumentsEndpoints:
                 """SELECT id FROM document_types WHERE name = $1""",
                 doc_type_name
             )
-            
+
             if existing:
                 recurring_type_id = existing['id']
             else:
@@ -198,7 +146,7 @@ class TestDocumentsEndpoints:
                 recurring_type_id = recurring_type['id']
         finally:
             await conn.close()
-        
+
         # Prepare update payload. Ensure all required fields are provided.
         update_payload = {
             "name": "Updated Document Name",
@@ -241,7 +189,7 @@ class TestDocumentsEndpoints:
         Test retrieving documents by category (GET /documents/case/{case_id}/cat/{category}).
         """
         case_id = setup_test_data["case_id"]
-        
+
         # Create test document
         doc1_response = await async_client.post(
             "/documents",
@@ -249,16 +197,16 @@ class TestDocumentsEndpoints:
         )
         assert doc1_response.status_code == 201, f"Failed to create document: {doc1_response.json()}"
         doc1_id = doc1_response.json()["id"]
-        
+
         # Link document to the case
         conn = await get_connection()
         try:
             await conn.execute(
                 """
-                INSERT INTO case_documents (case_id, document_id, status, processing_status)
-                VALUES ($1, $2, $3, $4)
+                INSERT INTO case_documents (case_id, document_id)
+                VALUES ($1, $2)
                 """,
-                case_id, doc1_id, 'pending', 'pending'
+                case_id, doc1_id
             )
         finally:
             await conn.close()
@@ -266,7 +214,7 @@ class TestDocumentsEndpoints:
         # Instead of using the endpoint, directly test the database functions
         # 1. Get the category ID
         category_id = uuid.UUID(setup_test_data["categories"]["financial"])
-        
+
         # 2. Directly call the database function
         from server.database.documents_database import list_case_documents_by_category
         try:
@@ -277,16 +225,16 @@ class TestDocumentsEndpoints:
             import traceback
             traceback.print_exc()
             raise
-        
+
         # Assert that the document is found
         assert len(documents) >= 1
         assert str(documents[0].id) == doc1_id
-        
+
         # Test with non-existing category
         from server.database.documents_database import get_document_category_by_value
         invalid_category = await get_document_category_by_value("invalid_category")
         assert invalid_category is None
-        
+
         # Test with existing category but no documents
         asset_category_id = uuid.UUID(setup_test_data["categories"]["asset"])
         asset_documents = await list_case_documents_by_category(case_id, asset_category_id)
@@ -396,7 +344,7 @@ class TestValidationRulesEndpoints:
         payload = new_document_payload.copy()
         # Generate a unique name for validation rule tests
         unique_suffix = f"Validation_Rule_{request.node.name}"
-        
+
         payload.update({
             "name": f"Validation Rule Test Document {unique_suffix}",
             "document_type": "recurring",

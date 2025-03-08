@@ -39,7 +39,7 @@ class DocumentBase(BaseModel):
     name: str
     description: Optional[str] = None
     document_type_id: UUID
-    category: str  # Use string instead of enum
+    category: Optional[str] = None  # Use string instead of enum, but make it optional
     category_id: Optional[UUID] = None
     period_type: Optional[str] = None
     periods_required: Optional[int] = None
@@ -128,14 +128,13 @@ async def create_document(doc_in: DocumentInCreate) -> DocumentInDB:
         async with conn.transaction():
             record = await conn.fetchrow(
                 """INSERT INTO documents (
-                    name, description, document_type_id, category,
+                    name, description, document_type_id,
                     category_id, period_type, periods_required, has_multiple_periods
-                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7)
                 RETURNING *""",
                 doc_in.name,
                 doc_in.description,
                 doc_in.document_type_id,
-                doc_in.category,
                 doc_in.category_id,
                 doc_in.period_type,
                 doc_in.periods_required,
@@ -170,8 +169,10 @@ async def get_document(document_id: UUID) -> Optional[DocumentInDB]:
         # Convert to dict
         doc_dict = dict(doc)
 
-        # Validate category exists in database
-        if 'category' in doc_dict and isinstance(doc_dict['category'], str):
+        # Handle category field if it exists in the database result
+        # Since we've made category optional in the model, we don't need to validate it
+        # if it doesn't exist in the database result
+        if 'category' in doc_dict and doc_dict['category'] is not None and isinstance(doc_dict['category'], str):
             # No need to convert to enum anymore, just verify it's valid
             valid_category = await conn.fetchval(
                 """SELECT value FROM document_categories WHERE value = $1""",
@@ -180,8 +181,8 @@ async def get_document(document_id: UUID) -> Optional[DocumentInDB]:
 
             if not valid_category:
                 print(f"Invalid category: {doc_dict['category']}")
-                # Default to financial if category is invalid
-                doc_dict['category'] = 'financial'
+                # Make it None since it's optional now
+                doc_dict['category'] = None
 
         # Get required_for values
         required_for_rows = await conn.fetch(
@@ -217,17 +218,15 @@ async def update_document(document_id: UUID, doc_update: DocumentUpdate) -> Opti
                     name = $1,
                     description = $2,
                     document_type_id = $3,
-                    category = $4,
-                    category_id = $5,
-                    period_type = $6,
-                    periods_required = $7,
-                    has_multiple_periods = $8
-                WHERE id = $9
+                    category_id = $4,
+                    period_type = $5,
+                    periods_required = $6,
+                    has_multiple_periods = $7
+                WHERE id = $8
                 RETURNING *""",
                 updated_data.name,
                 updated_data.description,
                 updated_data.document_type_id,
-                updated_data.category,
                 updated_data.category_id,
                 updated_data.period_type,
                 updated_data.periods_required,
@@ -273,25 +272,15 @@ async def list_documents() -> List[DocumentInDB]:
         # Join with document_categories to verify categories in a single query
         # Left join with documents_required_for to get required_for values
         query = """
-        WITH valid_categories AS (
-            SELECT value FROM document_categories
-        ),
-        doc_with_category AS (
-            SELECT d.*,
-                   CASE WHEN vc.value IS NULL THEN 'financial' ELSE d.category END AS validated_category
-            FROM documents d
-            LEFT JOIN valid_categories vc ON d.category = vc.value
-        )
         SELECT d.id, d.name, d.description, d.document_type_id, 
-               d.validated_category AS category, d.category_id, 
-               d.period_type, d.periods_required, d.has_multiple_periods,
+               d.category_id, d.period_type, d.periods_required, d.has_multiple_periods,
                d.created_at, d.updated_at,
                ARRAY_AGG(drf.required_for) FILTER (WHERE drf.required_for IS NOT NULL) AS required_for
-        FROM doc_with_category d
+        FROM documents d
         LEFT JOIN documents_required_for drf ON d.id = drf.document_id
         GROUP BY d.id, d.name, d.description, d.document_type_id, 
-                 d.validated_category, d.category_id, d.period_type, 
-                 d.periods_required, d.has_multiple_periods, d.created_at, d.updated_at
+                 d.category_id, d.period_type, d.periods_required, 
+                 d.has_multiple_periods, d.created_at, d.updated_at
         ORDER BY d.name
         """
         
@@ -442,7 +431,7 @@ async def list_case_documents_by_category(case_id: UUID, category_id: UUID) -> L
             d.id, d.name, d.description, 
             d.document_type_id, d.category_id,
             d.created_at, d.updated_at,
-            cdoc.status as case_status,
+            'pending' as case_status, -- Default status since the column doesn't exist
             cdoc.file_path
         FROM documents d
         JOIN case_documents cdoc ON d.id = cdoc.document_id

@@ -41,33 +41,40 @@ class TestPersonAssetsRouter:
             await conn.close()
 
     @pytest_asyncio.fixture
-    async def created_case_id(self, async_client: AsyncClient):
-        """Create a case for testing and return its ID"""
-        # Create a new case
-        payload = {
-            "name": "Test Case for Person Assets",
-            "status": "pending",
-            "last_active": datetime.utcnow().isoformat(),
-            "case_purpose": "Testing person assets",
-            "loan_type": "Personal Loan"
-        }
-        
-        response = await async_client.post("/cases", json=payload)
-        assert response.status_code == 201
-        return response.json()["id"]
-
-    @pytest_asyncio.fixture
     async def created_person_id(self, async_client: AsyncClient, created_case_id: uuid.UUID):
         """Create a person for testing and return its ID"""
         # Create a new person for the case
+        # Get a role_id first
+        conn = await get_connection()
+        try:
+            # Try to get a role_id for 'primary'
+            role_result = await conn.fetchrow(
+                """SELECT id FROM person_roles WHERE value = 'primary'"""
+            )
+            role_id = role_result['id'] if role_result else None
+        finally:
+            await conn.close()
+            
+        if not role_id:
+            # If role doesn't exist, create it
+            conn = await get_connection()
+            try:
+                role_result = await conn.fetchrow(
+                    """INSERT INTO person_roles (id, name, value) 
+                       VALUES (gen_random_uuid(), 'Primary', 'primary') 
+                       RETURNING id"""
+                )
+                role_id = role_result['id']
+            finally:
+                await conn.close()
+        
         payload = {
             "case_id": str(created_case_id),
             "first_name": "Test",
             "last_name": "Person",
             "id_number": str(uuid.uuid4())[:8],
-            "age": 30,
             "gender": "male",
-            "role": "primary",
+            "role_id": str(role_id),  # Use role_id instead of role
             "birth_date": "1990-01-01",
             "phone": "+123456789",
             "email": "test@example.com",

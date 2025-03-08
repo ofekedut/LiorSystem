@@ -34,14 +34,7 @@ async def read_loan_types():
 
 @router.get("/{loan_type_id}", response_model=LoanTypeInDB)
 async def read_loan_type(loan_type_id: uuid.UUID):
-    conn = await get_connection()
-    try:
-        row = await conn.fetchrow("SELECT id, name, value FROM loan_types WHERE id = $1", str(loan_type_id))
-        if row is None:
-            raise HTTPException(status_code=404, detail="Loan type not found")
-        return dict(row)
-    finally:
-        await conn.close()
+    return await LoanTypeDb.get_loan_type(loan_type_id)
 
 
 class LoanTypeDb:
@@ -58,9 +51,53 @@ class LoanTypeDb:
         finally:
             await conn.close()
 
+    @classmethod
+    async def delete_loan_type(cls, loan_type_id):
+        conn = await get_connection()
+        try:
+            result = await conn.execute("DELETE FROM loan_types WHERE id = $1", str(loan_type_id))
+            if result.split()[-1] == "0":
+                raise HTTPException(status_code=404, detail="Loan type not found")
+        finally:
+            await conn.close()
+
+    @classmethod
+    async def get_loan_type(cls, loan_type_id):
+        conn = await get_connection()
+        try:
+            row = await conn.fetchrow("SELECT id, name, value FROM loan_types WHERE id = $1", str(loan_type_id))
+            if row is None:
+                raise HTTPException(status_code=404, detail="Loan type not found")
+            return dict(row)
+        finally:
+            await conn.close()
+
+    @classmethod
+    async def get_loan_type_by_value(cls, value):
+        conn = await get_connection()
+        try:
+            row = await conn.fetchrow("SELECT id, name, value FROM loan_types WHERE value = $1", str(value))
+            if row is None:
+                raise HTTPException(status_code=404, detail="Loan type not found")
+            return dict(row)
+        finally:
+            await conn.close()
+
+    @classmethod
+    async def get_loan_type_by_name(cls, name):
+        conn = await get_connection()
+        try:
+            row = await conn.fetchrow("SELECT id, name, value FROM loan_types WHERE name = $1", str(name))
+            if row is None:
+                raise HTTPException(status_code=404, detail="Loan type not found")
+            return dict(row)
+        finally:
+            await conn.close()
+
+
 @router.post("/", response_model=LoanTypeInDB, status_code=status.HTTP_201_CREATED)
 async def create_loan_type(payload: LoanTypeInCreate):
-    return LoanTypeDb.create_loan_type(payload)
+    return await LoanTypeDb.create_loan_type(payload)
 
 @router.put("/{loan_type_id}", response_model=LoanTypeInDB)
 async def update_loan_type(loan_type_id: uuid.UUID, payload: LoanTypeInUpdate):
@@ -82,10 +119,4 @@ async def update_loan_type(loan_type_id: uuid.UUID, payload: LoanTypeInUpdate):
 
 @router.delete("/{loan_type_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_loan_type(loan_type_id: uuid.UUID):
-    conn = await get_connection()
-    try:
-        result = await conn.execute("DELETE FROM loan_types WHERE id = $1", str(loan_type_id))
-        if result.split()[-1] == "0":
-            raise HTTPException(status_code=404, detail="Loan type not found")
-    finally:
-        await conn.close()
+    return await LoanTypeDb.delete_loan_type(loan_type_id)

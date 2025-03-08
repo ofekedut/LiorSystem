@@ -1,14 +1,18 @@
 import uuid
 
+import asyncpg
 import pytest
 import pytest_asyncio
 from fastapi.testclient import TestClient
 from httpx import AsyncClient
 
-from database.finorg_database import create_fin_org_type, FinOrgTypeCreate
+from database.person_roles_database import PersonRoleInCreate
+from server.database.cases_database import create_case, CaseInCreate, CaseStatus
+from server.database.finorg_database import create_fin_org_type, FinOrgTypeCreate
+from server.routers.loan_types_router import LoanTypeDb, LoanTypeInCreate
 from server.api import app
 from server.database.database import drop_all_tables, create_schema_if_not_exists, get_connection
-from server.database.users_database import create_user, UserCreate, update_user_role, UserRole, delete_user, get_user, get_user_by_email
+from server.database.users_database import create_user, UserCreate, update_user_role, UserRole, delete_user, get_user_by_email
 from server.features.users.security import create_access_token
 
 
@@ -145,3 +149,107 @@ async def created_fin_org_type():
         name='bank' + uid,
         value='bank' + uid,
     ))
+
+
+@pytest_asyncio.fixture
+async def created_loan_type():
+    """
+    Creates a test load type for use in testing.
+    """
+    try:
+        return await LoanTypeDb.create_loan_type(LoanTypeInCreate(
+            name="Mortgage",
+            value="mortgage"
+        ))
+    except asyncpg.exceptions.UniqueViolationError:
+        return await LoanTypeDb.get_loan_type_by_name('Mortgage')
+
+
+@pytest_asyncio.fixture
+async def created_case(created_loan_type):
+    """
+    Creates a new case for testing and returns the resulting CaseInDB.
+    """
+    return await create_case(CaseInCreate(
+        name="Test Case",
+        status=CaseStatus.active,
+        case_purpose="Testing",
+        loan_type_id=created_loan_type['id'],
+    ))
+
+
+@pytest_asyncio.fixture
+async def created_case_id(created_case):
+    """
+    Creates a new case for testing and returns the resulting CaseInDB.
+    """
+    return created_case.id
+
+
+@pytest_asyncio.fixture
+async def setup_test_data():
+    """Setup test data needed for document tests"""
+    conn = await get_connection()
+    try:
+        # Create document type
+        doc_type = await conn.fetchrow(
+            """
+            INSERT INTO document_types (name, value)
+            VALUES ($1, $2)
+            ON CONFLICT (value) DO UPDATE 
+            SET name = $1
+            RETURNING id
+            """,
+            "Test Type", "test_type"
+        )
+
+        # Create document categories
+        categories = {}
+        for category in ["financial", "asset", "bank_account"]:
+            category_record = await conn.fetchrow(
+                """
+                INSERT INTO document_categories (name, value)
+                VALUES ($1, $2)
+                ON CONFLICT (value) DO UPDATE 
+                SET name = $1
+                RETURNING id, value
+                """,
+                category.capitalize(), category
+            )
+            categories[category] = str(category_record["id"])
+
+        # Create test case
+        case = await conn.fetchrow(
+            """
+            INSERT INTO cases (name, description, status)
+            VALUES ($1, $2, $3)
+            RETURNING id
+            """,
+            "Test Case", "Test case for documents", "active"
+        )
+
+        return {
+            "doc_type_id": doc_type["id"],
+            "case_id": case["id"],
+            "categories": categories
+        }
+    finally:
+        await conn.close()
+
+@pytest_asyncio.fixture
+async def created_role():
+    """
+    Creates a new person role for testing.
+    """
+    from server.database.person_roles_database import create_person_role, get_person_role_by_value
+
+    try:
+        role_data = PersonRoleInCreate(
+            name="cosigner",
+            value="cosigner"
+        )
+        role_db = await create_person_role(role_data)
+        return role_db
+
+    except asyncpg.exceptions.UniqueViolationError:
+        return await get_person_role_by_value('cosigner')

@@ -6,7 +6,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field, validator
 from server.database.database import get_connection
-from server.database.person_roles_database import get_person_role_by_value
+from server.database.person_roles_database import get_person_role_by_value, get_person_role
 
 
 class CaseStatus(str, enum.Enum):
@@ -103,7 +103,7 @@ class CaseUpdate(BaseModel):
     status: Optional[CaseStatus] = None
     last_active: Optional[datetime] = None
     case_purpose: str
-    loan_type: str
+    loan_type_id: UUID
     primary_contact_id: Optional[UUID] = None
 
 
@@ -115,13 +115,12 @@ class CasePersonBase(BaseModel):
     last_name: str
     id_number: str
     gender: PersonGender
-    role_id: str
+    role_id: UUID | str  # Accept either UUID or string
     birth_date: date
     marital_status_id: Optional[UUID] = None
     phone: Optional[str] = None
     email: Optional[str] = None
-    status: str
-
+    status: str = "active"  # Using string status (must be 'active' or 'inactive')
 
 
 class CasePersonCreate(CasePersonBase):
@@ -150,20 +149,12 @@ class CasePersonUpdate(BaseModel):
     last_name: Optional[str] = None
     id_number: Optional[str] = None
     gender: Optional[PersonGender] = None
-    role: Optional[str] = None  # Changed from Optional[PersonRole] to Optional[str]
+    role_id: Optional[UUID] = None
     marital_status_id: Optional[UUID] = None  # Added marital_status_id field
-
-    @validator('role')
-    def validate_role(cls, v):
-        if v is None:
-            return v
-        # This will be validated at runtime when data is processed
-        # We can't do async validation in Pydantic validators
-        return v
     birth_date: Optional[date] = None
     phone: Optional[str] = None
     email: Optional[str] = None
-    status: Optional[str] = None
+    status: Optional[str] = None  # Using string status (must be 'active' or 'inactive')
 
 
 # ----------------------------
@@ -176,7 +167,7 @@ class CasePersonRelationBase(BaseModel):
     """
     from_person_id: UUID
     to_person_id: UUID
-    relationship_type: str  # e.g. 'child', 'partner', 'parent', etc.
+    relationship_type_id: UUID
 
 
 class CasePersonRelationCreate(CasePersonRelationBase):
@@ -203,7 +194,6 @@ class CaseDocumentBase(BaseModel):
     processing_status: DocumentProcessingStatus = DocumentProcessingStatus.pending
     uploaded_at: Optional[datetime] = None
     reviewed_at: Optional[datetime] = None
-    uploaded_by: Optional[UUID] = None
 
 
 class CaseDocumentCreate(CaseDocumentBase):
@@ -227,8 +217,8 @@ class CaseDocumentUpdate(BaseModel):
     """
     Model for updating the status or processing information of an existing case-document link.
     """
-    status: Optional[DocumentStatus] = None
-    processing_status: Optional[DocumentProcessingStatus] = None
+    status: Optional[str] = None  # Using status_id instead of DocumentStatus enum
+    processing_status_id: Optional[int] = None  # Using processing_status_id instead of DocumentProcessingStatus enum
     reviewed_at: Optional[datetime] = None
     file_path: Optional[str] = None
 
@@ -238,7 +228,7 @@ class CaseDocumentUpdate(BaseModel):
 # ----------------------------
 class CaseLoanBase(BaseModel):
     amount: float
-    status: LoanStatus
+    status: str
     start_date: date
     end_date: Optional[date] = None
 
@@ -265,7 +255,7 @@ class CaseLoanUpdate(BaseModel):
     Model for updating fields of an existing case loan record.
     """
     amount: Optional[float] = None
-    status: Optional[LoanStatus] = None
+    status: Optional[str] = None
     start_date: Optional[date] = None
     end_date: Optional[date] = None
 
@@ -327,7 +317,7 @@ async def create_case(case_in: CaseInCreate) -> CaseInDB:
                 RETURNING *
                 """,
                 case_in.name,
-                case_in.status.value,
+                case_in.status,
                 case_in.last_active,
                 case_in.case_purpose,
                 case_in.loan_type_id,
@@ -398,7 +388,7 @@ async def update_case(case_id: UUID, case_update: CaseUpdate) -> Optional[CaseIn
                 RETURNING *
                 """,
                 updated_data.name,
-                updated_data.status.value if updated_data.status else existing.status.value,
+                updated_data.status,
                 updated_data.case_purpose,
                 updated_data.last_active,
                 updated_data.loan_type_id,
@@ -442,11 +432,9 @@ async def create_case_person(person_in: CasePersonCreate) -> CasePersonInDB:
     """
     Create a new person record tied to a specific case.
     """
-    # Validate role against database
-    role_obj = await get_person_role_by_value(person_in.role)
-    if not role_obj:
-        raise ValueError(f"Invalid person role: {person_in.role}")
-    
+    # Use the role_id directly from the input
+    # The role_id is already validated by the Pydantic model
+
     query = """
     INSERT INTO case_persons (
         case_id, first_name, last_name, id_number, gender, 
@@ -463,14 +451,14 @@ async def create_case_person(person_in: CasePersonCreate) -> CasePersonInDB:
         person_in.last_name,
         person_in.id_number,
         person_in.gender.value,
-        role_obj.id,
+        person_in.role_id,
         person_in.birth_date,
         person_in.marital_status_id,
         person_in.phone,
         person_in.email,
         person_in.status
     ]
-    
+
     conn = await get_connection()
     try:
         row = await conn.fetchrow(query, *values)
@@ -509,81 +497,77 @@ async def update_case_person(person_id: UUID, person_update: CasePersonUpdate) -
     """
     # Validate role if provided
     role_obj = None
-    if person_update.role is not None:
-        role_obj = await get_person_role_by_value(person_update.role)
+
+    if person_update.role_id is not None:
+        role_obj = await get_person_role(str(person_update.role_id))
         if not role_obj:
-            raise ValueError(f"Invalid person role: {person_update.role}")
-    
+            raise ValueError(f"Invalid person role: {person_update.role_id}")
+
     # Get current data
     current_person = await get_case_person(person_id)
     if not current_person:
         return None
-    
+
     # Build update query dynamically
     update_parts = []
     values = [person_id]  # First param is always the ID
     param_index = 2
-    
+
     # For each field in the update model, add it to the query if it's not None
     if person_update.first_name is not None:
         update_parts.append(f"first_name = ${param_index}")
         values.append(person_update.first_name)
         param_index += 1
-        
+
     if person_update.last_name is not None:
         update_parts.append(f"last_name = ${param_index}")
         values.append(person_update.last_name)
         param_index += 1
-        
+
     if person_update.id_number is not None:
         update_parts.append(f"id_number = ${param_index}")
         values.append(person_update.id_number)
         param_index += 1
-        
+
     if person_update.gender is not None:
         update_parts.append(f"gender = ${param_index}")
         values.append(person_update.gender.value)
         param_index += 1
-        
-    if person_update.role is not None:
-        # Update both role and role_id
-        update_parts.append(f"role = ${param_index}")
-        values.append(person_update.role)  # Now a string
-        param_index += 1
-        
+
+    if person_update.role_id is not None:
         update_parts.append(f"role_id = ${param_index}")
-        values.append(role_obj.id)  # Set role_id from the validated role object
+        values.append(role_obj.id)
         param_index += 1
-        
+
     if person_update.birth_date is not None:
         update_parts.append(f"birth_date = ${param_index}")
         values.append(person_update.birth_date)
         param_index += 1
-        
+
     if person_update.marital_status_id is not None:
         update_parts.append(f"marital_status_id = ${param_index}")
         values.append(person_update.marital_status_id)
         param_index += 1
-        
+
     if person_update.phone is not None:
         update_parts.append(f"phone = ${param_index}")
         values.append(person_update.phone)
         param_index += 1
-        
+
     if person_update.email is not None:
         update_parts.append(f"email = ${param_index}")
         values.append(person_update.email)
         param_index += 1
-        
+
     if person_update.status is not None:
         update_parts.append(f"status = ${param_index}")
         values.append(person_update.status)
         param_index += 1
-    
+
     # If nothing to update, return the current data
     if not update_parts:
         return current_person
-    
+
     # Build the final query
     update_clause = ", ".join(update_parts)
     query = f"""
@@ -594,7 +578,7 @@ async def update_case_person(person_id: UUID, person_update: CasePersonUpdate) -
         id, case_id, first_name, last_name, id_number, gender, 
          role_id, birth_date, marital_status_id, phone, email, status, created_at, updated_at
     """
-    
+
     conn = await get_connection()
     try:
         row = await conn.fetchrow(query, *values)
@@ -630,12 +614,12 @@ async def create_person_relation(rel_in: CasePersonRelationCreate) -> CasePerson
         async with conn.transaction():
             await conn.execute(
                 """
-                INSERT INTO case_person_relations (from_person_id, to_person_id, relationship_type)
+                INSERT INTO case_person_relations (from_person_id, to_person_id, relationship_type_id)
                 VALUES ($1, $2, $3)
                 """,
                 rel_in.from_person_id,
                 rel_in.to_person_id,
-                rel_in.relationship_type,
+                rel_in.relationship_type_id,
             )
             return CasePersonRelationInDB(**rel_in.dict())
     finally:
@@ -696,18 +680,17 @@ async def create_case_document(doc_in: CaseDocumentCreate) -> CaseDocumentInDB:
             row = await conn.fetchrow(
                 """
                 INSERT INTO case_documents (
-                    case_id, document_id, status, processing_status, uploaded_at, reviewed_at, uploaded_by
+                    case_id, document_id, status, processing_status, uploaded_at, reviewed_at
                 )
-                VALUES ($1, $2, $3, $4, COALESCE($5, NOW()), $6, $7)
+                VALUES ($1, $2, $3, $4, COALESCE($5, NOW()), $6)
                 RETURNING *
                 """,
                 doc_in.case_id,
                 doc_in.document_id,
-                doc_in.status.value,
-                doc_in.processing_status.value,
+                doc_in.status,
+                doc_in.processing_status,
                 doc_in.uploaded_at,
                 doc_in.reviewed_at,
-                doc_in.uploaded_by,
             )
             return CaseDocumentInDB(**dict(row))
     finally:
@@ -763,18 +746,18 @@ async def update_case_document(case_id: UUID, document_id: UUID, doc_update: Cas
                 """
                 UPDATE case_documents
                 SET 
-                    status            = COALESCE($1, status),
-                    processing_status = COALESCE($2, processing_status),
-                    reviewed_at       = COALESCE($3, reviewed_at),
+                    status            = $1,
+                    processing_status = $2,
+                    reviewed_at       = $3 ,
                     file_path         = $4      -- We want to set it exactly, even if it's None
                 WHERE case_id = $5
                   AND document_id = $6
                 RETURNING *
                 """,
-                (updated_data.status.value if updated_data.status else None),
-                (updated_data.processing_status.value if updated_data.processing_status else None),
+                updated_data.status,
+                updated_data.processing_status,
                 updated_data.reviewed_at,
-                updated_data.file_path,  # If None, will overwrite with NULL
+                updated_data.file_path,
                 case_id,
                 document_id,
             )
@@ -824,7 +807,7 @@ async def create_case_loan(loan_in: CaseLoanCreate) -> CaseLoanInDB:
                 """,
                 loan_in.case_id,
                 loan_in.amount,
-                loan_in.status.value,
+                loan_in.status,
                 loan_in.start_date,
                 loan_in.end_date,
             )
@@ -881,7 +864,7 @@ async def update_case_loan(loan_id: UUID, loan_update: CaseLoanUpdate) -> Option
                 RETURNING *
                 """,
                 updated_data.amount,
-                updated_data.status.value if updated_data.status else existing.status.value,
+                updated_data.status,
                 updated_data.start_date,
                 updated_data.end_date,
                 loan_id,

@@ -131,16 +131,24 @@ async def update_document_category(document_category_id: uuid.UUID, payload: Doc
                 raise ValueError(f"Document category with value '{payload.value}' already exists")
             
             # Check if there are any documents using this category
-            check_references_query = "SELECT COUNT(*) FROM documents WHERE category = $1"
-            referenced_count = await conn.fetchval(check_references_query, current.value)
+            check_references_query = "SELECT COUNT(*) FROM documents WHERE category_id = $1"
+            referenced_count = await conn.fetchval(check_references_query, document_category_id)
             if referenced_count > 0:
                 if not cascade_updates:
                     # Block the change if cascading is not enabled
                     raise ValueError(f"Cannot change value of category '{current.value}' because it is used by {referenced_count} document(s). Update the documents first to use a different category or enable cascade_updates.")
                 else:
                     # Update the documents to use the new category value
-                    update_docs_query = "UPDATE documents SET category = $1 WHERE category = $2"
-                    await conn.execute(update_docs_query, value, current.value)
+                    # First get the new category ID if it exists, or create it
+                    new_category = await get_document_category_by_value(value)
+                    if new_category:
+                        new_category_id = new_category.id
+                    else:
+                        # This shouldn't happen as we're updating the existing category
+                        new_category_id = document_category_id
+                    
+                    update_docs_query = "UPDATE documents SET category_id = $1 WHERE category_id = $2"
+                    await conn.execute(update_docs_query, new_category_id, document_category_id)
         
         update_query = """
         UPDATE document_categories
@@ -179,15 +187,15 @@ async def delete_document_category(document_category_id: uuid.UUID, cascade_dele
             return False
             
         # Check if there are documents using this category
-        check_query = "SELECT COUNT(*) FROM documents WHERE category = $1"
-        referenced_count = await conn.fetchval(check_query, category.value)
+        check_query = "SELECT COUNT(*) FROM documents WHERE category_id = $1"
+        referenced_count = await conn.fetchval(check_query, document_category_id)
         if referenced_count > 0:
             if not cascade_delete:
                 raise ValueError(f"Cannot delete category '{category.value}' because it is used by {referenced_count} document(s). Update or delete those documents first, or use cascade_delete=True.")
             else:
                 # Delete all documents with this category
-                delete_docs_query = "DELETE FROM documents WHERE category = $1"
-                await conn.execute(delete_docs_query, category.value)
+                delete_docs_query = "DELETE FROM documents WHERE category_id = $1"
+                await conn.execute(delete_docs_query, document_category_id)
         
         # If no references, proceed with deletion
         delete_query = """
