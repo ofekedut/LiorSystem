@@ -6,7 +6,7 @@ import pytest_asyncio
 from fastapi.testclient import TestClient
 from httpx import AsyncClient
 
-from database.person_roles_database import PersonRoleInCreate
+from server.database.person_roles_database import PersonRoleInCreate
 from server.database.cases_database import create_case, CaseInCreate, CaseStatus
 from server.database.finorg_database import create_fin_org_type, FinOrgTypeCreate
 from server.routers.loan_types_router import LoanTypeDb, LoanTypeInCreate

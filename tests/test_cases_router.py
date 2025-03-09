@@ -278,15 +278,13 @@ class TestCasePersonsRouter:
 @pytest.mark.asyncio
 class TestCaseDocumentsRouter:
     @pytest_asyncio.fixture
-    async def created_case_id(self, async_client: AsyncClient):
+    async def created_case_id(self, async_client: AsyncClient, created_loan_type):
         payload = {
             "name": "Case for Documents",
             "status": "pending",
-            "activity_level": 5,
             "last_active": datetime.utcnow().isoformat(),
-            "project_count": 0,
             "case_purpose": "Purpose for Documents",
-            "loan_type": "Type for Documents"
+            "loan_type_id": str(created_loan_type['id'])
         }
         resp = await async_client.post("/cases", json=payload)
         return resp.json()["id"]
@@ -339,7 +337,7 @@ class TestCaseDocumentsRouter:
 
         update_payload = {
             "status": "approved",
-            "processing_status": "processed"
+            "processing_status_id": 1  # 1 corresponds to 'processed' in the enum
         }
         update_resp = await async_client.put(
             f"/cases/{created_case_id}/documents/{document_id}",
@@ -348,6 +346,7 @@ class TestCaseDocumentsRouter:
         assert update_resp.status_code == status.HTTP_200_OK
         updated = update_resp.json()
         assert updated["status"] == "approved"
+        # Verify the processing_status in the response matches what we expect
         assert updated["processing_status"] == "processed"
 
     async def test_delete_case_document(
@@ -402,7 +401,7 @@ class TestCaseLoansRouter:
         return {
             "case_id": str(created_case_id),
             "amount": 12345.67,
-            "status_id": "active",
+            "status": "active",
             "start_date": date.today().isoformat(),
             "end_date": None
         }

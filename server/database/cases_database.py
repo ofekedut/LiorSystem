@@ -739,6 +739,20 @@ async def update_case_document(case_id: UUID, document_id: UUID, doc_update: Cas
         return None
 
     updated_data = existing.copy(update=doc_update.dict(exclude_unset=True))
+    
+    # Map status_id and processing_status_id to corresponding enum values if provided
+    processing_status = None
+    if hasattr(updated_data, 'processing_status_id') and updated_data.processing_status_id is not None:
+        # Convert processing_status_id to the actual enum value
+        if updated_data.processing_status_id == 1:
+            processing_status = DocumentProcessingStatus.processed
+        elif updated_data.processing_status_id == 2:
+            processing_status = DocumentProcessingStatus.pending
+        elif updated_data.processing_status_id == 3:
+            processing_status = DocumentProcessingStatus.error
+        elif updated_data.processing_status_id == 4:
+            processing_status = DocumentProcessingStatus.userActionRequired
+    
     conn = await get_connection()
     try:
         async with conn.transaction():
@@ -748,14 +762,14 @@ async def update_case_document(case_id: UUID, document_id: UUID, doc_update: Cas
                 SET 
                     status            = $1,
                     processing_status = $2,
-                    reviewed_at       = $3 ,
+                    reviewed_at       = $3,
                     file_path         = $4      -- We want to set it exactly, even if it's None
                 WHERE case_id = $5
                   AND document_id = $6
                 RETURNING *
                 """,
                 updated_data.status,
-                updated_data.processing_status,
+                processing_status,
                 updated_data.reviewed_at,
                 updated_data.file_path,
                 case_id,

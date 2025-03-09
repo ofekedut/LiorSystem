@@ -367,7 +367,7 @@ async def upload_case_document_file(
         raise HTTPException(status_code=500, detail=f"File upload failed: {e}")
 
     # 4. Update the DB record so `file_path` is stored
-    doc_update = CaseDocumentUpdate(file_path=file_path)
+    doc_update = CaseDocumentUpdate(file_path=file_path, processing_status_id=2)  # 2 corresponds to 'pending'
     updated_doc = await update_case_document(case_id, document_id, doc_update)
     if not updated_doc:
         raise HTTPException(status_code=404, detail="Could not update file path")
