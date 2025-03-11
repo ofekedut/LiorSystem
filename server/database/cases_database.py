@@ -214,11 +214,8 @@ class CaseDocumentInDB(CaseDocumentBase):
 
 
 class CaseDocumentUpdate(BaseModel):
-    """
-    Model for updating the status or processing information of an existing case-document link.
-    """
-    status: Optional[str] = None  # Using status_id instead of DocumentStatus enum
-    processing_status_id: Optional[int] = None  # Using processing_status_id instead of DocumentProcessingStatus enum
+    status: Optional[str] = None
+    processing_status: Optional[str] = None
     reviewed_at: Optional[datetime] = None
     file_path: Optional[str] = None
 
@@ -752,7 +749,8 @@ async def update_case_document(case_id: UUID, document_id: UUID, doc_update: Cas
             processing_status = DocumentProcessingStatus.error
         elif updated_data.processing_status_id == 4:
             processing_status = DocumentProcessingStatus.userActionRequired
-    
+    else:
+        processing_status = updated_data.processing_status
     conn = await get_connection()
     try:
         async with conn.transaction():

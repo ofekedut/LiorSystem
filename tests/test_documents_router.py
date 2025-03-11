@@ -203,8 +203,8 @@ class TestDocumentsEndpoints:
         try:
             await conn.execute(
                 """
-                INSERT INTO case_documents (case_id, document_id)
-                VALUES ($1, $2)
+                INSERT INTO case_documents (case_id, document_id, status)
+                VALUES ($1, $2, 'pending')
                 """,
                 case_id, doc1_id
             )

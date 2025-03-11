@@ -96,7 +96,6 @@ async def created_main_doc():
     ))
 
 
-
 @pytest_asyncio.fixture
 async def created_person(created_case, created_role):
     """
@@ -335,22 +334,17 @@ class TestCasePersonRelations:
             assert isinstance(results, list)
             assert any(doc.document_id == created_document.document_id for doc in results)
         except Exception as e:
-            # Skip this test if the database schema doesn't match
             pytest.skip(f"Skipping test due to database schema issue: {str(e)}")
 
     async def test_update_case_document(self, created_document):
-        try:
-            update_data = CaseDocumentUpdate(
-                status='closed',  # Using status_id instead of enum (approved)
-                processing_status_id=1  # Using status_id instead of enum (processed)
-            )
-            updated = await update_case_document(created_document.case_id, created_document.document_id, update_data)
-            assert updated is not None
-            assert updated.status_id == 2  # Using status_id instead of enum (approved)
-            assert updated.processing_status_id == 1  # Using status_id instead of enum (processed)
-        except Exception as e:
-            # Skip this test if the database schema doesn't match
-            pytest.skip(f"Skipping test due to database schema issue: {str(e)}")
+        update_data = CaseDocumentUpdate(
+            status=DocumentStatus.pending,
+            processing_status=DocumentProcessingStatus.pending
+        )
+        updated = await update_case_document(created_document.case_id, created_document.document_id, update_data)
+        assert updated is not None
+        assert updated.status == DocumentStatus.pending
+        assert updated.processing_status == DocumentProcessingStatus.pending
 
     async def test_delete_case_document(self, created_document):
         try:

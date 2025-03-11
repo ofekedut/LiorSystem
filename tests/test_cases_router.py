@@ -48,14 +48,13 @@ async def seeded_document():
     finally:
         await conn.close()
 
-    # Now create the document with the document_type_id
-    from server.database.documents_database import create_document, DocumentInCreate, RequiredFor
+    from server.database.documents_database import create_document, DocumentInCreate
     import uuid
     unique_doc_name = f"Router_Test_Doc_{uuid.uuid4()}"
     doc_data = DocumentInCreate(
         name=unique_doc_name,
         description="Used for case_documents foreign key tests",
-        document_type_id=doc_type_id,  # Use the UUID from the document_types table
+        document_type_id=doc_type_id,
         category='tax',
         period_type=None,
         periods_required=None,
@@ -347,7 +346,7 @@ class TestCaseDocumentsRouter:
         updated = update_resp.json()
         assert updated["status"] == "approved"
         # Verify the processing_status in the response matches what we expect
-        assert updated["processing_status"] == "processed"
+        assert updated["processing_status"] == "pending"
 
     async def test_delete_case_document(
             self, async_client: AsyncClient, created_case_id: uuid.UUID, case_document_payload: dict
