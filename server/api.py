@@ -31,8 +31,17 @@ from server.routers.document_types_router import router as document_types_router
 from server.routers.document_categories_router import router as document_categories_router
 from server.routers.asset_types_router import router as asset_types_router
 from server.routers.person_assets_router import router as person_assets_router
-from server.features.docs_processing.docs_processing_router import router as docs_processing_router
+from server.routers.enums_router import router as enums_router
+from server.routers.employment_history_router import router as employment_history_router
+from server.routers.income_sources_router import router as income_sources_router
+from server.routers.bank_accounts_router import router as bank_accounts_router
+from server.routers.credit_cards_person_router import router as credit_cards_router
+from server.routers.person_loans_router import router as person_loans_router
+from server.routers.person_relationships_router import router as person_relationships_router
+from server.routers.companies_router import router as companies_router
+from server.routers.case_formatter_router import router as case_formatter_router
 
+from server.features.docs_processing.docs_processing_router import router as docs_processing_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -95,6 +104,15 @@ app.include_router(document_categories_router)
 app.include_router(asset_types_router)
 app.include_router(person_assets_router)
 app.include_router(docs_processing_router)
+app.include_router(enums_router)
+app.include_router(employment_history_router)
+app.include_router(income_sources_router)
+app.include_router(bank_accounts_router)
+app.include_router(credit_cards_router)
+app.include_router(person_loans_router)
+app.include_router(person_relationships_router)
+app.include_router(companies_router)
+app.include_router(case_formatter_router)
 
 
 async def create_schema_and_admin():
