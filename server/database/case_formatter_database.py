@@ -8,7 +8,6 @@ from datetime import datetime
 from server.database.database import get_connection
 from server.database.cases_database import get_case, CaseInDB
 from server.database.documents_database import DocumentInDB
-from server.database.finorg_database import FinOrgTypeInDB
 
 
 async def get_formatted_case(case_id: uuid.UUID) -> Dict[str, Any]:
@@ -59,14 +58,14 @@ async def get_case_persons_with_details(case_id: uuid.UUID) -> List[Dict[str, An
         SELECT 
             p.id, p.first_name, p.last_name, p.id_number, p.gender, 
             p.birth_date, p.phone, p.email, p.status,
-            pr.value as role_value,
+            role.value as role_value,
             ms.value as marital_status_value
         FROM 
             case_persons p
         LEFT JOIN 
-            person_roles pr ON p.role_id = pr.id
+            lior_dropdown_options role ON p.role_id = role.id AND role.category = 'person_roles'
         LEFT JOIN 
-            person_marital_statuses ms ON p.marital_status_id = ms.id
+            lior_dropdown_options ms ON p.marital_status_id = ms.id AND ms.category = 'person_marital_statuses'
         WHERE 
             p.case_id = $1
         """
@@ -133,11 +132,11 @@ async def get_person_bank_accounts(person_id: uuid.UUID) -> List[Dict[str, Any]]
         query = """
         SELECT 
             pba.id, pba.bank_name, pba.account_number,
-            bat.value as account_type_value
+            acc_type.value as account_type_value
         FROM 
             person_bank_accounts pba
-        JOIN 
-            bank_account_type bat ON pba.account_type_id = bat.id
+        LEFT JOIN 
+            lior_dropdown_options acc_type ON pba.account_type_id = acc_type.id AND acc_type.category = 'bank_account_types'
         WHERE 
             pba.person_id = $1
         """
@@ -174,11 +173,11 @@ async def get_person_credit_cards(person_id: uuid.UUID) -> List[Dict[str, Any]]:
         query = """
         SELECT 
             pcc.id, pcc.issuer, pcc.last_four,
-            cct.value as card_type_value
+            card_type.value as card_type_value
         FROM 
             person_credit_cards pcc
-        JOIN 
-            credit_card_types cct ON pcc.card_type_id = cct.id
+        LEFT JOIN 
+            lior_dropdown_options card_type ON pcc.card_type_id = card_type.id AND card_type.category = 'credit_card_types'
         WHERE 
             pcc.person_id = $1
         """
@@ -215,11 +214,11 @@ async def get_person_loans(person_id: uuid.UUID) -> List[Dict[str, Any]]:
         query = """
         SELECT 
             pl.id, pl.lender,
-            lt.value as loan_type_value
+            loan_type.value as loan_type_value
         FROM 
             person_loans pl
-        JOIN 
-            loan_types lt ON pl.loan_type_id = lt.id
+        LEFT JOIN 
+            lior_dropdown_options loan_type ON pl.loan_type_id = loan_type.id AND loan_type.category = 'loan_types'
         WHERE 
             pl.person_id = $1
         """
@@ -255,11 +254,11 @@ async def get_person_assets(person_id: uuid.UUID) -> List[Dict[str, Any]]:
         query = """
         SELECT 
             pa.id, pa.description,
-            at.value as asset_type_value
+            asset_type.value as asset_type_value
         FROM 
             person_assets pa
-        JOIN 
-            asset_types at ON pa.asset_type_id = at.id
+        LEFT JOIN 
+            lior_dropdown_options asset_type ON pa.asset_type_id = asset_type.id AND asset_type.category = 'asset_types'
         WHERE 
             pa.person_id = $1
         """
@@ -295,12 +294,12 @@ async def get_person_relationships(person_id: uuid.UUID) -> List[Dict[str, Any]]
         query = """
         SELECT 
             cpr.from_person_id, cpr.to_person_id,
-            rrt.value as relationship_type_value,
+            rel_type.value as relationship_type_value,
             cp.first_name, cp.last_name
         FROM 
             case_person_relations cpr
-        JOIN 
-            related_person_relationships_types rrt ON cpr.relationship_type_id = rrt.id
+        LEFT JOIN 
+            lior_dropdown_options rel_type ON cpr.relationship_type_id = rel_type.id AND rel_type.category = 'related_person_relationships_types'
         JOIN
             case_persons cp ON (
                 CASE 
@@ -344,13 +343,13 @@ async def get_entity_documents(entity_type: str, entity_id: uuid.UUID) -> List[D
     try:
         query = """
         SELECT 
-            d.id, d.name, dt.value as doc_type
+            d.id, d.name, doc_type.value as doc_type
         FROM 
             document_entity_relations der
         JOIN 
             documents d ON der.document_id = d.id
-        JOIN 
-            document_types dt ON d.document_type_id = dt.id
+        LEFT JOIN 
+            lior_dropdown_options doc_type ON d.document_type_id = doc_type.id AND doc_type.category = 'document_types'
         WHERE 
             der.entity_type = $1 AND der.entity_id = $2
         """
@@ -375,13 +374,13 @@ async def get_relationship_documents(from_person_id: uuid.UUID, to_person_id: uu
     try:
         query = """
         SELECT 
-            d.id, d.name, dt.value as doc_type
+            d.id, d.name, doc_type.value as doc_type
         FROM 
             document_entity_relations der
         JOIN 
             documents d ON der.document_id = d.id
-        JOIN 
-            document_types dt ON d.document_type_id = dt.id
+        LEFT JOIN 
+            lior_dropdown_options doc_type ON d.document_type_id = doc_type.id AND doc_type.category = 'document_types'
         WHERE 
             der.entity_type = 'relationship' AND 
             der.entity_id = $1
@@ -410,8 +409,8 @@ async def get_loan_type(loan_type_id: uuid.UUID) -> Optional[Dict[str, Any]]:
     try:
         query = """
         SELECT id, name, value
-        FROM loan_types
-        WHERE id = $1
+        FROM lior_dropdown_options
+        WHERE id = $1 AND category = 'loan_types'
         """
 
         row = await conn.fetchrow(query, loan_type_id)
@@ -433,14 +432,14 @@ async def get_case_companies_with_details(case_id: uuid.UUID) -> List[Dict[str, 
         companies_query = """
         SELECT 
             c.id, c.name,
-            ct.value as company_type_value,
-            r.value as role_value
+            comp_type.value as company_type_value,
+            role.value as role_value
         FROM 
             case_companies c
         LEFT JOIN 
-            company_types ct ON c.company_type_id = ct.id
+            lior_dropdown_options comp_type ON c.company_type_id = comp_type.id AND comp_type.category = 'company_types'
         LEFT JOIN 
-            person_roles r ON c.role_id = r.id
+            lior_dropdown_options role ON c.role_id = role.id AND role.category = 'person_roles'
         WHERE 
             c.case_id = $1
         """
@@ -475,13 +474,13 @@ async def get_person_documents(person_id: uuid.UUID) -> List[Dict[str, Any]]:
     try:
         query = """
         SELECT 
-            d.id, d.name, dt.value as doc_type
+            d.id, d.name, doc_type.value as doc_type
         FROM 
             case_person_documents cpd
         JOIN 
             documents d ON cpd.document_id = d.id
-        JOIN 
-            document_types dt ON d.document_type_id = dt.id
+        LEFT JOIN 
+            lior_dropdown_options doc_type ON d.document_type_id = doc_type.id AND doc_type.category = 'document_types'
         WHERE 
             cpd.person_id = $1
         """
@@ -506,13 +505,13 @@ async def get_company_documents(company_id: uuid.UUID) -> List[Dict[str, Any]]:
     try:
         query = """
         SELECT 
-            d.id, d.name, dt.value as doc_type
+            d.id, d.name, doc_type.value as doc_type
         FROM 
             document_entity_relations der
         JOIN 
             documents d ON der.document_id = d.id
-        JOIN 
-            document_types dt ON d.document_type_id = dt.id
+        LEFT JOIN 
+            lior_dropdown_options doc_type ON d.document_type_id = doc_type.id AND doc_type.category = 'document_types'
         WHERE 
             der.entity_type = 'company' AND der.entity_id = $1
         """
@@ -538,11 +537,11 @@ async def get_person_employment_history(person_id: uuid.UUID) -> List[Dict[str, 
         query = """
         SELECT 
             peh.id, peh.employer_name, peh.position, peh.current_employer,
-            et.value as employment_type_value
+            emp_type.value as employment_type_value
         FROM 
             person_employment_history peh
-        JOIN 
-            employment_types et ON peh.employment_type_id = et.id
+        LEFT JOIN 
+            lior_dropdown_options emp_type ON peh.employment_type_id = emp_type.id AND emp_type.category = 'employment_types'
         WHERE 
             peh.person_id = $1
         """
@@ -569,11 +568,11 @@ async def get_person_income_sources(person_id: uuid.UUID) -> List[Dict[str, Any]
         query = """
         SELECT 
             pis.id, pis.label,
-            ist.value as income_source_type_value
+            income_type.value as income_source_type_value
         FROM 
             person_income_sources pis
-        JOIN 
-            income_sources_types ist ON pis.income_source_type_id = ist.id
+        LEFT JOIN 
+            lior_dropdown_options income_type ON pis.income_source_type_id = income_type.id AND income_type.category = 'income_sources_types'
         WHERE 
             pis.person_id = $1
         """

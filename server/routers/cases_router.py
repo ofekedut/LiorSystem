@@ -71,8 +71,7 @@ from server.database.cases_database import (
     delete_case_person_document,
     CasePersonDocumentCreate,
     CasePersonDocumentInDB,
-    CasePersonDocumentUpdate,
-DocumentProcessingStatus
+    CasePersonDocumentUpdate
 )
 
 
@@ -477,7 +476,7 @@ async def classify_document_background(file_path: str, case_id: UUID, document_i
                 
                 # Create update payload
                 update_payload = CaseDocumentUpdate(
-                    processing_status=DocumentProcessingStatus.processed
+                    processing_status="processed"
                 )
                 
                 logger.info(f"Updating case document status to 'processed'")
@@ -495,7 +494,7 @@ async def classify_document_background(file_path: str, case_id: UUID, document_i
             
             # Set processing status to userActionRequired
             update_payload = CaseDocumentUpdate(
-                processing_status=DocumentProcessingStatus.userActionRequired
+                processing_status="userActionRequired"
             )
             
             # Update the case document
@@ -517,7 +516,7 @@ async def classify_document_background(file_path: str, case_id: UUID, document_i
             # Set processing status to error
             from server.database.cases_database import update_case_document
             update_payload = CaseDocumentUpdate(
-                processing_status=DocumentProcessingStatus.error
+                processing_status="error"
             )
             
             # Update the case document

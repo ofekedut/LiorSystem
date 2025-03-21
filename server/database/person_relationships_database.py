@@ -83,6 +83,7 @@ async def get_relationships_for_person(person_id: uuid.UUID) -> List[Relationshi
     Get all relationships where the person is either the source or target,
     including details about the related person and relationship type
     """
+    # Updated query to use lior_dropdown_options instead of related_person_relationships_types
     query = """
     SELECT 
         r.from_person_id, 
@@ -95,7 +96,7 @@ async def get_relationships_for_person(person_id: uuid.UUID) -> List[Relationshi
     FROM 
         case_person_relations r
     JOIN 
-        related_person_relationships_types rt ON r.relationship_type_id = rt.id
+        lior_dropdown_options rt ON r.relationship_type_id = rt.id AND rt.category = 'related_person_relationships_types'
     JOIN 
         case_persons p ON (
             CASE 

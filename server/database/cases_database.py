@@ -1,57 +1,10 @@
 # cases_database.py
-import enum
-from typing import List, Optional
+from typing import List, Optional, Union
 from datetime import datetime, date
 from uuid import UUID
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field
 from server.database.database import get_connection
-from server.database.person_roles_database import get_person_role_by_value, get_person_role
-
-
-class CaseStatus(str, enum.Enum):
-    active = "active"
-    inactive = "inactive"
-    pending = "pending"
-
-
-class PersonRole(str):
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
-
-    @classmethod
-    def validate(cls, v):
-        if not isinstance(v, str):
-            raise TypeError("Person role must be a string")
-        role = get_person_role_by_value(v)
-        if role is None:
-            raise ValueError("Invalid person role")
-        return v
-
-
-class PersonGender(str, enum.Enum):
-    male = "male"
-    female = "female"
-
-
-class DocumentStatus(str, enum.Enum):
-    pending = "pending"
-    approved = "approved"
-    rejected = "rejected"
-
-
-class DocumentProcessingStatus(str, enum.Enum):
-    processed = "processed"
-    pending = "pending"
-    error = "error"
-    userActionRequired = "userActionRequired"
-
-
-class LoanStatus(str, enum.Enum):
-    active = "active"
-    closed = "closed"
-    defaulted = "defaulted"
 
 
 # =============================================================================
@@ -63,7 +16,7 @@ class LoanStatus(str, enum.Enum):
 # ----------------------------
 class CaseBase(BaseModel):
     name: str
-    status: CaseStatus
+    status: str  # Changed from enum to string
     case_purpose: str
     loan_type_id: UUID
     last_active: datetime = Field(default_factory=datetime.utcnow)
@@ -100,10 +53,10 @@ class CaseUpdate(BaseModel):
     Only includes fields that can be changed.
     """
     name: Optional[str] = None
-    status: Optional[CaseStatus] = None
+    status: Optional[str] = None  # Changed from enum to string
     last_active: Optional[datetime] = None
-    case_purpose: str
-    loan_type_id: UUID
+    case_purpose: Optional[str] = None
+    loan_type_id: Optional[UUID] = None
     primary_contact_id: Optional[UUID] = None
 
 
@@ -114,13 +67,13 @@ class CasePersonBase(BaseModel):
     first_name: str
     last_name: str
     id_number: str
-    gender: PersonGender
-    role_id: UUID | str  # Accept either UUID or string
+    gender: str  # Changed from enum to string
+    role_id: UUID  # Accept UUID type
     birth_date: date
     marital_status_id: Optional[UUID] = None
     phone: Optional[str] = None
     email: Optional[str] = None
-    status: str = "active"  # Using string status (must be 'active' or 'inactive')
+    status: str = "active"  # Using string status
 
 
 class CasePersonCreate(CasePersonBase):
@@ -148,13 +101,13 @@ class CasePersonUpdate(BaseModel):
     first_name: Optional[str] = None
     last_name: Optional[str] = None
     id_number: Optional[str] = None
-    gender: Optional[PersonGender] = None
+    gender: Optional[str] = None  # Changed from enum to string
     role_id: Optional[UUID] = None
-    marital_status_id: Optional[UUID] = None  # Added marital_status_id field
+    marital_status_id: Optional[UUID] = None
     birth_date: Optional[date] = None
     phone: Optional[str] = None
     email: Optional[str] = None
-    status: Optional[str] = None  # Using string status (must be 'active' or 'inactive')
+    status: Optional[str] = None  # Using string status
 
 
 # ----------------------------
@@ -190,8 +143,8 @@ class CaseDocumentBase(BaseModel):
     """
     Base model for case-document links. Contains common fields across all document operations.
     """
-    status: DocumentStatus
-    processing_status: DocumentProcessingStatus = DocumentProcessingStatus.pending
+    status: str  # Changed from enum to string
+    processing_status: str = "pending"  # Changed from enum to string with default
     uploaded_at: Optional[datetime] = None
     reviewed_at: Optional[datetime] = None
 
@@ -225,7 +178,7 @@ class CaseDocumentUpdate(BaseModel):
 # ----------------------------
 class CaseLoanBase(BaseModel):
     amount: float
-    status: str
+    status: str  # Changed from enum to string
     start_date: date
     end_date: Optional[date] = None
 
@@ -252,7 +205,7 @@ class CaseLoanUpdate(BaseModel):
     Model for updating fields of an existing case loan record.
     """
     amount: Optional[float] = None
-    status: Optional[str] = None
+    status: Optional[str] = None  # Changed from enum to string
     start_date: Optional[date] = None
     end_date: Optional[date] = None
 
@@ -309,7 +262,7 @@ async def create_case(case_in: CaseInCreate) -> CaseInDB:
         async with conn.transaction():
             row = await conn.fetchrow(
                 """
-                INSERT INTO cases (name, status,  last_active,case_purpose, loan_type_id, primary_contact_id)
+                INSERT INTO cases (name, status, last_active, case_purpose, loan_type_id, primary_contact_id)
                 VALUES ($1, $2, $3, $4, $5, $6)
                 RETURNING *
                 """,
@@ -321,6 +274,150 @@ async def create_case(case_in: CaseInCreate) -> CaseInDB:
                 None,
             )
             return CaseInDB(**dict(row))
+    finally:
+        await conn.close()
+
+
+async def get_case_person_document(case_id: UUID, person_id: UUID, document_id: UUID) -> CasePersonDocumentInDB:
+    """
+    Retrieve the specific link between a person and a document within a case.
+    """
+    conn = await get_connection()
+    try:
+        record = await conn.fetchrow(
+            """
+            SELECT * FROM case_person_documents
+            WHERE case_id = $1 AND person_id = $2 AND document_id = $3
+            """,
+            case_id, person_id, document_id
+        )
+
+        if not record:
+            raise ValueError(
+                f"No document found for person {person_id} in case {case_id} with document ID {document_id}")
+
+        return CasePersonDocumentInDB(
+            case_id=record["case_id"],
+            person_id=record["person_id"],
+            document_id=record["document_id"],
+            is_primary=record["is_primary"],
+            created_at=record["created_at"]
+        )
+    finally:
+        await conn.close()
+
+
+async def list_case_person_documents(case_id: UUID, person_id: UUID) -> List[CasePersonDocumentInDB]:
+    """
+    List all documents linked to a specific person within a case.
+    """
+    conn = await get_connection()
+    try:
+        records = await conn.fetch(
+            """
+            SELECT * FROM case_person_documents
+            WHERE case_id = $1 AND person_id = $2
+            """,
+            case_id, person_id
+        )
+
+        return [
+            CasePersonDocumentInDB(
+                case_id=record["case_id"],
+                person_id=record["person_id"],
+                document_id=record["document_id"],
+                is_primary=record["is_primary"],
+                created_at=record["created_at"]
+            )
+            for record in records
+        ]
+    finally:
+        await conn.close()
+
+
+async def update_case_person_document(
+        case_id: UUID,
+        person_id: UUID,
+        document_id: UUID,
+        doc_update: CasePersonDocumentUpdate
+) -> CasePersonDocumentInDB:
+    """
+    Update a person-document link within a case.
+    """
+    conn = await get_connection()
+    try:
+        # Check if the record exists
+        record = await conn.fetchrow(
+            """
+            SELECT * FROM case_person_documents
+            WHERE case_id = $1 AND person_id = $2 AND document_id = $3
+            """,
+            case_id, person_id, document_id
+        )
+
+        if not record:
+            raise ValueError(
+                f"No document found for person {person_id} in case {case_id} with document ID {document_id}")
+
+        # Prepare update values
+        update_fields = []
+        update_values = []
+
+        if doc_update.is_primary is not None:
+            update_fields.append("is_primary = $" + str(len(update_values) + 4))
+            update_values.append(doc_update.is_primary)
+
+        # If there's nothing to update, return the existing record
+        if not update_fields:
+            return CasePersonDocumentInDB(
+                case_id=record["case_id"],
+                person_id=record["person_id"],
+                document_id=record["document_id"],
+                is_primary=record["is_primary"],
+                created_at=record["created_at"]
+            )
+
+        # Build the update query
+        query = f"""
+            UPDATE case_person_documents
+            SET {', '.join(update_fields)}
+            WHERE case_id = $1 AND person_id = $2 AND document_id = $3
+            RETURNING *
+        """
+
+        # Execute the update
+        updated = await conn.fetchrow(
+            query,
+            case_id, person_id, document_id, *update_values
+        )
+
+        return CasePersonDocumentInDB(
+            case_id=updated["case_id"],
+            person_id=updated["person_id"],
+            document_id=updated["document_id"],
+            is_primary=updated["is_primary"],
+            created_at=updated["created_at"]
+        )
+    finally:
+        await conn.close()
+
+
+async def delete_case_person_document(case_id: UUID, person_id: UUID, document_id: UUID) -> bool:
+    """
+    Delete a person-document link within a case.
+    """
+    conn = await get_connection()
+    try:
+        result = await conn.execute(
+            """
+            DELETE FROM case_person_documents
+            WHERE case_id = $1 AND person_id = $2 AND document_id = $3
+            """,
+            case_id, person_id, document_id
+        )
+
+        # Check if a record was deleted
+        return result and "DELETE 1" in result
     finally:
         await conn.close()
 
@@ -367,7 +464,8 @@ async def update_case(case_id: UUID, case_update: CaseUpdate) -> Optional[CaseIn
     if not existing:
         return None
 
-    updated_data = existing.copy(update=case_update.dict(exclude_unset=True))
+    updated_data = existing.copy(
+        update={k: v for k, v in case_update.dict(exclude_unset=True).items() if v is not None})
     conn = await get_connection()
     try:
         async with conn.transaction():
@@ -429,9 +527,6 @@ async def create_case_person(person_in: CasePersonCreate) -> CasePersonInDB:
     """
     Create a new person record tied to a specific case.
     """
-    # Use the role_id directly from the input
-    # The role_id is already validated by the Pydantic model
-
     query = """
     INSERT INTO case_persons (
         case_id, first_name, last_name, id_number, gender, 
@@ -447,7 +542,7 @@ async def create_case_person(person_in: CasePersonCreate) -> CasePersonInDB:
         person_in.first_name,
         person_in.last_name,
         person_in.id_number,
-        person_in.gender.value,
+        person_in.gender,  # No need for .value since we're using string directly
         person_in.role_id,
         person_in.birth_date,
         person_in.marital_status_id,
@@ -492,14 +587,6 @@ async def update_case_person(person_id: UUID, person_update: CasePersonUpdate) -
     """
     Update an existing case person record by ID.
     """
-    # Validate role if provided
-    role_obj = None
-
-    if person_update.role_id is not None:
-        role_obj = await get_person_role(str(person_update.role_id))
-        if not role_obj:
-            raise ValueError(f"Invalid person role: {person_update.role_id}")
-
     # Get current data
     current_person = await get_case_person(person_id)
     if not current_person:
@@ -528,12 +615,12 @@ async def update_case_person(person_id: UUID, person_update: CasePersonUpdate) -
 
     if person_update.gender is not None:
         update_parts.append(f"gender = ${param_index}")
-        values.append(person_update.gender.value)
+        values.append(person_update.gender)  # No need for .value since we're using string directly
         param_index += 1
 
     if person_update.role_id is not None:
         update_parts.append(f"role_id = ${param_index}")
-        values.append(role_obj.id)
+        values.append(person_update.role_id)
         param_index += 1
 
     if person_update.birth_date is not None:
@@ -727,7 +814,8 @@ async def list_case_documents(case_id: UUID) -> List[CaseDocumentInDB]:
         await conn.close()
 
 
-async def update_case_document(case_id: UUID, document_id: UUID, doc_update: CaseDocumentUpdate) -> Optional[CaseDocumentInDB]:
+async def update_case_document(case_id: UUID, document_id: UUID, doc_update: CaseDocumentUpdate) -> Optional[
+    CaseDocumentInDB]:
     """
     Update the status, processing info, or file_path of an existing case-document link.
     """
@@ -735,22 +823,8 @@ async def update_case_document(case_id: UUID, document_id: UUID, doc_update: Cas
     if not existing:
         return None
 
-    updated_data = existing.copy(update=doc_update.dict(exclude_unset=True))
-    
-    # Map status_id and processing_status_id to corresponding enum values if provided
-    processing_status = None
-    if hasattr(updated_data, 'processing_status_id') and updated_data.processing_status_id is not None:
-        # Convert processing_status_id to the actual enum value
-        if updated_data.processing_status_id == 1:
-            processing_status = DocumentProcessingStatus.processed
-        elif updated_data.processing_status_id == 2:
-            processing_status = DocumentProcessingStatus.pending
-        elif updated_data.processing_status_id == 3:
-            processing_status = DocumentProcessingStatus.error
-        elif updated_data.processing_status_id == 4:
-            processing_status = DocumentProcessingStatus.userActionRequired
-    else:
-        processing_status = updated_data.processing_status
+    updated_data = existing.copy(update={k: v for k, v in doc_update.dict(exclude_unset=True).items() if v is not None})
+
     conn = await get_connection()
     try:
         async with conn.transaction():
@@ -767,7 +841,7 @@ async def update_case_document(case_id: UUID, document_id: UUID, doc_update: Cas
                 RETURNING *
                 """,
                 updated_data.status,
-                processing_status,
+                updated_data.processing_status,
                 updated_data.reviewed_at,
                 updated_data.file_path,
                 case_id,
@@ -860,7 +934,8 @@ async def update_case_loan(loan_id: UUID, loan_update: CaseLoanUpdate) -> Option
     if not existing:
         return None
 
-    updated_data = existing.copy(update=loan_update.dict(exclude_unset=True))
+    updated_data = existing.copy(
+        update={k: v for k, v in loan_update.dict(exclude_unset=True).items() if v is not None})
     conn = await get_connection()
     try:
         async with conn.transaction():
@@ -897,7 +972,6 @@ async def delete_case_loan(loan_id: UUID) -> bool:
             return "DELETE 1" in result
     finally:
         await conn.close()
-
 
 # ----------------------------
 # 3F. Case Person Documents
@@ -955,147 +1029,5 @@ async def create_case_person_document(doc_in: CasePersonDocumentCreate) -> CaseP
             is_primary=record["is_primary"],
             created_at=record["created_at"]
         )
-    finally:
-        await conn.close()
-
-
-async def get_case_person_document(case_id: UUID, person_id: UUID, document_id: UUID) -> CasePersonDocumentInDB:
-    """
-    Retrieve the specific link between a person and a document within a case.
-    """
-    conn = await get_connection()
-    try:
-        record = await conn.fetchrow(
-            """
-            SELECT * FROM case_person_documents
-            WHERE case_id = $1 AND person_id = $2 AND document_id = $3
-            """,
-            case_id, person_id, document_id
-        )
-
-        if not record:
-            raise ValueError(f"No document found for person {person_id} in case {case_id} with document ID {document_id}")
-
-        return CasePersonDocumentInDB(
-            case_id=record["case_id"],
-            person_id=record["person_id"],
-            document_id=record["document_id"],
-            is_primary=record["is_primary"],
-            created_at=record["created_at"]
-        )
-    finally:
-        await conn.close()
-
-
-async def list_case_person_documents(case_id: UUID, person_id: UUID) -> List[CasePersonDocumentInDB]:
-    """
-    List all documents linked to a specific person within a case.
-    """
-    conn = await get_connection()
-    try:
-        records = await conn.fetch(
-            """
-            SELECT * FROM case_person_documents
-            WHERE case_id = $1 AND person_id = $2
-            """,
-            case_id, person_id
-        )
-
-        return [
-            CasePersonDocumentInDB(
-                case_id=record["case_id"],
-                person_id=record["person_id"],
-                document_id=record["document_id"],
-                is_primary=record["is_primary"],
-                created_at=record["created_at"]
-            )
-            for record in records
-        ]
-    finally:
-        await conn.close()
-
-
-async def update_case_person_document(
-        case_id: UUID,
-        person_id: UUID,
-        document_id: UUID,
-        doc_update: CasePersonDocumentUpdate
-) -> CasePersonDocumentInDB:
-    """
-    Update a person-document link within a case.
-    """
-    conn = await get_connection()
-    try:
-        # Check if the record exists
-        record = await conn.fetchrow(
-            """
-            SELECT * FROM case_person_documents
-            WHERE case_id = $1 AND person_id = $2 AND document_id = $3
-            """,
-            case_id, person_id, document_id
-        )
-
-        if not record:
-            raise ValueError(f"No document found for person {person_id} in case {case_id} with document ID {document_id}")
-
-        # Prepare update values
-        update_fields = []
-        update_values = []
-
-        if doc_update.is_primary is not None:
-            update_fields.append("is_primary = $" + str(len(update_values) + 4))
-            update_values.append(doc_update.is_primary)
-
-        # If there's nothing to update, return the existing record
-        if not update_fields:
-            return CasePersonDocumentInDB(
-                case_id=record["case_id"],
-                person_id=record["person_id"],
-                document_id=record["document_id"],
-                is_primary=record["is_primary"],
-                created_at=record["created_at"]
-            )
-
-        # Build the update query
-        query = f"""
-            UPDATE case_person_documents
-            SET {', '.join(update_fields)}
-            WHERE case_id = $1 AND person_id = $2 AND document_id = $3
-            RETURNING *
-        """
-
-        # Execute the update
-        updated = await conn.fetchrow(
-            query,
-            case_id, person_id, document_id, *update_values
-        )
-
-        return CasePersonDocumentInDB(
-            case_id=updated["case_id"],
-            person_id=updated["person_id"],
-            document_id=updated["document_id"],
-            is_primary=updated["is_primary"],
-            created_at=updated["created_at"]
-        )
-    finally:
-        await conn.close()
-
-
-async def delete_case_person_document(case_id: UUID, person_id: UUID, document_id: UUID) -> bool:
-    """
-    Delete a person-document link within a case.
-    """
-    conn = await get_connection()
-    try:
-        result = await conn.execute(
-            """
-            DELETE FROM case_person_documents
-            WHERE case_id = $1 AND person_id = $2 AND document_id = $3
-            """,
-            case_id, person_id, document_id
-        )
-
-        # Check if a record was deleted
-        return result and "DELETE 1" in result
     finally:
         await conn.close()

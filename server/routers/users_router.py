@@ -27,14 +27,14 @@ image_service = ImageService(AVATAR_DIR)
 @router.get("", response_model=PaginatedUsers)
 async def list_users(
         search: Optional[str] = None,
-        role: Optional[UserRole] = None,
-        status: Optional[UserStatus] = None,
+        role: Optional[str] = None,
+        status: Optional[str] = None,
         page: int = 1,
         limit: int = 10,
         current_user: UserPublic = Depends(get_current_active_user)
 ):
     """List users with pagination and filtering (Admin only)"""
-    if current_user.role != UserRole.ADMIN:
+    if current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Insufficient permissions")
     data = await list_users_paginated(search, role, status, page, limit)
     return data
@@ -46,7 +46,7 @@ async def create_new_user(
         current_user: UserPublic = Depends(get_current_active_user)
 ):
     """Create a new user (Admin only)"""
-    if current_user.role != UserRole.ADMIN:
+    if current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Insufficient permissions")
     created_user = await create_user(user_data)
     return UserPublic(**created_user.dict(exclude={"password_hash"}))
@@ -58,7 +58,7 @@ async def get_user_profile(
         current_user: UserPublic = Depends(get_current_active_user)
 ):
     """Get user profile by ID (Self or Admin)"""
-    if current_user.id != user_id and current_user.role != UserRole.ADMIN:
+    if current_user.id != user_id and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Insufficient permissions")
 
     user = await get_user(user_id)
@@ -74,7 +74,7 @@ async def update_user(
         current_user: UserPublic = Depends(get_current_active_user)
 ):
     """Update user profile (Self or Admin)"""
-    if current_user.id != user_id and current_user.role != UserRole.ADMIN:
+    if current_user.id != user_id and current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Insufficient permissions")
     return await update_user_profile(user_id, user_data)
 
@@ -85,7 +85,7 @@ async def delete_user_account(
         current_user: UserPublic = Depends(get_current_active_user)
 ):
     """Delete user account (Admin only)"""
-    if current_user.role != UserRole.ADMIN:
+    if current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Insufficient permissions")
 
     await delete_user(user_id)
@@ -206,7 +206,7 @@ async def main():
         created_user = await create_user(admin_user)
 
         # Update role to admin
-        updated_user = await update_user_role(created_user.id, UserRole.ADMIN)
+        updated_user = await update_user_role(created_user.id, "admin")
 
         # Update additional profile information
         profile_update = UserProfileUpdate(
@@ -218,7 +218,7 @@ async def main():
 
         # Update preferences with admin-specific settings
         preferences_update = UserPreferences(
-            language=UserLanguage.HE,  # Set preferred language
+            language="he",  # Set preferred language
             timezone="Asia/Jerusalem",  # Set appropriate timezone
             notifications=NotificationPreferences(
                 email=True,  # Enable email notifications

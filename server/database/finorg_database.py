@@ -14,13 +14,13 @@ from server.database.database import get_connection
 
 class FinOrgBase(BaseModel):
     name: str
-    type_id: UUID
+    type_id: UUID  # References lior_dropdown_options.id
     settings: Optional[Dict[str, Any]] = None
 
 
 class FinOrgCreate(BaseModel):
     name: str
-    type_id: UUID
+    type_id: UUID  # References lior_dropdown_options.id
     settings: Optional[Dict[str, Any]] = None
 
 
@@ -34,7 +34,7 @@ class FinOrgUpdate(BaseModel):
     name: Optional[str] = None
     id: Optional[UUID] = None
     settings: Optional[Dict[str, Any]] = None
-    type_id: UUID = None
+    type_id: Optional[UUID] = None
 
 
 # -----------------------------------------------------------------------------
@@ -266,7 +266,7 @@ class FinOrgTypeInDB(FinOrgTypeBase):
 
 
 # -----------------------------------------------------------------------------
-# 6. CRUD Functions for FinOrgType
+# 6. CRUD Functions for FinOrgType - Updated to use lior_dropdown_options
 # -----------------------------------------------------------------------------
 
 async def create_fin_org_type(type_in: FinOrgTypeCreate) -> FinOrgTypeInDB | None:
@@ -275,8 +275,8 @@ async def create_fin_org_type(type_in: FinOrgTypeCreate) -> FinOrgTypeInDB | Non
         async with conn.transaction():
             row = await conn.fetchrow(
                 """
-                INSERT INTO fin_org_types (name, value, created_at, updated_at)
-                VALUES ($1, $2, NOW(), NOW())
+                INSERT INTO lior_dropdown_options (category, name, value)
+                VALUES ('fin_org_types', $1, $2)
                 RETURNING id, name, value, created_at, updated_at
                 """,
                 type_in.name,
@@ -293,8 +293,8 @@ async def get_fin_org_type(type_id: UUID) -> Optional[FinOrgTypeInDB]:
         row = await conn.fetchrow(
             """
             SELECT id, name, value, created_at, updated_at 
-            FROM fin_org_types 
-            WHERE id = $1
+            FROM lior_dropdown_options 
+            WHERE id = $1 AND category = 'fin_org_types'
             """,
             type_id
         )
@@ -309,7 +309,8 @@ async def list_fin_org_types() -> List[FinOrgTypeInDB] | None:
         rows = await conn.fetch(
             """
             SELECT id, name, value, created_at, updated_at 
-            FROM fin_org_types 
+            FROM lior_dropdown_options 
+            WHERE category = 'fin_org_types'
             ORDER BY name
             """
         )
@@ -341,9 +342,9 @@ async def update_fin_org_type(type_id: UUID, type_update: FinOrgTypeUpdate) -> O
     update_fields.append("updated_at = NOW()")
 
     query = f"""
-    UPDATE fin_org_types
+    UPDATE lior_dropdown_options
     SET {", ".join(update_fields)}
-    WHERE id = $1
+    WHERE id = $1 AND category = 'fin_org_types'
     RETURNING id, name, value, created_at, updated_at
     """
 
@@ -359,7 +360,10 @@ async def delete_fin_org_type(type_id: UUID) -> bool | None:
     conn = await get_connection()
     try:
         async with conn.transaction():
-            result = await conn.execute("DELETE FROM fin_org_types WHERE id = $1", type_id)
+            result = await conn.execute(
+                "DELETE FROM lior_dropdown_options WHERE id = $1 AND category = 'fin_org_types'",
+                type_id
+            )
             return "DELETE 1" in result
     finally:
         await conn.close()

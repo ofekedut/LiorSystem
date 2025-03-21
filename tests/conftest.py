@@ -65,7 +65,7 @@ async def admin_user():
         return found
     else:
         user = await create_user(user_data)
-        await  update_user_role(user.id, UserRole.ADMIN)
+        await  update_user_role(user.id, "admin")
     return user
 
 

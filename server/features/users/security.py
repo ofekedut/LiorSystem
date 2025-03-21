@@ -71,7 +71,7 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]) -> Use
 async def get_current_active_user(
         current_user: Annotated[UserInDB, Depends(get_current_user)]
 ) -> UserInDB:
-    if current_user.status != UserStatus.ACTIVE:
+    if current_user.status != "active":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Account is not active"

@@ -25,7 +25,7 @@ async def test_create_admin_user(admin_user):
     assert db_user.password_hash != "123456qQ!", "Password should be hashed, not stored in plain text."
 
     # If your create_user sets a role, test that
-    assert db_user.role == UserRole.ADMIN, "Admin user should have role='admin'."
+    assert db_user.role == "admin", "Admin user should have role='admin'."
 
 
 @pytest.mark.asyncio

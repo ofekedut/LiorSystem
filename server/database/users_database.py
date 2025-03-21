@@ -1,8 +1,7 @@
 import asyncpg
 from datetime import datetime
-from enum import Enum
 from pydantic import BaseModel, Field, validator, constr
-from typing import Optional, Dict, List, Tuple
+from typing import Optional, Dict, List, Tuple, Literal
 import pytz
 import re
 import uuid
@@ -14,21 +13,11 @@ from server.database.database import get_connection
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-
-class UserRole(str, Enum):
-    ADMIN = "admin"
-    USER = "user"
-
-
-class UserStatus(str, Enum):
-    ACTIVE = "active"
-    INACTIVE = "inactive"
-    SUSPENDED = "suspended"
-
-
-class UserLanguage(str, Enum):
-    EN = "en"
-    HE = "he"
+# Using string literals instead of enums
+# This provides flexibility while still having some type safety
+UserRole = Literal["admin", "user"]
+UserStatus = Literal["active", "inactive", "suspended"]
+UserLanguage = Literal["en", "he"]
 
 
 class UserBase(BaseModel):
@@ -96,7 +85,7 @@ class NotificationPreferences(BaseModel):
 
 
 class UserPreferences(BaseModel):
-    language: UserLanguage = UserLanguage.HE
+    language: UserLanguage = "he"
     timezone: str = "UTC"
     notifications: NotificationPreferences = Field(default_factory=NotificationPreferences)
 
@@ -109,8 +98,8 @@ class UserPreferences(BaseModel):
 
 class UserInDB(UserBase):
     id: uuid.UUID
-    role: UserRole
-    status: UserStatus
+    role: str  # Changed from UserRole enum to string
+    status: str  # Changed from UserStatus enum to string
     password_hash: str
     last_login: Optional[datetime] = None
     created_at: datetime
@@ -123,7 +112,7 @@ class UserInDB(UserBase):
     deleted_at: Optional[datetime] = None
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
     @classmethod
     def from_database(cls, item: dict) -> "UserInDB":
@@ -133,8 +122,8 @@ class UserInDB(UserBase):
 
 class UserPublic(UserBase):
     id: uuid.UUID
-    role: UserRole
-    status: UserStatus
+    role: str  # Changed from UserRole enum to string
+    status: str  # Changed from UserStatus enum to string
     last_login: Optional[datetime] = None
     created_at: datetime
     updated_at: datetime
@@ -145,12 +134,19 @@ class UserPublic(UserBase):
     preferences: UserPreferences
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
     @classmethod
     def from_database(cls, item: dict) -> "UserPublic":
         item['preferences'] = UserPreferences.model_validate_json(item['preferences'])
         return UserPublic(**item)
+
+
+class PaginatedUsers(BaseModel):
+    items: list[UserPublic]
+    total: int
+    page: int
+    pages: int
 
 
 async def create_user(user: UserCreate) -> UserInDB:
@@ -313,11 +309,11 @@ async def change_password(user_id: uuid.UUID, password_change: PasswordChange) -
 
 async def list_users_paginated(
         search: Optional[str] = None,
-        role: Optional[UserRole] = None,
-        status: Optional[UserStatus] = None,
+        role: Optional[str] = None,  # Changed from UserRole enum to string
+        status: Optional[str] = None,  # Changed from UserStatus enum to string
         page: int = 1,
         limit: int = 10
-) :
+) -> PaginatedUsers:
     base_query = "FROM users WHERE deleted_at IS NULL"
     conditions = []
     params = []
@@ -328,11 +324,11 @@ async def list_users_paginated(
 
     if role:
         conditions.append(f"role = ${len(params) + 1}")
-        params.append(role.value)
+        params.append(role)  # No need to access .value anymore
 
     if status:
         conditions.append(f"status = ${len(params) + 1}")
-        params.append(status.value)
+        params.append(status)  # No need to access .value anymore
 
     if conditions:
         base_query += " AND " + " AND ".join(conditions)
@@ -345,12 +341,13 @@ async def list_users_paginated(
         query += f"OFFSET ${len(params) + 1} LIMIT ${len(params) + 2}"
 
         rows = await conn.fetch(query, *params, (page - 1) * limit, limit)
-        return PaginatedUsers(items=[UserPublic.from_database(dict(row)) for row in rows], total=total, page=page, pages=(total + limit - 1) // limit)
-class PaginatedUsers(BaseModel):
-    items: list[UserPublic]
-    total: int
-    page: int
-    pages: int
+        return PaginatedUsers(
+            items=[UserPublic.from_database(dict(row)) for row in rows],
+            total=total,
+            page=page,
+            pages=(total + limit - 1) // limit
+        )
+
 
 async def cleanup_expired_lockouts():
     conn = await get_connection()
@@ -456,13 +453,13 @@ async def update_user_preferences(user_id: uuid.UUID, preferences_update: UserPr
         return UserPublic(**result)
 
 
-async def update_user_role(user_id: uuid.UUID, new_role: UserRole) -> UserPublic:
+async def update_user_role(user_id: uuid.UUID, new_role: str) -> UserPublic:
     """
     Update a user's role in the system.
 
     Args:
         user_id (uuid.UUID): The ID of the user to update
-        new_role (UserRole): The new role to assign to the user
+        new_role (str): The new role to assign to the user
 
     Returns:
         UserPublic: The updated user object
@@ -480,7 +477,7 @@ async def update_user_role(user_id: uuid.UUID, new_role: UserRole) -> UserPublic
                     AND deleted_at IS NULL
                 RETURNING *
                 """,
-                                  new_role.value,
+                                  new_role,  # No longer need to access .value
                                   user_id
                                   )
 

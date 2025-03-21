@@ -29,7 +29,7 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
 
     try:
         user = await authenticate_user(form_data.username, form_data.password)
-        if not user.status == UserStatus.ACTIVE:
+        if not user.status == "active":
             raise HTTPException(status_code=403, detail="Account disabled")
 
         await login_attempts.reset_attempts(form_data.username)
@@ -73,7 +73,7 @@ async def refresh(req: RefreshTokenRequest):
         user_id = uuid.UUID(payload["sub"])
         user = await get_user(user_id)
 
-        if not user or not user.status == UserStatus.ACTIVE:
+        if not user or not user.status == "active":
             raise HTTPException(status_code=404, detail="User not found or inactive")
 
         new_access_token = create_access_token(user.id)

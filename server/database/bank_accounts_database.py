@@ -11,7 +11,7 @@ from server.database.database import get_connection
 
 class BankAccountBase(BaseModel):
     person_id: uuid.UUID
-    account_type_id: uuid.UUID
+    account_type_id: uuid.UUID  # This is already a UUID, which is correct
     bank_name: str
     account_number: str
 
