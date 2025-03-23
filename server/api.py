@@ -9,6 +9,7 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse
 
 from server.routers.person_assets_router import router as person_assets_router
+from server.routers.unique_docs_router import router as unique_docs_router
 from server.database.users_database import UserCreate, create_user, update_user_role, UserRole
 from server.database.database import create_schema_if_not_exists, drop_all_tables
 from server.database.d_migrations import run_migrations
@@ -87,12 +88,13 @@ app.include_router(person_relationships_router)
 app.include_router(companies_router)
 app.include_router(case_formatter_router)
 app.include_router(dropdown_options_router)
+app.include_router(unique_docs_router)
 
 
 async def create_schema_and_admin():
     await drop_all_tables()
     await create_schema_if_not_exists()
-    # await run_migrations()
+    await run_migrations()
     
 
 

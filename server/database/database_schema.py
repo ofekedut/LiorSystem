@@ -66,6 +66,44 @@ CREATE_SCHEMA_QUERIES = [
         EXECUTE PROCEDURE set_updated_at();
       END IF;
     END$$;""",
+    
+    # ### Unique Document Types Tables
+    # These need to be created before case_documents since they're referenced there
+    """CREATE TABLE IF NOT EXISTS unique_doc_types (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        display_name VARCHAR(255) NOT NULL,
+        category VARCHAR(50) NOT NULL,
+        issuer VARCHAR(255),
+        target_object VARCHAR(50) NOT NULL,
+        document_type VARCHAR(50) NOT NULL,
+        is_recurring BOOLEAN NOT NULL DEFAULT false,
+        frequency VARCHAR(50),
+        links JSONB,
+        contact_info JSONB,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );""",
+    
+    """CREATE TABLE IF NOT EXISTS required_for (
+        doc_type_id UUID REFERENCES unique_doc_types(id) ON DELETE CASCADE,
+        required_for VARCHAR(50) NOT NULL,
+        PRIMARY KEY (doc_type_id, required_for)
+    );""",
+    
+    """CREATE INDEX IF NOT EXISTS idx_unique_doc_types_category ON unique_doc_types(category);""",
+    """CREATE INDEX IF NOT EXISTS idx_unique_doc_types_target_object ON unique_doc_types(target_object);""",
+    
+    """DO $$ BEGIN
+      IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'update_unique_doc_types_timestamp'
+      ) THEN
+        CREATE TRIGGER update_unique_doc_types_timestamp
+        BEFORE UPDATE ON unique_doc_types
+        FOR EACH ROW
+        EXECUTE PROCEDURE set_updated_at();
+      END IF;
+    END$$;""",
 
     # ### 4. Documents Table
     # Now references lior_dropdown_options instead of document_types and document_categories
@@ -137,15 +175,36 @@ CREATE_SCHEMA_QUERIES = [
     );""",
     """drop TABLE IF EXISTS case_documents ;""",
     """CREATE TABLE IF NOT EXISTS case_documents (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
-        document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
+        document_id UUID REFERENCES documents(id) ON DELETE CASCADE,
+        doc_type_id UUID REFERENCES unique_doc_types(id),
+        target_object_type VARCHAR(50),
+        target_object_id UUID,
         status VARCHAR(20) NOT NULL,
         processing_status VARCHAR(30) NOT NULL DEFAULT 'pending',
         uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         reviewed_at TIMESTAMP WITH TIME ZONE,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         file_path TEXT DEFAULT NULL,
-        PRIMARY KEY (case_id, document_id)
+        CONSTRAINT unique_case_document UNIQUE (case_id, document_id)
     );""",
+    
+    """CREATE INDEX IF NOT EXISTS idx_case_documents_doc_type_id ON case_documents(doc_type_id);""",
+    """CREATE INDEX IF NOT EXISTS idx_case_documents_target_object ON case_documents(target_object_type, target_object_id);""",
+    
+    """DO $$ BEGIN
+      IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'update_case_documents_timestamp'
+      ) THEN
+        CREATE TRIGGER update_case_documents_timestamp
+        BEFORE UPDATE ON case_documents
+        FOR EACH ROW
+        EXECUTE PROCEDURE set_updated_at();
+      END IF;
+    END$$;""",
     """CREATE TABLE IF NOT EXISTS case_loans (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
@@ -371,6 +430,43 @@ CREATE_SCHEMA_QUERIES = [
     """CREATE INDEX IF NOT EXISTS idx_users_deleted ON users(deleted_at);""",
     """CREATE INDEX IF NOT EXISTS idx_lior_dropdown_options_category ON lior_dropdown_options(category);""",
     """CREATE INDEX IF NOT EXISTS idx_lior_dropdown_options_value ON lior_dropdown_options(value);""",
+    
+    # ### Unique Document Types Tables
+    """CREATE TABLE IF NOT EXISTS unique_doc_types (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        display_name VARCHAR(255) NOT NULL,
+        category VARCHAR(50) NOT NULL,
+        issuer VARCHAR(255),
+        target_object VARCHAR(50) NOT NULL,
+        document_type VARCHAR(50) NOT NULL,
+        is_recurring BOOLEAN NOT NULL DEFAULT false,
+        frequency VARCHAR(50),
+        links JSONB,
+        contact_info JSONB,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    );""",
+    
+    """CREATE TABLE IF NOT EXISTS required_for (
+        doc_type_id UUID REFERENCES unique_doc_types(id) ON DELETE CASCADE,
+        required_for VARCHAR(50) NOT NULL,
+        PRIMARY KEY (doc_type_id, required_for)
+    );""",
+    
+    """CREATE INDEX IF NOT EXISTS idx_unique_doc_types_category ON unique_doc_types(category);""",
+    """CREATE INDEX IF NOT EXISTS idx_unique_doc_types_target_object ON unique_doc_types(target_object);""",
+    
+    """DO $$ BEGIN
+      IF NOT EXISTS (
+        SELECT 1 FROM pg_trigger
+        WHERE tgname = 'update_unique_doc_types_timestamp'
+      ) THEN
+        CREATE TRIGGER update_unique_doc_types_timestamp
+        BEFORE UPDATE ON unique_doc_types
+        FOR EACH ROW
+        EXECUTE PROCEDURE set_updated_at();
+      END IF;
+    END$$;""",
 
     # ### 11. Triggers
     # Modified to remove triggers for deleted tables
