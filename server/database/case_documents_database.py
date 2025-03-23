@@ -4,9 +4,10 @@ Database operations for case documents management.
 from typing import List, Optional, Dict, Any, Union
 from uuid import UUID
 from datetime import datetime
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 
 from server.database.database import get_connection
+from server.database.unique_docs_database import UniqueDocTypeInDB, get_unique_doc_type
 
 
 # ------------------------------------------------
@@ -43,6 +44,22 @@ class CaseDocumentInDB(CaseDocumentBase):
     reviewed_at: Optional[datetime] = None
     created_at: datetime
     updated_at: datetime
+
+
+class CaseDocumentWithTypeInfo(CaseDocumentInDB):
+    document_type: Optional[UniqueDocTypeInDB] = None
+    
+    @computed_field
+    @property
+    def has_valid_type(self) -> bool:
+        """Indicates if the document has a valid document type."""
+        return self.document_type is not None
+    
+    @computed_field
+    @property
+    def has_target_linkage(self) -> bool:
+        """Indicates if the document is linked to a target object."""
+        return self.target_object_id is not None and self.target_object_type is not None
 
 
 # ------------------------------------------------
