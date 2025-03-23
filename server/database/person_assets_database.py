@@ -10,7 +10,7 @@ class PersonAsset(BaseModel):
     id: uuid.UUID
     person_id: uuid.UUID
     asset_type_id: uuid.UUID
-    description: str
+    label: str  # Changed from description to label to match PRD
     created_at: datetime
     updated_at: datetime
 
@@ -18,34 +18,34 @@ class PersonAsset(BaseModel):
 class PersonAssetInCreate(BaseModel):
     person_id: uuid.UUID
     asset_type_id: uuid.UUID
-    description: str
+    label: str  # Changed from description to label to match PRD
 
 
 class PersonAssetInUpdate(BaseModel):
     asset_type_id: Optional[uuid.UUID] = None
-    description: Optional[str] = None
+    label: Optional[str] = None  # Changed from description to label to match PRD
 
 
 async def create_person_asset(payload: PersonAssetInCreate) -> PersonAsset | None:
     """Create a new person asset record in the database"""
     query = """
-    INSERT INTO person_assets (id, person_id, asset_type_id, description, created_at, updated_at)
+    INSERT INTO person_assets (id, person_id, asset_type_id, label, created_at, updated_at)
     VALUES ($1, $2, $3, $4, NOW(), NOW())
-    RETURNING id, person_id, asset_type_id, description, created_at, updated_at
+    RETURNING id, person_id, asset_type_id, label, created_at, updated_at
     """
-    
+
     conn = await get_connection()
     try:
         async with conn.transaction():
             asset_id = uuid.uuid4()
             row = await conn.fetchrow(
-                query, 
-                asset_id, 
-                payload.person_id, 
-                payload.asset_type_id, 
-                payload.description
+                query,
+                asset_id,
+                payload.person_id,
+                payload.asset_type_id,
+                payload.label  # Changed from description to label to match PRD
             )
-            
+
             if row:
                 return PersonAsset.model_validate(dict(row))
             return None
@@ -60,16 +60,16 @@ async def create_person_asset(payload: PersonAssetInCreate) -> PersonAsset | Non
 async def get_person_assets_by_person_id(person_id: uuid.UUID) -> List[PersonAsset] | None:
     """Get all assets for a specific person"""
     query = """
-    SELECT id, person_id, asset_type_id, description, created_at, updated_at
+    SELECT id, person_id, asset_type_id, label, created_at, updated_at
     FROM person_assets
     WHERE person_id = $1
     """
-    
+
     conn = await get_connection()
     try:
         async with conn.transaction():
             rows = await conn.fetch(query, person_id)
-            
+
             if rows:
                 return [PersonAsset.model_validate(dict(row)) for row in rows]
             return []
@@ -84,16 +84,16 @@ async def get_person_assets_by_person_id(person_id: uuid.UUID) -> List[PersonAss
 async def get_person_asset_by_id(asset_id: uuid.UUID) -> Optional[PersonAsset]:
     """Get a specific person asset by its ID"""
     query = """
-    SELECT id, person_id, asset_type_id, description, created_at, updated_at
+    SELECT id, person_id, asset_type_id, label, created_at, updated_at
     FROM person_assets
     WHERE id = $1
     """
-    
+
     conn = await get_connection()
     try:
         async with conn.transaction():
             row = await conn.fetchrow(query, asset_id)
-            
+
             if row:
                 return PersonAsset.model_validate(dict(row))
             return None
@@ -111,37 +111,37 @@ async def update_person_asset(asset_id: uuid.UUID, payload: PersonAssetInUpdate)
     set_clauses = []
     values = [asset_id]
     param_index = 2  # Start from $2 since $1 is asset_id
-    
+
     if payload.asset_type_id is not None:
         set_clauses.append(f"asset_type_id = ${param_index}")
         values.append(payload.asset_type_id)
         param_index += 1
-        
-    if payload.description is not None:
-        set_clauses.append(f"description = ${param_index}")
-        values.append(payload.description)
+
+    if payload.label is not None:  # Changed from description to label to match PRD
+        set_clauses.append(f"label = ${param_index}")  # Changed from description to label to match PRD
+        values.append(payload.label)  # Changed from description to label to match PRD
         param_index += 1
-    
+
     # If no fields to update, return the existing record
     if not set_clauses:
         return await get_person_asset_by_id(asset_id)
-    
+
     # Add updated_at timestamp to SET clause
     set_clauses.append("updated_at = NOW()")
-    
+
     # Build the final query
     query = f"""
     UPDATE person_assets
     SET {", ".join(set_clauses)}
     WHERE id = $1
-    RETURNING id, person_id, asset_type_id, description, created_at, updated_at
+    RETURNING id, person_id, asset_type_id, label, created_at, updated_at  # Changed from description to label to match PRD
     """
-    
+
     conn = await get_connection()
     try:
         async with conn.transaction():
             row = await conn.fetchrow(query, *values)
-            
+
             if row:
                 return PersonAsset.model_validate(dict(row))
             return None
@@ -160,7 +160,7 @@ async def delete_person_asset(asset_id: uuid.UUID) -> bool:
     WHERE id = $1
     RETURNING id
     """
-    
+
     conn = await get_connection()
     try:
         async with conn.transaction():

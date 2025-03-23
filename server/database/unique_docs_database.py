@@ -59,15 +59,7 @@ class RequiredFor(str, Enum):
 # -------------------------------------------------
 # Pydantic Models
 # -------------------------------------------------
-class ContactInfo(BaseModel):
-    email: Optional[str] = None
-    phone: Optional[str] = None
-    hours: Optional[str] = None
-
-
-class Links(BaseModel):
-    url: Optional[str] = None
-    additional_url: Optional[str] = None
+# Removed ContactInfo and Links classes as they are not specified in the PRD
 
 
 class UniqueDocTypeBase(BaseModel):
@@ -78,8 +70,7 @@ class UniqueDocTypeBase(BaseModel):
     document_type: DocumentType
     is_recurring: bool
     frequency: Optional[DocumentFrequency] = None
-    links: Optional[Links] = None
-    contact_info: Optional[ContactInfo] = None
+    # Removed links and contact_info as they are not specified in the PRD
 
     model_config = ConfigDict(
         use_enum_values=True,
@@ -99,8 +90,7 @@ class UniqueDocTypeUpdate(UniqueDocTypeBase):
     is_recurring: Optional[bool] = None
     frequency: Optional[DocumentFrequency] = None
     required_for: Optional[List[RequiredFor]] = None
-    links: Optional[Links] = None
-    contact_info: Optional[ContactInfo] = None
+    # Removed links and contact_info as they are not specified in the PRD
 
 
 class UniqueDocTypeInDB(UniqueDocTypeBase):
@@ -133,13 +123,12 @@ async def create_unique_doc_type(doc_type: UniqueDocTypeCreate) -> UniqueDocType
                 """
                 INSERT INTO unique_doc_types (
                     display_name, category, issuer, target_object,
-                    document_type, is_recurring, frequency,
-                    links, contact_info
+                    document_type, is_recurring, frequency
                 )
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                VALUES ($1, $2, $3, $4, $5, $6, $7)
                 RETURNING id, display_name, category, issuer, target_object,
                         document_type, is_recurring, frequency,
-                        links, contact_info, created_at, updated_at
+                        created_at, updated_at
                 """,
                 doc_type.display_name,
                 doc_type.category,
@@ -147,20 +136,11 @@ async def create_unique_doc_type(doc_type: UniqueDocTypeCreate) -> UniqueDocType
                 doc_type.target_object,
                 doc_type.document_type,
                 doc_type.is_recurring,
-                doc_type.frequency,
-                json.dumps(doc_type.links.model_dump()) if doc_type.links else None,
-                json.dumps(doc_type.contact_info.model_dump()) if doc_type.contact_info else None
+                doc_type.frequency
             )
 
             # Convert the record to a dict
             doc_dict = dict(record)
-
-            # Parse JSON fields
-            if doc_dict['links']:
-                doc_dict['links'] = Links.model_validate(json.loads(doc_dict['links']))
-
-            if doc_dict['contact_info']:
-                doc_dict['contact_info'] = ContactInfo.model_validate(json.loads(doc_dict['contact_info']))
 
             # Insert required_for relationships
             for rf in doc_type.required_for:
@@ -191,7 +171,7 @@ async def get_unique_doc_type(doc_type_id: UUID) -> Optional[UniqueDocTypeInDB]:
         query = """
         SELECT id, display_name, category, issuer, target_object,
                document_type, is_recurring, frequency,
-               links, contact_info, created_at, updated_at
+               created_at, updated_at
         FROM unique_doc_types
         WHERE id = $1
         """
@@ -203,13 +183,6 @@ async def get_unique_doc_type(doc_type_id: UUID) -> Optional[UniqueDocTypeInDB]:
 
         # Convert to dict
         doc_dict = dict(record)
-
-        # Parse JSON fields
-        if doc_dict['links']:
-            doc_dict['links'] = Links.model_validate(json.loads(doc_dict['links']))
-
-        if doc_dict['contact_info']:
-            doc_dict['contact_info'] = ContactInfo.model_validate(json.loads(doc_dict['contact_info']))
 
         # Get required_for values
         required_for_query = """
@@ -289,15 +262,7 @@ async def update_unique_doc_type(
                 params.append(doc_type_update.frequency)
                 param_idx += 1
 
-            if doc_type_update.links is not None:
-                fields_to_update.append(f"links = ${param_idx}")
-                params.append(json.dumps(doc_type_update.links.model_dump()) if doc_type_update.links else None)
-                param_idx += 1
-
-            if doc_type_update.contact_info is not None:
-                fields_to_update.append(f"contact_info = ${param_idx}")
-                params.append(json.dumps(doc_type_update.contact_info.model_dump()) if doc_type_update.contact_info else None)
-                param_idx += 1
+            # Remove links and contact_info handling as they're not in the PRD
 
             # If there are fields to update, execute the update query
             if fields_to_update:
@@ -307,18 +272,11 @@ async def update_unique_doc_type(
                     WHERE id = ${param_idx}
                     RETURNING id, display_name, category, issuer, target_object,
                             document_type, is_recurring, frequency,
-                            links, contact_info, created_at, updated_at
+                            created_at, updated_at
                 """
                 params.append(doc_type_id)
                 record = await conn.fetchrow(update_query, *params)
                 doc_dict = dict(record)
-
-                # Parse JSON fields
-                if doc_dict['links']:
-                    doc_dict['links'] = Links.model_validate(json.loads(doc_dict['links']))
-
-                if doc_dict['contact_info']:
-                    doc_dict['contact_info'] = ContactInfo.model_validate(json.loads(doc_dict['contact_info']))
 
                 # Update required_for if provided
                 if doc_type_update.required_for is not None:
@@ -434,7 +392,7 @@ async def list_unique_doc_types() -> List[UniqueDocTypeInDB]:
         query = """
         SELECT id, display_name, category, issuer, target_object,
                document_type, is_recurring, frequency,
-               links, contact_info, created_at, updated_at
+               created_at, updated_at
         FROM unique_doc_types
         ORDER BY display_name
         """
@@ -444,13 +402,6 @@ async def list_unique_doc_types() -> List[UniqueDocTypeInDB]:
 
         for record in records:
             doc_dict = dict(record)
-
-            # Parse JSON fields
-            if doc_dict['links']:
-                doc_dict['links'] = Links.model_validate(json.loads(doc_dict['links']))
-
-            if doc_dict['contact_info']:
-                doc_dict['contact_info'] = ContactInfo.model_validate(json.loads(doc_dict['contact_info']))
 
             # Get required_for values
             required_for_query = """
@@ -480,7 +431,7 @@ async def filter_by_category(category: str) -> List[UniqueDocTypeInDB]:
         query = """
         SELECT id, display_name, category, issuer, target_object,
                document_type, is_recurring, frequency,
-               links, contact_info, created_at, updated_at
+               created_at, updated_at
         FROM unique_doc_types
         WHERE category = $1
         ORDER BY display_name
@@ -491,13 +442,6 @@ async def filter_by_category(category: str) -> List[UniqueDocTypeInDB]:
 
         for record in records:
             doc_dict = dict(record)
-
-            # Parse JSON fields
-            if doc_dict['links']:
-                doc_dict['links'] = Links.model_validate(json.loads(doc_dict['links']))
-
-            if doc_dict['contact_info']:
-                doc_dict['contact_info'] = ContactInfo.model_validate(json.loads(doc_dict['contact_info']))
 
             # Get required_for values
             required_for_query = """
@@ -527,7 +471,7 @@ async def filter_by_target_object(target_object: str) -> List[UniqueDocTypeInDB]
         query = """
         SELECT id, display_name, category, issuer, target_object,
                document_type, is_recurring, frequency,
-               links, contact_info, created_at, updated_at
+               created_at, updated_at
         FROM unique_doc_types
         WHERE target_object = $1
         ORDER BY display_name
@@ -538,13 +482,6 @@ async def filter_by_target_object(target_object: str) -> List[UniqueDocTypeInDB]
 
         for record in records:
             doc_dict = dict(record)
-
-            # Parse JSON fields
-            if doc_dict['links']:
-                doc_dict['links'] = Links.model_validate(json.loads(doc_dict['links']))
-
-            if doc_dict['contact_info']:
-                doc_dict['contact_info'] = ContactInfo.model_validate(json.loads(doc_dict['contact_info']))
 
             # Get required_for values
             required_for_query = """

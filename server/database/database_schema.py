@@ -78,8 +78,6 @@ CREATE_SCHEMA_QUERIES = [
         document_type VARCHAR(50) NOT NULL,
         is_recurring BOOLEAN NOT NULL DEFAULT false,
         frequency VARCHAR(50),
-        links JSONB,
-        contact_info JSONB,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
     );""",
@@ -168,11 +166,8 @@ CREATE_SCHEMA_QUERIES = [
        FOREIGN KEY (primary_contact_id) REFERENCES case_persons(id);""",
 
     # ### 8. Tables Depending on Cases, Documents, and Users
-    """CREATE TABLE IF NOT EXISTS case_assets (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        case_id UUID NOT NULL REFERENCES cases(id),
-        value TEXT NOT NULL
-    );""",
+    # Removed case_assets table as it's not specified in the PRD
+    # Only person_assets should exist per PRD specifications
     """drop TABLE IF EXISTS case_documents ;""",
     """CREATE TABLE IF NOT EXISTS case_documents (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -219,33 +214,19 @@ CREATE_SCHEMA_QUERIES = [
         EXECUTE PROCEDURE set_updated_at();
       END IF;
     END$$;""",
-    """CREATE TABLE IF NOT EXISTS case_loans (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
-        amount NUMERIC(15,2) NOT NULL CHECK (amount > 0),
-        status VARCHAR(20) NOT NULL,
-        start_date DATE NOT NULL,
-        end_date DATE,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
-    );""",
+    # Removed case_loans table as it's not specified in the PRD
+    # Only person_loans should exist per PRD specifications
     """CREATE TABLE IF NOT EXISTS case_companies (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
         name TEXT NOT NULL,
         company_type_id UUID NOT NULL,
+        company_id_num TEXT NOT NULL, -- Added as primary identification field as per PRD
         role_id UUID,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
     );""",
-    """CREATE TABLE IF NOT EXISTS case_desired_products (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        case_id UUID NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
-        loan_type_id UUID NOT NULL,
-        loan_goal_id UUID NOT NULL,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
-    );""",
+    # Removed case_desired_products table as it's not specified in the PRD
     """CREATE TABLE IF NOT EXISTS cases_monday_relation (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         case_id UUID NOT NULL REFERENCES cases(id),
@@ -277,7 +258,7 @@ CREATE_SCHEMA_QUERIES = [
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         person_id UUID NOT NULL REFERENCES case_persons(id) ON DELETE CASCADE,
         asset_type_id UUID NOT NULL,
-        description TEXT NOT NULL,
+        label TEXT NOT NULL,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
     );""",
@@ -366,39 +347,14 @@ CREATE_SCHEMA_QUERIES = [
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
     );""",
-    """CREATE TABLE IF NOT EXISTS document_entity_relations (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
-        entity_type TEXT NOT NULL,
-        entity_id UUID NOT NULL,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-        CONSTRAINT unique_document_entity UNIQUE (document_id, entity_type, entity_id)
-    );""",
+    # Removed document_entity_relations table as it's not specified in the PRD
+    # Document linkage should be handled through case_documents table per PRD
     """CREATE TABLE IF NOT EXISTS documents_required_for (
         document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
         required_for VARCHAR(20) NOT NULL,
         PRIMARY KEY(document_id, required_for)
     );""",
-    """CREATE TABLE IF NOT EXISTS document_fields (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
-        name TEXT NOT NULL CHECK (length(name) > 0),
-        type TEXT NOT NULL CHECK (type = ANY(ARRAY['string','number','date','currency'])),
-        is_identifier BOOLEAN NOT NULL DEFAULT false,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-        field_type TEXT NOT NULL,
-        is_required BOOLEAN NOT NULL DEFAULT false
-    );""",
-    """CREATE TABLE IF NOT EXISTS validation_rules (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        document_id UUID NOT NULL REFERENCES documents(id) ON DELETE CASCADE,
-        field TEXT NOT NULL CHECK (length(field) > 0),
-        operator VARCHAR(30) NOT NULL,
-        value JSONB,
-        error_message TEXT NOT NULL CHECK (length(error_message) > 0),
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
-    );""",
+    # Removed document_fields and validation_rules tables as they're not specified in the PRD
     """CREATE TABLE IF NOT EXISTS processing_step_results (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         processing_state_id UUID NOT NULL REFERENCES processing_states(id) ON DELETE CASCADE,
@@ -429,8 +385,9 @@ CREATE_SCHEMA_QUERIES = [
     """CREATE INDEX IF NOT EXISTS idx_case_companies_role_id ON case_companies(role_id);""",
     """CREATE INDEX IF NOT EXISTS idx_documents_document_type_id ON documents(document_type_id);""",
     """CREATE INDEX IF NOT EXISTS idx_documents_category_id ON documents(category_id);""",
-    """CREATE INDEX IF NOT EXISTS idx_document_entity_relations_document_id ON document_entity_relations(document_id);""",
-    """CREATE INDEX IF NOT EXISTS idx_document_entity_relations_entity ON document_entity_relations(entity_type, entity_id);""",
+    # Removed indices for document_entity_relations as the table has been removed
+    # """CREATE INDEX IF NOT EXISTS idx_document_entity_relations_document_id ON document_entity_relations(document_id);""",
+    # """CREATE INDEX IF NOT EXISTS idx_document_entity_relations_entity ON document_entity_relations(entity_type, entity_id);""",
     """CREATE INDEX IF NOT EXISTS idx_pending_processing_document_case_id ON pending_processing_documents(case_id);""",
     """CREATE INDEX IF NOT EXISTS idx_case_person_assets_case_id ON case_person_assets(case_id);""",
     """CREATE INDEX IF NOT EXISTS idx_case_person_assets_person_id ON case_person_assets(person_id);""",
@@ -447,27 +404,27 @@ CREATE_SCHEMA_QUERIES = [
     """CREATE INDEX IF NOT EXISTS idx_lior_dropdown_options_category ON lior_dropdown_options(category);""",
     """CREATE INDEX IF NOT EXISTS idx_lior_dropdown_options_value ON lior_dropdown_options(value);""",
     
-    # ### Unique Document Types Tables
-    """CREATE TABLE IF NOT EXISTS unique_doc_types (
-        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-        display_name VARCHAR(255) NOT NULL,
-        category VARCHAR(50) NOT NULL,
-        issuer VARCHAR(255),
-        target_object VARCHAR(50) NOT NULL,
-        document_type VARCHAR(50) NOT NULL,
-        is_recurring BOOLEAN NOT NULL DEFAULT false,
-        frequency VARCHAR(50),
-        links JSONB,
-        contact_info JSONB,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
-    );""",
+    # ### Unique Document Types Tables - Duplicate definition removed
+    # """CREATE TABLE IF NOT EXISTS unique_doc_types (
+    #    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    #    display_name VARCHAR(255) NOT NULL,
+    #    category VARCHAR(50) NOT NULL,
+    #    issuer VARCHAR(255),
+    #    target_object VARCHAR(50) NOT NULL,
+    #    document_type VARCHAR(50) NOT NULL,
+    #    is_recurring BOOLEAN NOT NULL DEFAULT false,
+    #    frequency VARCHAR(50),
+    #    links JSONB,
+    #    contact_info JSONB,
+    #    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+    #    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+    # );""",
     
-    """CREATE TABLE IF NOT EXISTS required_for (
-        doc_type_id UUID REFERENCES unique_doc_types(id) ON DELETE CASCADE,
-        required_for VARCHAR(50) NOT NULL,
-        PRIMARY KEY (doc_type_id, required_for)
-    );""",
+    # """CREATE TABLE IF NOT EXISTS required_for (
+    #    doc_type_id UUID REFERENCES unique_doc_types(id) ON DELETE CASCADE,
+    #    required_for VARCHAR(50) NOT NULL,
+    #    PRIMARY KEY (doc_type_id, required_for)
+    # );""",
     
     """CREATE INDEX IF NOT EXISTS idx_unique_doc_types_category ON unique_doc_types(category);""",
     """CREATE INDEX IF NOT EXISTS idx_unique_doc_types_target_object ON unique_doc_types(target_object);""",
@@ -585,28 +542,30 @@ CREATE_SCHEMA_QUERIES = [
         EXECUTE PROCEDURE set_updated_at();
       END IF;
     END$$;""",
-    """DO $$ BEGIN
-      IF NOT EXISTS (
-        SELECT 1 FROM pg_trigger
-        WHERE tgname = 'update_document_entity_relations_timestamp'
-      ) THEN
-        CREATE TRIGGER update_document_entity_relations_timestamp
-        BEFORE UPDATE ON document_entity_relations
-        FOR EACH ROW
-        EXECUTE PROCEDURE set_updated_at();
-      END IF;
-    END$$;""",
-    """DO $$ BEGIN
-      IF NOT EXISTS (
-        SELECT 1 FROM pg_trigger
-        WHERE tgname = 'update_case_loans_timestamp'
-      ) THEN
-        CREATE TRIGGER update_case_loans_timestamp
-        BEFORE UPDATE ON case_loans
-        FOR EACH ROW
-        EXECUTE PROCEDURE set_updated_at();
-      END IF;
-    END$$;""",
+    # Removed trigger for document_entity_relations as the table has been removed
+    # """DO $$ BEGIN
+    #   IF NOT EXISTS (
+    #     SELECT 1 FROM pg_trigger
+    #     WHERE tgname = 'update_document_entity_relations_timestamp'
+    #   ) THEN
+    #     CREATE TRIGGER update_document_entity_relations_timestamp
+    #     BEFORE UPDATE ON document_entity_relations
+    #     FOR EACH ROW
+    #     EXECUTE PROCEDURE set_updated_at();
+    #   END IF;
+    # END$$;""",
+    # Removed trigger for case_loans as the table has been removed
+    # """DO $$ BEGIN
+    #   IF NOT EXISTS (
+    #     SELECT 1 FROM pg_trigger
+    #     WHERE tgname = 'update_case_loans_timestamp'
+    #   ) THEN
+    #     CREATE TRIGGER update_case_loans_timestamp
+    #     BEFORE UPDATE ON case_loans
+    #     FOR EACH ROW
+    #     EXECUTE PROCEDURE set_updated_at();
+    #   END IF;
+    # END$$;""",
     """DO $$ BEGIN
       IF NOT EXISTS (
         SELECT 1 FROM pg_trigger
@@ -618,17 +577,18 @@ CREATE_SCHEMA_QUERIES = [
         EXECUTE PROCEDURE set_updated_at();
       END IF;
     END$$;""",
-    """DO $$ BEGIN
-      IF NOT EXISTS (
-        SELECT 1 FROM pg_trigger
-        WHERE tgname = 'update_case_desired_products_timestamp'
-      ) THEN
-        CREATE TRIGGER update_case_desired_products_timestamp
-        BEFORE UPDATE ON case_desired_products
-        FOR EACH ROW
-        EXECUTE PROCEDURE set_updated_at();
-      END IF;
-    END$$;""",
+    # Removed trigger for case_desired_products as the table has been removed
+    # """DO $$ BEGIN
+    #   IF NOT EXISTS (
+    #     SELECT 1 FROM pg_trigger
+    #     WHERE tgname = 'update_case_desired_products_timestamp'
+    #   ) THEN
+    #     CREATE TRIGGER update_case_desired_products_timestamp
+    #     BEFORE UPDATE ON case_desired_products
+    #     FOR EACH ROW
+    #     EXECUTE PROCEDURE set_updated_at();
+    #   END IF;
+    # END$$;""",
     """DO $$ BEGIN
       IF NOT EXISTS (
         SELECT 1 FROM pg_trigger
@@ -705,22 +665,22 @@ BEGIN
     DROP TABLE IF EXISTS processing_step_results CASCADE;
     DROP TABLE IF EXISTS processing_states CASCADE;
     DROP TABLE IF EXISTS documents_required_for CASCADE;
-    DROP TABLE IF EXISTS validation_rules CASCADE;
-    DROP TABLE IF EXISTS document_fields CASCADE;
+    DROP TABLE IF EXISTS validation_rules CASCADE; -- Not in PRD
+    DROP TABLE IF EXISTS document_fields CASCADE; -- Not in PRD
     DROP TABLE IF EXISTS documents CASCADE;
-    DROP TABLE IF EXISTS document_entity_relations CASCADE;
+    DROP TABLE IF EXISTS document_entity_relations CASCADE; -- Not in PRD
     DROP TABLE IF EXISTS case_person_relations CASCADE;
     DROP TABLE IF EXISTS person_loans CASCADE;
     DROP TABLE IF EXISTS person_credit_cards CASCADE;
     DROP TABLE IF EXISTS person_bank_accounts CASCADE;
     DROP TABLE IF EXISTS person_income_sources CASCADE;
     DROP TABLE IF EXISTS person_employment_history CASCADE;
-    DROP TABLE IF EXISTS case_assets CASCADE;
+    DROP TABLE IF EXISTS case_assets CASCADE; -- Not in PRD
     DROP TABLE IF EXISTS person_assets CASCADE;
     DROP TABLE IF EXISTS case_person_assets CASCADE;
     DROP TABLE IF EXISTS case_person_documents CASCADE;
     DROP TABLE IF EXISTS case_companies CASCADE;
-    DROP TABLE IF EXISTS case_desired_products CASCADE;
+    DROP TABLE IF EXISTS case_desired_products CASCADE; -- Not in PRD
     DROP TABLE IF EXISTS case_persons CASCADE;
     DROP TABLE IF EXISTS cases CASCADE;
     DROP TABLE IF EXISTS cases_monday_relation CASCADE;

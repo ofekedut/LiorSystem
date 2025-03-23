@@ -246,6 +246,7 @@ async def create_case_with_wizard(survey: CaseDeclarationSurvey) -> WizardResult
                     created_entities["companies"].append({
                         "id": str(company.id),
                         "name": company.name,
+                        "company_id_num": company.company_id_num,  # Added primary identification field as per PRD
                         "owner_person_id": str(person_ids[company_declaration.owner_person_index])
                     })
                     
@@ -343,13 +344,13 @@ async def create_case_with_wizard(survey: CaseDeclarationSurvey) -> WizardResult
                     asset_data = PersonAssetInCreate(
                         person_id=person_ids[asset_declaration.owner_person_index],
                         asset_type_id=asset_declaration.asset_type_id,
-                        description=asset_declaration.label  # Using label as description as per PRD
+                        label=asset_declaration.label  # Using label as primary identification field as per PRD
                     )
                     
                     asset = await create_person_asset(asset_data)
                     created_entities["assets"].append({
                         "id": str(asset.id),
-                        "description": asset.description,
+                        "label": asset.label,  # Changed from description to label to match PRD
                         "owner_person_id": str(person_ids[asset_declaration.owner_person_index])
                     })
                     

@@ -18,8 +18,6 @@ from server.database.unique_docs_database import (
     DocumentType,
     DocumentFrequency,
     RequiredFor,
-    Links,
-    ContactInfo,
     create_unique_doc_type
 )
 
@@ -223,14 +221,7 @@ async def seed_document_types():
 
     for doc_type in DOCUMENT_TYPES:
         try:
-            links_data = None
-            if doc_type.get("links"):
-                links_data = Links(**doc_type["links"])
-
-            contact_info_data = None
-            if doc_type.get("contact_info"):
-                contact_info_data = ContactInfo(**doc_type["contact_info"])
-
+            # Skip links and contact_info as they are not in the PRD
             create_data = UniqueDocTypeCreate(
                 display_name=doc_type["display_name"],
                 category=doc_type["category"],
@@ -239,9 +230,7 @@ async def seed_document_types():
                 document_type=doc_type["document_type"],
                 is_recurring=doc_type["is_recurring"],
                 frequency=doc_type.get("frequency"),
-                required_for=doc_type["required_for"],
-                links=links_data,
-                contact_info=contact_info_data
+                required_for=doc_type["required_for"]
             )
 
             await create_unique_doc_type(create_data)
@@ -263,21 +252,21 @@ async def create_sample_cases():
     # Path to sample case JSON files
     json_folder = Path("/Users/nikotsy/OTECH/REPOS/LiorSystem/sample_cases_as_jsons")
     case_files = sorted(list(json_folder.glob("case_*.json")))
-    
+
     if not case_files:
         logger.warning("No sample case JSON files found")
         return []
-    
+
     case_ids = []
-    
+
     for case_file in case_files:
         logger.info(f"Processing case file: {case_file.name}")
-        
+
         try:
             # Load JSON data
             with open(case_file, "r", encoding="utf-8") as f:
                 case_data = json.load(f)
-            
+
             # Process each case
             case_id = await create_case_from_json(case_data)
             if case_id:
@@ -285,19 +274,20 @@ async def create_sample_cases():
                 logger.info(f"Successfully created case from {case_file.name} with ID: {case_id}")
             else:
                 logger.error(f"Failed to create case from {case_file.name}")
-                
+
         except Exception as e:
             logger.error(f"Error processing case file {case_file.name}: {str(e)}")
-    
+
     return case_ids
+
 
 async def create_case_from_json(case_data):
     """
     Create a case, persons, and related objects from JSON data.
-    
+
     Args:
         case_data: JSON data containing case information
-        
+
     Returns:
         UUID of the created case if successful, None otherwise
     """
@@ -307,21 +297,21 @@ async def create_case_from_json(case_data):
             # Extract basic case information
             case_id = uuid.uuid4()
             case_name = case_data.get("name", "Case from JSON")
-            
+
             # Get loan type from column values if available
             loan_type = "mortgage"  # Default loan type
             loan_purpose = "גיוס משכנתא"  # Default purpose
             status = "in_progress"
-            
+
             # Extract information from column_values
             phone = None
             id_number = None
             primary_contact_name = None
-            
+
             for col_val in case_data.get("column_values", []):
                 col_title = col_val.get("column", {}).get("title", "")
                 col_text = col_val.get("text", "")
-                
+
                 if col_title == "סוג הלוואה" and col_text:
                     loan_type = col_text
                 elif col_title == "מהות התיק" and col_text:
@@ -334,7 +324,7 @@ async def create_case_from_json(case_data):
                     id_number = col_text
                 elif col_title == "לקוח איתו מתנהלים" and col_text:
                     primary_contact_name = col_text
-            
+
             # Create the case
             case_query = """
             INSERT INTO cases (
@@ -354,15 +344,15 @@ async def create_case_from_json(case_data):
                 f"תיק {loan_purpose}",
                 loan_purpose
             )
-            
+
             logger.info(f"Created case: {case_name} with ID: {case_id}")
-            
+
             # Create primary applicant based on case name
             # Split the name to extract first and last name
             name_parts = case_name.split()
             first_name = name_parts[0] if name_parts else "לקוח"
             last_name = name_parts[1] if len(name_parts) > 1 else "חדש"
-            
+
             primary_person_id = uuid.uuid4()
             primary_person_query = """
             INSERT INTO case_persons (
@@ -388,71 +378,69 @@ async def create_case_from_json(case_data):
                 phone or "0500000000",
                 f"{first_name.lower()}.{last_name.lower()}@example.com"
             )
-            
+
             logger.info(f"Created primary applicant: {first_name} {last_name} with ID: {primary_person_id}")
-            
+
             # Set primary contact for the case
             update_case_query = """
             UPDATE cases SET primary_contact_id = $1 WHERE id = $2
             """
             await conn.execute(update_case_query, primary_person_id, case_id)
-            
+
             # Check if there are subitems in the case
             if case_data.get("subitems"):
                 # Process the first 5 subitems as documents
                 for idx, subitem in enumerate(case_data.get("subitems", [])[:5]):
                     doc_name = subitem.get("name", f"Document {idx+1}")
-                    
+
                     # Check if the subitem has files
                     assets = subitem.get("assets", [])
                     if assets:
                         for asset_idx, asset in enumerate(assets[:2]):  # Process up to 2 assets per subitem
                             doc_id = uuid.uuid4()
+                            # Updated query to match the case_documents table structure
                             doc_query = """
                             INSERT INTO case_documents (
-                                id, case_id, person_id, name, document_type_id, 
-                                status, description, file_url
+                                id, case_id, doc_type_id, status, file_path, 
+                                target_object_type, target_object_id
                             ) VALUES (
-                                $1, $2, $3, $4, 
+                                $1, $2, 
                                 (SELECT id FROM unique_doc_types WHERE display_name = 'תעודת זהות - צד קדמי' LIMIT 1),
-                                $5, $6, $7
+                                $3, $4, 'person', $5
                             )
                             """
-                            
+
                             await conn.execute(
                                 doc_query,
                                 doc_id,
                                 case_id,
-                                primary_person_id,
-                                f"{doc_name} - {asset.get('name', f'File {asset_idx+1}')}",
-                                "uploaded",
-                                f"מסמך {doc_name} שהועלה מהמערכת",
-                                asset.get("public_url", "")
+                                "received",  # Status field
+                                asset.get("public_url", ""),  # file_path
+                                primary_person_id  # target_object_id
                             )
                     else:
                         # Create a placeholder document entry even without files
                         doc_id = uuid.uuid4()
+                        # Updated query to match the case_documents table structure
                         doc_query = """
                         INSERT INTO case_documents (
-                            id, case_id, person_id, name, document_type_id, 
-                            status, description
+                            id, case_id, doc_type_id, status, 
+                            target_object_type, target_object_id
                         ) VALUES (
-                            $1, $2, $3, $4, 
+                            $1, $2,
                             (SELECT id FROM unique_doc_types WHERE display_name = 'תעודת זהות - צד קדמי' LIMIT 1),
-                            $5, $6
+                            $3, 'person', $4
                         )
                         """
-                        
+
                         await conn.execute(
                             doc_query,
                             doc_id,
                             case_id,
-                            primary_person_id,
-                            doc_name,
-                            "pending",
-                            f"מסמך {doc_name} בהמתנה"
+                            "pending",  # Status field
+                            primary_person_id  # target_object_id
                         )
-            
+
             logger.info(f"Case created successfully with ID: {case_id}")
             return case_id
 
@@ -461,6 +449,7 @@ async def create_case_from_json(case_data):
         return None
     finally:
         await conn.close()
+
 
 # ------------------------------------------------
 # Main Migration Process
@@ -514,7 +503,7 @@ def generate_html_report(seeded_categories) -> str:
             </div>
             """
 
-    # Generate HTML content
+    # Generate HTML content with CSS styling
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -596,6 +585,7 @@ def generate_html_report(seeded_categories) -> str:
         f.write(html_content)
 
     return str(report_path)
+
 
 async def run_migrations():
     """

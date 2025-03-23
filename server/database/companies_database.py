@@ -13,6 +13,7 @@ class CompanyBase(BaseModel):
     case_id: uuid.UUID
     name: str
     company_type_id: uuid.UUID
+    company_id_num: str  # Added as primary identification field as per PRD
     role_id: Optional[uuid.UUID] = None
 
 
@@ -29,6 +30,7 @@ class CompanyInDB(CompanyBase):
 class CompanyInUpdate(BaseModel):
     name: Optional[str] = None
     company_type_id: Optional[uuid.UUID] = None
+    company_id_num: Optional[str] = None  # Added as primary identification field as per PRD
     role_id: Optional[uuid.UUID] = None
 
 
@@ -38,10 +40,10 @@ async def create_company(payload: CompanyInCreate) -> CompanyInDB:
     """
     query = """
     INSERT INTO case_companies (
-        id, case_id, name, company_type_id, role_id
+        id, case_id, name, company_type_id, company_id_num, role_id
     )
-    VALUES ($1, $2, $3, $4, $5)
-    RETURNING id, case_id, name, company_type_id, role_id, created_at, updated_at
+    VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING id, case_id, name, company_type_id, company_id_num, role_id, created_at, updated_at
     """
 
     company_id = uuid.uuid4()
@@ -50,6 +52,7 @@ async def create_company(payload: CompanyInCreate) -> CompanyInDB:
         payload.case_id,
         payload.name,
         payload.company_type_id,
+        payload.company_id_num,
         payload.role_id
     ]
 
@@ -66,7 +69,7 @@ async def get_company_by_id(company_id: uuid.UUID) -> Optional[CompanyInDB]:
     Get a specific company by ID
     """
     query = """
-    SELECT id, case_id, name, company_type_id, role_id, created_at, updated_at
+    SELECT id, case_id, name, company_type_id, company_id_num, role_id, created_at, updated_at
     FROM case_companies
     WHERE id = $1
     """
@@ -86,7 +89,7 @@ async def get_companies_by_case(case_id: uuid.UUID) -> List[CompanyInDB]:
     Get all companies for a specific case
     """
     query = """
-    SELECT id, case_id, name, company_type_id, role_id, created_at, updated_at
+    SELECT id, case_id, name, company_type_id, company_id_num, role_id, created_at, updated_at
     FROM case_companies
     WHERE case_id = $1
     ORDER BY created_at DESC
@@ -126,6 +129,11 @@ async def update_company(
         values.append(payload.company_type_id)
         param_index += 1
 
+    if payload.company_id_num is not None:
+        set_parts.append(f"company_id_num = ${param_index}")
+        values.append(payload.company_id_num)
+        param_index += 1
+        
     if payload.role_id is not None:
         set_parts.append(f"role_id = ${param_index}")
         values.append(payload.role_id)
@@ -142,7 +150,7 @@ async def update_company(
     UPDATE case_companies
     SET {", ".join(set_parts)}
     WHERE id = $1
-    RETURNING id, case_id, name, company_type_id, role_id, created_at, updated_at
+    RETURNING id, case_id, name, company_type_id, company_id_num, role_id, created_at, updated_at
     """
 
     conn = await get_connection()
