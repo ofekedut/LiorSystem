@@ -4,7 +4,7 @@ Database operations for employment history
 import uuid
 from typing import List, Optional
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, date
 
 from server.database.database import get_connection
 
@@ -15,6 +15,8 @@ class EmploymentHistoryBase(BaseModel):
     position: str
     employment_type_id: uuid.UUID
     current_employer: bool = False
+    employment_since: date
+    employment_until: Optional[date] = None
 
 
 class EmploymentHistoryInCreate(EmploymentHistoryBase):
@@ -32,6 +34,8 @@ class EmploymentHistoryInUpdate(BaseModel):
     position: Optional[str] = None
     employment_type_id: Optional[uuid.UUID] = None
     current_employer: Optional[bool] = None
+    employment_since: Optional[date] = None
+    employment_until: Optional[date] = None
 
 
 async def create_employment_history(payload: EmploymentHistoryInCreate) -> EmploymentHistoryInDB:
@@ -40,10 +44,12 @@ async def create_employment_history(payload: EmploymentHistoryInCreate) -> Emplo
     """
     query = """
     INSERT INTO person_employment_history (
-        id, person_id, employer_name, position, employment_type_id, current_employer
+        id, person_id, employer_name, position, employment_type_id, current_employer,
+        employment_since, employment_until
     )
-    VALUES ($1, $2, $3, $4, $5, $6)
-    RETURNING id, person_id, employer_name, position, employment_type_id, current_employer, created_at, updated_at
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+    RETURNING id, person_id, employer_name, position, employment_type_id, current_employer,
+              employment_since, employment_until, created_at, updated_at
     """
 
     employment_id = uuid.uuid4()
@@ -53,7 +59,9 @@ async def create_employment_history(payload: EmploymentHistoryInCreate) -> Emplo
         payload.employer_name,
         payload.position,
         payload.employment_type_id,
-        payload.current_employer
+        payload.current_employer,
+        payload.employment_since,
+        payload.employment_until
     ]
 
     conn = await get_connection()
@@ -69,7 +77,8 @@ async def get_employment_history_by_id(employment_id: uuid.UUID) -> Optional[Emp
     Get a specific employment history record by ID
     """
     query = """
-    SELECT id, person_id, employer_name, position, employment_type_id, current_employer, created_at, updated_at
+    SELECT id, person_id, employer_name, position, employment_type_id, current_employer,
+           employment_since, employment_until, created_at, updated_at
     FROM person_employment_history
     WHERE id = $1
     """
@@ -89,10 +98,11 @@ async def get_employment_history_by_person(person_id: uuid.UUID) -> List[Employm
     Get all employment history records for a specific person
     """
     query = """
-    SELECT id, person_id, employer_name, position, employment_type_id, current_employer, created_at, updated_at
+    SELECT id, person_id, employer_name, position, employment_type_id, current_employer,
+           employment_since, employment_until, created_at, updated_at
     FROM person_employment_history
     WHERE person_id = $1
-    ORDER BY current_employer DESC, created_at DESC
+    ORDER BY current_employer DESC, employment_since DESC
     """
 
     conn = await get_connection()
@@ -138,6 +148,16 @@ async def update_employment_history(
         set_parts.append(f"current_employer = ${param_index}")
         values.append(payload.current_employer)
         param_index += 1
+        
+    if payload.employment_since is not None:
+        set_parts.append(f"employment_since = ${param_index}")
+        values.append(payload.employment_since)
+        param_index += 1
+        
+    if payload.employment_until is not None:
+        set_parts.append(f"employment_until = ${param_index}")
+        values.append(payload.employment_until)
+        param_index += 1
 
     # If nothing to update, return existing record
     if not set_parts:
@@ -150,7 +170,8 @@ async def update_employment_history(
     UPDATE person_employment_history
     SET {", ".join(set_parts)}
     WHERE id = $1
-    RETURNING id, person_id, employer_name, position, employment_type_id, current_employer, created_at, updated_at
+    RETURNING id, person_id, employer_name, position, employment_type_id, current_employer,
+              employment_since, employment_until, created_at, updated_at
     """
 
     conn = await get_connection()

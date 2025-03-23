@@ -2,6 +2,8 @@
 Database operations for unique document types management.
 """
 import json
+import csv
+import io
 from typing import List, Optional, Dict, Any, Union
 from uuid import UUID
 from datetime import datetime
@@ -385,7 +387,7 @@ async def is_doc_type_in_use(doc_type_id: UUID) -> bool:
     try:
         query = """
         SELECT EXISTS(
-            SELECT 1 FROM case_documents 
+            SELECT 1 FROM case_documents
             WHERE doc_type_id = $1
         )
         """
@@ -404,19 +406,19 @@ async def delete_unique_doc_type(doc_type_id: UUID) -> bool:
         # Check if the document type exists
         exists_query = "SELECT EXISTS(SELECT 1 FROM unique_doc_types WHERE id = $1)"
         exists = await conn.fetchval(exists_query, doc_type_id)
-        
+
         if not exists:
             return False
-        
+
         # Check if the document type is in use
         in_use = await is_doc_type_in_use(doc_type_id)
         if in_use:
             raise ValueError("Cannot delete document type that is in use by case documents")
-            
+
         # Delete the document type (required_for will be deleted by CASCADE)
         delete_query = "DELETE FROM unique_doc_types WHERE id = $1"
         await conn.execute(delete_query, doc_type_id)
-        
+
         return True
     finally:
         await conn.close()
@@ -437,19 +439,19 @@ async def list_unique_doc_types() -> List[UniqueDocTypeInDB]:
         ORDER BY display_name
         """
         records = await conn.fetch(query)
-        
+
         result = []
-        
+
         for record in records:
             doc_dict = dict(record)
-            
+
             # Parse JSON fields
             if doc_dict['links']:
                 doc_dict['links'] = Links.model_validate(json.loads(doc_dict['links']))
-                
+
             if doc_dict['contact_info']:
                 doc_dict['contact_info'] = ContactInfo.model_validate(json.loads(doc_dict['contact_info']))
-                
+
             # Get required_for values
             required_for_query = """
             SELECT required_for
@@ -457,12 +459,12 @@ async def list_unique_doc_types() -> List[UniqueDocTypeInDB]:
             WHERE doc_type_id = $1
             """
             required_for_rows = await conn.fetch(required_for_query, doc_dict['id'])
-            
+
             # Add required_for to the result
             doc_dict['required_for'] = [row['required_for'] for row in required_for_rows]
-            
+
             result.append(UniqueDocTypeInDB.model_validate(doc_dict))
-            
+
         return result
     finally:
         await conn.close()
@@ -484,19 +486,19 @@ async def filter_by_category(category: str) -> List[UniqueDocTypeInDB]:
         ORDER BY display_name
         """
         records = await conn.fetch(query, category)
-        
+
         result = []
-        
+
         for record in records:
             doc_dict = dict(record)
-            
+
             # Parse JSON fields
             if doc_dict['links']:
                 doc_dict['links'] = Links.model_validate(json.loads(doc_dict['links']))
-                
+
             if doc_dict['contact_info']:
                 doc_dict['contact_info'] = ContactInfo.model_validate(json.loads(doc_dict['contact_info']))
-                
+
             # Get required_for values
             required_for_query = """
             SELECT required_for
@@ -504,12 +506,12 @@ async def filter_by_category(category: str) -> List[UniqueDocTypeInDB]:
             WHERE doc_type_id = $1
             """
             required_for_rows = await conn.fetch(required_for_query, doc_dict['id'])
-            
+
             # Add required_for to the result
             doc_dict['required_for'] = [row['required_for'] for row in required_for_rows]
-            
+
             result.append(UniqueDocTypeInDB.model_validate(doc_dict))
-            
+
         return result
     finally:
         await conn.close()
@@ -531,19 +533,19 @@ async def filter_by_target_object(target_object: str) -> List[UniqueDocTypeInDB]
         ORDER BY display_name
         """
         records = await conn.fetch(query, target_object)
-        
+
         result = []
-        
+
         for record in records:
             doc_dict = dict(record)
-            
+
             # Parse JSON fields
             if doc_dict['links']:
                 doc_dict['links'] = Links.model_validate(json.loads(doc_dict['links']))
-                
+
             if doc_dict['contact_info']:
                 doc_dict['contact_info'] = ContactInfo.model_validate(json.loads(doc_dict['contact_info']))
-                
+
             # Get required_for values
             required_for_query = """
             SELECT required_for
@@ -551,12 +553,145 @@ async def filter_by_target_object(target_object: str) -> List[UniqueDocTypeInDB]
             WHERE doc_type_id = $1
             """
             required_for_rows = await conn.fetch(required_for_query, doc_dict['id'])
-            
+
             # Add required_for to the result
             doc_dict['required_for'] = [row['required_for'] for row in required_for_rows]
-            
+
             result.append(UniqueDocTypeInDB.model_validate(doc_dict))
-            
+
         return result
+    finally:
+        await conn.close()
+
+
+async def import_doc_types_from_csv(csv_content: str) -> Dict[str, Any]:
+    """
+    Import document types from a CSV file.
+    This implements the "Import document types in bulk via CSV" feature mentioned in the PRD.
+
+    Expected CSV format:
+    display_name,category,target_object,document_type,is_recurring,frequency,issuer,required_for
+
+    Where:
+    - required_for is a comma-separated list of required_for values within quotes (e.g., "employees,self_employed")
+    - is_recurring is "true" or "false"
+    - frequency is only required if is_recurring is "true"
+
+    Args:
+        csv_content: String containing CSV content
+
+    Returns:
+        Dict containing success status, counts, and any errors
+    """
+    conn = await get_connection()
+    try:
+        # Parse CSV content
+        csv_file = io.StringIO(csv_content)
+        reader = csv.DictReader(csv_file)
+        
+        # Prepare counters
+        created_count = 0
+        error_count = 0
+        errors = []
+        
+        # Process each row
+        async with conn.transaction():
+            for row_num, row in enumerate(reader, start=2):  # Start at 2 to account for header row
+                try:
+                    # Required fields
+                    if not all(key in row for key in ['display_name', 'category', 'target_object', 'document_type']):
+                        errors.append(f"Row {row_num}: Missing required fields")
+                        error_count += 1
+                        continue
+                    
+                    # Process boolean field
+                    is_recurring = row.get('is_recurring', 'false').lower() == 'true'
+                    
+                    # Validate frequency if recurring
+                    frequency = row.get('frequency')
+                    if is_recurring and not frequency:
+                        errors.append(f"Row {row_num}: Frequency is required for recurring documents")
+                        error_count += 1
+                        continue
+                    
+                    # Parse required_for
+                    required_for_str = row.get('required_for', '').strip('"\'')
+                    required_for = [rf.strip() for rf in required_for_str.split(',') if rf.strip()]
+                    
+                    # Validate category
+                    try:
+                        category = DocumentCategory(row['category'])
+                    except ValueError:
+                        errors.append(f"Row {row_num}: Invalid category '{row['category']}'")
+                        error_count += 1
+                        continue
+                    
+                    # Validate target_object
+                    try:
+                        target_object = DocumentTargetObject(row['target_object'])
+                    except ValueError:
+                        errors.append(f"Row {row_num}: Invalid target_object '{row['target_object']}'")
+                        error_count += 1
+                        continue
+                    
+                    # Validate document_type
+                    try:
+                        document_type = DocumentType(row['document_type'])
+                    except ValueError:
+                        errors.append(f"Row {row_num}: Invalid document_type '{row['document_type']}'")
+                        error_count += 1
+                        continue
+                    
+                    # Validate frequency if provided
+                    if frequency:
+                        try:
+                            frequency = DocumentFrequency(frequency)
+                        except ValueError:
+                            errors.append(f"Row {row_num}: Invalid frequency '{frequency}'")
+                            error_count += 1
+                            continue
+                    
+                    # Validate required_for values
+                    valid_required_for = []
+                    for rf in required_for:
+                        try:
+                            valid_required_for.append(RequiredFor(rf))
+                        except ValueError:
+                            errors.append(f"Row {row_num}: Invalid required_for value '{rf}'")
+                            error_count += 1
+                            continue
+                    
+                    if not valid_required_for:
+                        errors.append(f"Row {row_num}: At least one valid required_for value is needed")
+                        error_count += 1
+                        continue
+                    
+                    # Create doc type object
+                    doc_type = UniqueDocTypeCreate(
+                        display_name=row['display_name'],
+                        category=category,
+                        target_object=target_object,
+                        document_type=document_type,
+                        is_recurring=is_recurring,
+                        frequency=frequency if frequency else None,
+                        issuer=row.get('issuer'),
+                        required_for=valid_required_for
+                    )
+                    
+                    # Create the document type
+                    await create_unique_doc_type(doc_type)
+                    created_count += 1
+                    
+                except Exception as e:
+                    errors.append(f"Row {row_num}: {str(e)}")
+                    error_count += 1
+        
+        return {
+            "success": error_count == 0,
+            "created_count": created_count,
+            "error_count": error_count,
+            "errors": errors
+        }
+        
     finally:
         await conn.close()

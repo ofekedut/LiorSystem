@@ -1,9 +1,9 @@
 """
 API endpoints for unique document types management.
 """
-from typing import List, Optional
+from typing import List, Optional, Dict, Any
 from uuid import UUID
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, File, Form
 from fastapi.responses import JSONResponse
 
 from server.database.auth_database import get_current_user_id
@@ -19,7 +19,8 @@ from server.database.unique_docs_database import (
     filter_by_category,
     filter_by_target_object,
     DocumentCategory,
-    DocumentTargetObject
+    DocumentTargetObject,
+    import_doc_types_from_csv
 )
 
 router = APIRouter(
@@ -118,7 +119,7 @@ async def get_document_types_by_category(category: str):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Invalid category. Valid categories are: {valid_categories}"
         )
-    
+
     return await filter_by_category(category)
 
 
@@ -136,5 +137,55 @@ async def get_document_types_by_target_object(target_object: str):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Invalid target object. Valid target objects are: {valid_targets}"
         )
-    
+
     return await filter_by_target_object(target_object)
+
+
+@router.post("/import", response_model=Dict[str, Any])
+async def import_document_types_from_csv(file: UploadFile = File(...)):
+    """
+    Import document types from a CSV file.
+    This implements the "Import document types in bulk via CSV" feature mentioned in the PRD.
+    
+    The CSV should have the following columns:
+    - display_name: Name of the document type
+    - category: One of the valid document categories
+    - target_object: Entity type the document relates to
+    - document_type: Type of document (one_time, updatable, recurring)
+    - is_recurring: Whether the document is recurring (true/false)
+    - frequency: Required if is_recurring is true (monthly, quarterly, yearly)
+    - issuer: Optional issuer of the document
+    - required_for: Comma-separated list of groups this document is required for
+    """
+    # Validate file type
+    if not file.filename.endswith('.csv'):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only CSV files are accepted for import"
+        )
+    
+    # Read file content
+    csv_content = await file.read()
+    
+    try:
+        # Try to decode as UTF-8
+        csv_text = csv_content.decode('utf-8')
+    except UnicodeDecodeError:
+        # If UTF-8 decoding fails, try other common encodings
+        try:
+            csv_text = csv_content.decode('latin-1')
+        except Exception:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Unable to decode CSV file. Please ensure it is a valid CSV file with UTF-8 or Latin-1 encoding."
+            )
+    
+    # Process the CSV content
+    try:
+        result = await import_doc_types_from_csv(csv_text)
+        return result
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error processing CSV: {str(e)}"
+        )

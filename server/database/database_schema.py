@@ -188,7 +188,21 @@ CREATE_SCHEMA_QUERIES = [
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         file_path TEXT DEFAULT NULL,
+        is_current_version BOOLEAN NOT NULL DEFAULT TRUE,
+        version_number INT NOT NULL DEFAULT 1,
+        replace_version_id UUID,
         CONSTRAINT unique_case_document UNIQUE (case_id, document_id)
+    );""",
+    
+    """CREATE TABLE IF NOT EXISTS document_version_history (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        case_document_id UUID NOT NULL REFERENCES case_documents(id) ON DELETE CASCADE,
+        version_number INT NOT NULL,
+        file_path TEXT NOT NULL,
+        uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        uploaded_by UUID,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        UNIQUE(case_document_id, version_number)
     );""",
     
     """CREATE INDEX IF NOT EXISTS idx_case_documents_doc_type_id ON case_documents(doc_type_id);""",
@@ -274,6 +288,8 @@ CREATE_SCHEMA_QUERIES = [
         position TEXT NOT NULL,
         employment_type_id UUID NOT NULL,
         current_employer BOOLEAN NOT NULL DEFAULT false,
+        employment_since DATE NOT NULL DEFAULT CURRENT_DATE,
+        employment_until DATE,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
     );""",
