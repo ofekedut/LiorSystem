@@ -1,0 +1,76 @@
+{
+    "id": "1720653097",
+    "name": "אישור זכויות (ניירת אחרונה)",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "בר",
+            "value": "{\"changed_at\":\"2024-10-15T14:04:19.309Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-04T11:00:44.537Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384109/%D7%9E%D7%9C%D7%90%20%D7%A0%D7%A1%D7%97%20(4).pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384110/%D7%9E%D7%A8%D7%95%D7%9B%D7%96%20%D7%A0%D7%A1%D7%97%20(3).pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384111/%D7%94%D7%97%D7%9C%D7%98%D7%94%2020.05.2024.pdf",
+            "value": "{\"files\":[{\"name\":\"מלא נסח (4).pdf\",\"assetId\":82384109,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1730130092372,\"createdBy\":\"67199198\"},{\"name\":\"מרוכז נסח (3).pdf\",\"assetId\":82384110,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1730130092377,\"createdBy\":\"67199198\"},{\"name\":\"החלטה 20.05.2024.pdf\",\"assetId\":82384111,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1730718023601,\"createdBy\":\"67199198\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-11-04",
+            "value": "{\"date\":\"2024-11-04\",\"changed_at\":\"2024-11-04T11:00:47.182Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653097",
+            "value": "{\"item_id\":\"1720653097\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "מלא נסח (4).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384109/%D7%9E%D7%9C%D7%90%20%D7%A0%D7%A1%D7%97%20%284%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=33562f0fc1be71081682fad69330634e743b35ea8fff40fcf5796923ea126803"
+        },
+        {
+            "name": "מרוכז נסח (3).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384110/%D7%9E%D7%A8%D7%95%D7%9B%D7%96%20%D7%A0%D7%A1%D7%97%20%283%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5010a5c373d133217b294b21d118b46dbe2ba6882b6344ffcb834472acb277e7"
+        },
+        {
+            "name": "החלטה 20.05.2024.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384111/%D7%94%D7%97%D7%9C%D7%98%D7%94%2020.05.2024.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c8ba75ef28a555eb03fe0c6282eb41415eee2a2bffa1acb9c8cefa6151b49941"
+        }
+    ]
+}

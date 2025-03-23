@@ -1,0 +1,68 @@
+{
+    "id": "1720653970",
+    "name": "שלושה תלושי שכר אחרונים של קרן",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-11-13T07:24:39.790Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-20T10:23:22.514Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384546/%D7%A7%D7%A8%D7%9F%20%D7%A1%D7%92%D7%9C.pdf",
+            "value": "{\"files\":[{\"name\":\"קרן סגל.pdf\",\"assetId\":82384546,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732098185594,\"createdBy\":\"68003642\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-11-20",
+            "value": "{\"date\":\"2024-11-20\",\"changed_at\":\"2024-11-20T10:23:23.267Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653970",
+            "value": "{\"item_id\":\"1720653970\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "קרן סגל.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384546/%D7%A7%D7%A8%D7%9F%20%D7%A1%D7%92%D7%9C.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=3588886ac53b655c009b547896ec859f9b7610040b03f5184940692f2f95e42d"
+        }
+    ]
+}

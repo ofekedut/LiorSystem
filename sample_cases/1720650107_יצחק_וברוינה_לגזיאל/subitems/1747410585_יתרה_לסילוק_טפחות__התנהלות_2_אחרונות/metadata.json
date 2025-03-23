@@ -1,0 +1,68 @@
+{
+    "id": "1747410585",
+    "name": "יתרה לסילוק טפחות + התנהלות 2 אחרונות",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-18T06:53:45.455Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-18T16:02:55.414Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/86981472/fwd%20(1).zip",
+            "value": "{\"files\":[{\"name\":\"fwd (1).zip\",\"assetId\":86981472,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734537754635,\"createdBy\":\"68720131\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-18",
+            "value": "{\"date\":\"2024-12-18\",\"changed_at\":\"2024-12-18T16:03:00.977Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1747410585",
+            "value": "{\"item_id\":\"1747410585\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "fwd (1).zip",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/86981472/fwd%20%281%29.zip?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=ac1768142d5345e1b48cc8a1b3e68a39403fdcf0bac3c15727c126743f51fde4"
+        }
+    ]
+}

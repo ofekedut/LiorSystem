@@ -1,0 +1,68 @@
+{
+    "id": "1758731394",
+    "name": "ת.ז קריאה של סבטלנה",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "Lior Arbiv",
+            "value": "{\"changed_at\":\"2025-01-01T08:33:23.501Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-01T09:02:04.577Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/88471870/combinepdf%20-%202025-01-01T110853.376.pdf",
+            "value": "{\"files\":[{\"name\":\"combinepdf - 2025-01-01T110853.376.pdf\",\"assetId\":88471870,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735722546612,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2025-01-01",
+            "value": "{\"date\":\"2025-01-01\",\"changed_at\":\"2025-01-01T09:02:06.105Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1758731394",
+            "value": "{\"item_id\":\"1758731394\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "combinepdf - 2025-01-01T110853.376.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/88471870/combinepdf%20-%202025-01-01T110853.376.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=cf6a4e1448d4af1d6ad56529ae86a699a4092b1a8982a0dcbdaf61927d1e29db"
+        }
+    ]
+}

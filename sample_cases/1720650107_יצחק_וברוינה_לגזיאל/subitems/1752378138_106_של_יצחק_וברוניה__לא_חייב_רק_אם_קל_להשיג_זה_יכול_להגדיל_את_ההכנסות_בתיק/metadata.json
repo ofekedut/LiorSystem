@@ -1,0 +1,72 @@
+{
+    "id": "1752378138",
+    "name": "106 של יצחק וברוניה ( לא חייב, רק אם קל להשיג, זה יכול להגדיל את ההכנסות בתיק)",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-22T09:14:49.669Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-22T11:16:33.389Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87587699/106%20%D7%93%D7%A0%D7%A9%D7%A8%20%D7%99%D7%A6%D7%97%D7%A7%20%D7%9C%D7%92%D7%96%D7%99%D7%90%D7%9C.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/87587803/106%20%D7%92%D7%9C%D7%95%D7%91%D7%9C%20%D7%A8%D7%99%D7%98%D7%99%D7%99%D7%9C%20%D7%91%D7%A8%D7%95%D7%A0%D7%99%D7%94%20%D7%9C%D7%92%D7%96%D7%99%D7%90%D7%9C.pdf",
+            "value": "{\"files\":[{\"name\":\"106 דנשר יצחק לגזיאל.pdf\",\"assetId\":87587699,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734866074862,\"createdBy\":\"68720225\"},{\"name\":\"106 גלובל ריטייל ברוניה לגזיאל.pdf\",\"assetId\":87587803,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734866190303,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-22",
+            "value": "{\"date\":\"2024-12-22\",\"changed_at\":\"2024-12-22T11:16:34.935Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1752378138",
+            "value": "{\"item_id\":\"1752378138\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "106 דנשר יצחק לגזיאל.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87587699/106%20%D7%93%D7%A0%D7%A9%D7%A8%20%D7%99%D7%A6%D7%97%D7%A7%20%D7%9C%D7%92%D7%96%D7%99%D7%90%D7%9C.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4c253e0eb0856e607cf465c3bbb17beadb2a8a06056acb192bc4142fab90824b"
+        },
+        {
+            "name": "106 גלובל ריטייל ברוניה לגזיאל.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87587803/106%20%D7%92%D7%9C%D7%95%D7%91%D7%9C%20%D7%A8%D7%99%D7%98%D7%99%D7%99%D7%9C%20%D7%91%D7%A8%D7%95%D7%A0%D7%99%D7%94%20%D7%9C%D7%92%D7%96%D7%99%D7%90%D7%9C.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=34e55457abdd8d0260f4c9639661659d7e0e8c55145b67c97d493e2b7d418f27"
+        }
+    ]
+}

@@ -1,0 +1,52 @@
+# codemcp.toml for LiorSystem FastAPI project
+# This configuration file helps Claude Desktop assist with your codebase
+
+project_prompt = """
+This is the LiorSystem FastAPI backend project located in the 'Server' directory. When working with this codebase:
+
+1. Follow the established project structure with:
+   - database/ - for database-related code and models
+   - features/ - for feature modules (docs_processing, users, etc.)
+   - routers/ - for API route definitions
+   - pdf_parsing/ - for PDF processing utilities
+
+2. Maintain the existing architectural patterns:
+   - Keep database logic in appropriate database modules
+   - Organize API endpoints in relevant routers
+   - Group related functionality into feature modules
+
+3. Coding standards to follow:
+   - Use Pydantic models for request/response validation
+   - Include proper type hints
+   - Document new functions and endpoints
+   - Write tests for new functionality
+   - Ensure backwards compatibility when modifying existing endpoints
+"""
+
+[commands]
+# Common development commands
+format = ["black", "server"]
+lint = ["flake8", "server"]
+typecheck = ["mypy", "server"]
+
+# Run tests
+test = ["pytest", "server"]
+
+# Start the development server (adjust the path if your app entry point is different)
+run = ["uvicorn", "server.api:app", "--reload"]
+
+# Install dependencies
+install = ["pip", "install", "-r", "requirements.txt"]
+
+# Custom commands with documentation
+[commands.test_coverage]
+command = ["pytest", "--cov=server", "--cov-report=term-missing"]
+doc = "Runs tests with coverage report. Can accept a path argument to test specific modules."
+
+[commands.generate_migrations]
+command = ["python", "-m", "server.database.d_migrations"]
+doc = "Generate database migrations based on current schema changes."
+
+[commands.docs_processing]
+command = ["python", "-m", "server.features.docs_processing.main"]
+doc = "Run the document processing module standalone for testing."

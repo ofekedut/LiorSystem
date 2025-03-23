@@ -1,0 +1,76 @@
+{
+    "id": "1763741846",
+    "name": "מסמכי בית משותף",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2025-01-06T12:56:09.554Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-08T08:20:35.112Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/89437424/207503344.zip, https://baroffice11s-team.monday.com/protected_static/26576015/resources/89556210/%D7%AA%D7%A1%D7%A8%D7%99%D7%98%20%D7%91%D7%99%D7%AA%20%D7%99%D7%A6%D7%97%D7%A7%202.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/89556229/%D7%AA%D7%A1%D7%A8%D7%99%D7%98%20%D7%91%D7%99%D7%AA%20%D7%99%D7%A6%D7%97%D7%A7%201.pdf",
+            "value": "{\"files\":[{\"name\":\"207503344.zip\",\"assetId\":89437424,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736258872050,\"createdBy\":\"68720131\"},{\"name\":\"תסריט בית יצחק 2.pdf\",\"assetId\":89556210,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736324406715,\"createdBy\":\"68720225\"},{\"name\":\"תסריט בית יצחק 1.pdf\",\"assetId\":89556229,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736324412483,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2025-01-07",
+            "value": "{\"date\":\"2025-01-07\",\"changed_at\":\"2025-01-07T14:09:07.376Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1763741846",
+            "value": "{\"item_id\":\"1763741846\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "207503344.zip",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/89437424/207503344.zip?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=ab0c236b134778f036ca4b36d3c18f193de688f9417e9e5979427c162343b15d"
+        },
+        {
+            "name": "תסריט בית יצחק 2.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/89556210/%D7%AA%D7%A1%D7%A8%D7%99%D7%98%20%D7%91%D7%99%D7%AA%20%D7%99%D7%A6%D7%97%D7%A7%202.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=2b675af6a76ab0167d8398ca6e91e0d718bfcbd6cd31db59103ac7a14228765f"
+        },
+        {
+            "name": "תסריט בית יצחק 1.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/89556229/%D7%AA%D7%A1%D7%A8%D7%99%D7%98%20%D7%91%D7%99%D7%AA%20%D7%99%D7%A6%D7%97%D7%A7%201.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=70e7c670cb570614dc4a3ddf0eb78ec56851600aa51a3fd97464c15cd50611f0"
+        }
+    ]
+}

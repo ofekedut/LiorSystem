@@ -1,0 +1,68 @@
+{
+    "id": "1720653518",
+    "name": "תלושים 9 + 10 + 11 חסן",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-11-06T10:14:15.824Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-19T09:08:06.057Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87074285/%D7%97%D7%A1%D7%9F%20%D7%AA%D7%9C%D7%95%D7%A9%D7%99%20%D7%A9%D7%9B%D7%A8.pdf",
+            "value": "{\"files\":[{\"name\":\"חסן תלושי שכר.pdf\",\"assetId\":87074285,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734599283709,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-19",
+            "value": "{\"date\":\"2024-12-19\",\"changed_at\":\"2024-12-19T09:08:07.452Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653518",
+            "value": "{\"item_id\":\"1720653518\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "חסן תלושי שכר.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87074285/%D7%97%D7%A1%D7%9F%20%D7%AA%D7%9C%D7%95%D7%A9%D7%99%20%D7%A9%D7%9B%D7%A8.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5909fb2ffbf8423eae175e5f5d472f0a2a3cad3e4caaf4d3f27954ee7a6e085d"
+        }
+    ]
+}

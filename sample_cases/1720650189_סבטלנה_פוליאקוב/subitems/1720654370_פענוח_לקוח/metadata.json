@@ -1,0 +1,68 @@
+{
+    "id": "1720654370",
+    "name": "פענוח לקוח",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-10-31T10:00:05.679Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-21T12:27:03.625Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384697/CamScanner%202024-11-21%2014.25.pdf",
+            "value": "{\"files\":[{\"name\":\"CamScanner 2024-11-21 14.25.pdf\",\"assetId\":82384697,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732192021875,\"createdBy\":\"68003642\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-11-21",
+            "value": "{\"date\":\"2024-11-21\",\"changed_at\":\"2024-11-21T12:27:03.349Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720654370",
+            "value": "{\"item_id\":\"1720654370\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "CamScanner 2024-11-21 14.25.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384697/CamScanner%202024-11-21%2014.25.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=48e8908e8bc482b90bf5e5786f399e373e526e12f5dbb00ac735cdc932d42930"
+        }
+    ]
+}

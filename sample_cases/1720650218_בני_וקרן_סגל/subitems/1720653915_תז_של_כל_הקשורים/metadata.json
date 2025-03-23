@@ -1,0 +1,72 @@
+{
+    "id": "1720653915",
+    "name": "ת.ז של כל הקשורים",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-10-31T10:00:02.196Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-17T10:53:38.078Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384522/combinepdf%20(34).pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384523/combinepdf%20(44).pdf",
+            "value": "{\"files\":[{\"name\":\"combinepdf (34).pdf\",\"assetId\":82384522,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1731329473328,\"createdBy\":\"68003642\"},{\"name\":\"combinepdf (44).pdf\",\"assetId\":82384523,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1731840815484,\"createdBy\":\"68003642\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-11-17",
+            "value": "{\"date\":\"2024-11-17\",\"changed_at\":\"2024-11-17T10:53:39.516Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653915",
+            "value": "{\"item_id\":\"1720653915\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "combinepdf (34).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384522/combinepdf%20%2834%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=8ca238473d781e4679a0887b9a2877fd8a9c09e3ceeba82a180d33dda67ce9ac"
+        },
+        {
+            "name": "combinepdf (44).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384523/combinepdf%20%2844%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=8016ae065b27efb4b4db5da27a3d07a3acceafde14a3821496713d24cdee44cd"
+        }
+    ]
+}

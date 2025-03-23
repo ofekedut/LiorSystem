@@ -1,0 +1,88 @@
+{
+    "id": "1720653982",
+    "name": "תנועות עוש + ריכוז יתרות + אישור ניהול לחשבונות פרטיים",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-11-13T07:24:47.007Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-27T11:24:54.463Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384574/%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%99%D7%AA%D7%A8%D7%95%D7%AA%20%D7%A4%D7%A8%D7%98%D7%99%20%D7%9E%D7%96%D7%A8%D7%97%D7%99.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384577/%D7%90%D7%99%D7%A9%D7%95%D7%A8%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%A4%D7%A8%D7%98%D7%99%20%D7%9E%D7%96%D7%A8%D7%97%D7%99.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384578/%D7%A2%D7%95%D7%A9%20%D7%A4%D7%A8%D7%98%D7%99%20%D7%9E%D7%96%D7%A8%D7%97%D7%99.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82495460/%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%99%D7%AA%D7%A8%D7%95%D7%AA%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82495504/%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%97%D7%A9%D7%91%D7%9F%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82495526/%D7%A2%D7%95%D7%A9%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20(2).pdf",
+            "value": "{\"files\":[{\"name\":\"ריכוז יתרות פרטי מזרחי.pdf\",\"assetId\":82384574,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732007623248,\"createdBy\":\"68003642\"},{\"name\":\"אישור ניהול פרטי מזרחי.pdf\",\"assetId\":82384577,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732007741875,\"createdBy\":\"68003642\"},{\"name\":\"עוש פרטי מזרחי.pdf\",\"assetId\":82384578,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732007855290,\"createdBy\":\"68003642\"},{\"name\":\"ריכוז יתרות פועלים.pdf\",\"assetId\":82495460,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732706647096,\"createdBy\":\"68720225\"},{\"name\":\"ניהול חשבן פועלים.pdf\",\"assetId\":82495504,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732706652121,\"createdBy\":\"68720225\"},{\"name\":\"עוש פועלים (2).pdf\",\"assetId\":82495526,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732706655081,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-11-27",
+            "value": "{\"date\":\"2024-11-27\",\"changed_at\":\"2024-11-27T11:24:56.108Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653982",
+            "value": "{\"item_id\":\"1720653982\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "ריכוז יתרות פרטי מזרחי.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384574/%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%99%D7%AA%D7%A8%D7%95%D7%AA%20%D7%A4%D7%A8%D7%98%D7%99%20%D7%9E%D7%96%D7%A8%D7%97%D7%99.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=62b53046746e068672f4a518f0d81ba9e80e7d41494ada2ec9aa17441ce1281c"
+        },
+        {
+            "name": "אישור ניהול פרטי מזרחי.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384577/%D7%90%D7%99%D7%A9%D7%95%D7%A8%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%A4%D7%A8%D7%98%D7%99%20%D7%9E%D7%96%D7%A8%D7%97%D7%99.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=2a9c0d07d60c10568dfcf1c2de18dd4268c349fdd46ac8ada9bce1145efe8715"
+        },
+        {
+            "name": "עוש פרטי מזרחי.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384578/%D7%A2%D7%95%D7%A9%20%D7%A4%D7%A8%D7%98%D7%99%20%D7%9E%D7%96%D7%A8%D7%97%D7%99.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=001a657395187f7d35f57f4f262692fcdd69cc29f9f296d78ba84573692b3db9"
+        },
+        {
+            "name": "ריכוז יתרות פועלים.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82495460/%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%99%D7%AA%D7%A8%D7%95%D7%AA%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=065d0a15e9946a8b4c7eb39028549bf7ef46cb716c1ce65c41f2bdad60c51078"
+        },
+        {
+            "name": "ניהול חשבן פועלים.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82495504/%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%97%D7%A9%D7%91%D7%9F%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5f565f28bd8b05d0799f9813ccc450986461efee0a7174d9fa4b221c63427df2"
+        },
+        {
+            "name": "עוש פועלים (2).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82495526/%D7%A2%D7%95%D7%A9%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20%282%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c61b4e3329eb98b0a542fe51e941a984a9c34d5b0a1a6f7dc97b25def6473bb7"
+        }
+    ]
+}

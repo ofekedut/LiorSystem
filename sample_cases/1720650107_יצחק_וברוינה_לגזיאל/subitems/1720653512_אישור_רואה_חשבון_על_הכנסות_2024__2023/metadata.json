@@ -1,0 +1,72 @@
+{
+    "id": "1720653512",
+    "name": "אישור רואה חשבון על הכנסות 2024 + 2023",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-11-05T09:54:32.293Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-01T12:15:22.940Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/83206193/combinepdf%20(80).pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/83206210/combinepdf%20(79).pdf",
+            "value": "{\"files\":[{\"name\":\"combinepdf (80).pdf\",\"assetId\":83206193,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733055185710,\"createdBy\":\"68720225\"},{\"name\":\"combinepdf (79).pdf\",\"assetId\":83206210,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733055211516,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-01",
+            "value": "{\"date\":\"2024-12-01\",\"changed_at\":\"2024-12-01T12:15:24.389Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653512",
+            "value": "{\"item_id\":\"1720653512\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "combinepdf (80).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/83206193/combinepdf%20%2880%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=8e2c55aba82b3ef0d6398d7b1141d5246009526f94d48769a5658e042681837b"
+        },
+        {
+            "name": "combinepdf (79).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/83206210/combinepdf%20%2879%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=0c8eb736ab8954b59f16ce3bab3297c89d41b1ebba5b30f48252f434f271088e"
+        }
+    ]
+}

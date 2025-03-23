@@ -1,0 +1,117 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Database Schema Creation Report</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                color: #333;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+            h1 {
+                color: #2c3e50;
+                text-align: center;
+                border-bottom: 2px solid #eee;
+                padding-bottom: 10px;
+            }
+            h2 {
+                color: #3498db;
+                margin-top: 30px;
+                border-left: 4px solid #3498db;
+                padding-left: 10px;
+            }
+            h3 {
+                color: #2980b9;
+                margin-top: 20px;
+                text-transform: capitalize;
+            }
+            .timestamp {
+                text-align: center;
+                color: #7f8c8d;
+                font-style: italic;
+                margin-bottom: 30px;
+            }
+            .summary {
+                background-color: #e8f4f8;
+                padding: 15px;
+                border-radius: 5px;
+                margin-top: 20px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
+            .category {
+                background-color: #f9f9f9;
+                padding: 15px;
+                border-radius: 5px;
+                margin: 15px 0;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            }
+            ul {
+                padding-left: 20px;
+            }
+            li {
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Database Schema Creation Report</h1>
+        <div class="timestamp">Generated on 2025-03-23 at 19:53:51</div>
+        
+        <div class="summary">
+            <h2>Schema Created Successfully</h2>
+            <p>Database schema has been created and seeded with initial data for the following categories:</p>
+        </div>
+        
+        <h2>Seeded Dropdown Options</h2>
+        
+            <div class="category">
+                <h3>person_roles</h3>
+                <ul>
+                    <li><strong>מבקש ראשי</strong> (primary_applicant)</li><li><strong>מבקש משני</strong> (co_applicant)</li><li><strong>ערב</strong> (guarantor)</li><li><strong>בן/בת זוג</strong> (spouse)</li><li><strong>תלוי</strong> (dependent)</li><li><strong>מיופה כוח</strong> (power_of_attorney)</li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>person_marital_statuses</h3>
+                <ul>
+                    <li><strong>רווק/ה</strong> (single)</li><li><strong>נשוי/אה</strong> (married)</li><li><strong>גרוש/ה</strong> (divorced)</li><li><strong>אלמן/ה</strong> (widowed)</li><li><strong>פרוד/ה</strong> (separated)</li><li><strong>ידוע/ה בציבור</strong> (common_law)</li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>loan_types</h3>
+                <ul>
+                    <li><strong>משכנתא</strong> (mortgage)</li><li><strong>הלוואה כנגד נכס</strong> (heloc)</li><li><strong>הלוואה אישית</strong> (personal_loan)</li><li><strong>הלוואת רכב</strong> (auto_loan)</li><li><strong>הלוואה עסקית</strong> (business_loan)</li><li><strong>הלוואת סטודנט</strong> (student_loan)</li><li><strong>מסגרת אשראי</strong> (credit_line)</li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>loan_goals</h3>
+                <ul>
+                    <li><strong>רכישת דירת מגורים</strong> (purchase_primary)</li><li><strong>רכישת דירה שניה</strong> (purchase_secondary)</li><li><strong>רכישת נכס להשקעה</strong> (purchase_investment)</li><li><strong>מיחזור הלוואה</strong> (refinance)</li><li><strong>איחוד הלוואות</strong> (debt_consolidation)</li><li><strong>שיפוץ בית</strong> (home_improvement)</li><li><strong>מימון לימודים</strong> (education)</li><li><strong>הרחבת עסק</strong> (business_expansion)</li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>case_status</h3>
+                <ul>
+                    <li><strong>חדש</strong> (new)</li><li><strong>בתהליך</strong> (in_progress)</li><li><strong>ממתין למסמכים</strong> (pending_docs)</li><li><strong>בבדיקה</strong> (under_review)</li><li><strong>מאושר</strong> (approved)</li><li><strong>נדחה</strong> (declined)</li><li><strong>בוטל על ידי הלקוח</strong> (withdrawn)</li><li><strong>סגור</strong> (closed)</li>
+                </ul>
+            </div>
+            
+            <div class="category">
+                <h3>related_person_relationships_types</h3>
+                <ul>
+                    <li><strong>בן/בת זוג</strong> (spouse)</li><li><strong>הורה</strong> (parent)</li><li><strong>ילד/ה</strong> (child)</li><li><strong>אח/אחות</strong> (sibling)</li><li><strong>סבא/סבתא</strong> (grandparent)</li><li><strong>נכד/ה</strong> (grandchild)</li><li><strong>בן/בת דוד/ה</strong> (cousin)</li><li><strong>דוד/ה</strong> (aunt_uncle)</li><li><strong>אחיין/אחיינית</strong> (niece_nephew)</li><li><strong>חבר/ה</strong> (friend)</li><li><strong>שותף/ה עסקי/ת</strong> (business_partner)</li>
+                </ul>
+            </div>
+            
+    </body>
+    </html>
+    

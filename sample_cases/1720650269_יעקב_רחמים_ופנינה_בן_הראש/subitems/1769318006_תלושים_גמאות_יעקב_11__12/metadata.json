@@ -1,0 +1,72 @@
+{
+    "id": "1769318006",
+    "name": "תלושים גמאות יעקב 11 + 12",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2025-01-09T10:28:17.687Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-12T08:27:35.007Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/90376437/%D7%AA%D7%9C%D7%95%D7%A9%D7%99%D7%9D%20%D7%92%D7%9E%D7%90%D7%95%D7%AA%20%D7%99%D7%A2%D7%A7%D7%91%2011%20+%2010.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/90383565/FaxMessage.pdf",
+            "value": "{\"files\":[{\"name\":\"תלושים גמאות יעקב 11 + 10.pdf\",\"assetId\":90376437,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736670515493,\"createdBy\":\"68720225\"},{\"name\":\"FaxMessage.pdf\",\"assetId\":90383565,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736675843931,\"createdBy\":\"68720131\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2025-01-12",
+            "value": "{\"date\":\"2025-01-12\",\"changed_at\":\"2025-01-12T08:27:36.588Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1769318006",
+            "value": "{\"item_id\":\"1769318006\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "תלושים גמאות יעקב 11 + 10.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/90376437/%D7%AA%D7%9C%D7%95%D7%A9%D7%99%D7%9D%20%D7%92%D7%9E%D7%90%D7%95%D7%AA%20%D7%99%D7%A2%D7%A7%D7%91%2011%20%2B%2010.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=696b4dfeb27aab37315b1ec1696a33a288501084fd602e1b05e2d03b2349b281"
+        },
+        {
+            "name": "FaxMessage.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/90383565/FaxMessage.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=96978137ef8c0782efe24b63001434453c6182f3844f00621ad76ec6cd33abf3"
+        }
+    ]
+}

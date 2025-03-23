@@ -1,0 +1,68 @@
+{
+    "id": "1720653118",
+    "name": "פענוח לקוח",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-28T15:37:59.769Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384115/CamScanner%2010-28-2024%2017.37.38.pdf",
+            "value": "{\"files\":[{\"name\":\"CamScanner 10-28-2024 17.37.38.pdf\",\"assetId\":82384115,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1730129877295,\"createdBy\":\"67199198\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-10-28",
+            "value": "{\"date\":\"2024-10-28\",\"changed_at\":\"2024-10-28T15:38:13.564Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653118",
+            "value": "{\"item_id\":\"1720653118\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "CamScanner 10-28-2024 17.37.38.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384115/CamScanner%2010-28-2024%2017.37.38.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=e30d84adb1fbf3c0b875f99210b551b4712f206d1cf766228cfd615bd8688cdf"
+        }
+    ]
+}

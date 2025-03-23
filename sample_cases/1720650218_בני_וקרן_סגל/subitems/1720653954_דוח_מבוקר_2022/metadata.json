@@ -1,0 +1,68 @@
+{
+    "id": "1720653954",
+    "name": "דוח מבוקר 2022",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-11-13T07:24:32.904Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-21T12:08:47.484Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384538/4.pdf",
+            "value": "{\"files\":[{\"name\":\"4.pdf\",\"assetId\":82384538,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732190924461,\"createdBy\":\"68003642\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-11-21",
+            "value": "{\"date\":\"2024-11-21\",\"changed_at\":\"2024-11-21T12:08:47.122Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653954",
+            "value": "{\"item_id\":\"1720653954\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "4.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384538/4.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=b824fe1fd3397b097697e8c834d09fc295c2cf12984c909fd3b63b9abd5160f2"
+        }
+    ]
+}

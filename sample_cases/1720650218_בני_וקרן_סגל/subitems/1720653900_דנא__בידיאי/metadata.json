@@ -1,0 +1,76 @@
+{
+    "id": "1720653900",
+    "name": "דנא / בידיאי",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-10-31T10:00:09.664Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-14T11:25:18.805Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384513/03-11-2024_%D7%93%D7%95%D7%97%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D%20(2).pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384514/1730645094968-Report%20(1).pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384515/14-11-2024_%D7%93%D7%95%D7%97%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D.pdf",
+            "value": "{\"files\":[{\"name\":\"03-11-2024_דוח ריכוז נתונים (2).pdf\",\"assetId\":82384513,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1731330233468,\"createdBy\":\"68003642\"},{\"name\":\"1730645094968-Report (1).pdf\",\"assetId\":82384514,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1731330498817,\"createdBy\":\"68003642\"},{\"name\":\"14-11-2024_דוח ריכוז נתונים.pdf\",\"assetId\":82384515,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1731583325007,\"createdBy\":\"68003642\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-11-14",
+            "value": "{\"date\":\"2024-11-14\",\"changed_at\":\"2024-11-14T11:25:20.261Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653900",
+            "value": "{\"item_id\":\"1720653900\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "03-11-2024_דוח ריכוז נתונים (2).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384513/03-11-2024_%D7%93%D7%95%D7%97%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D%20%282%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=73aa29e3c27226c08610cf1a00b51485c0886e489e87e205b7c42e6069eb4e28"
+        },
+        {
+            "name": "1730645094968-Report (1).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384514/1730645094968-Report%20%281%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c5e9039481b2fa86fdfc79a1d1a3c8acb1fcf50cd757d8479571cc3e4469145e"
+        },
+        {
+            "name": "14-11-2024_דוח ריכוז נתונים.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384515/14-11-2024_%D7%93%D7%95%D7%97%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=255129167bc8610c63e53fa5990b9cac4e3eec5e01a73a307b3c4c793b0c2d2e"
+        }
+    ]
+}

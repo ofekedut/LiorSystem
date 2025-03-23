@@ -1,9 +1,11 @@
 # cases_router.py
-from typing import List
+from typing import List, Dict, Any
 from uuid import UUID
 import os
 import logging
+from fastapi import Depends
 
+from server.database.documents_database import DocumentInCreate
 from server.features.docs_processing.detect_doc_type import classify_document
 from server.features.docs_processing.document_processing_db import get_labels
 
@@ -270,13 +272,182 @@ async def read_case_documents(case_id: UUID) -> List[CaseDocumentInDB]:
     return await list_case_documents(case_id)
 
 
+@router.post(
+    "/cases/{case_id}/create-and-link-document",
+    response_model=CaseDocumentInDB,
+    status_code=status.HTTP_201_CREATED
+)
+async def create_and_link_document(
+        case_id: UUID,
+        document_data: DocumentInCreate,
+        case_document_data: CaseDocumentCreate,
+        background_tasks: BackgroundTasks = BackgroundTasks()
+):
+    """
+    Properly creates a document and links it to a case in one atomic operation.
+
+    Steps:
+    1. Create the document in the documents table
+    2. Link the document to the case
+    3. Return the case-document link
+    """
+    # Verify case exists
+    existing_case = await get_case(case_id)
+    if not existing_case:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    # Import necessary functions
+    from server.database.documents_database import create_document
+
+    # Create the document first
+    try:
+        document = await create_document(document_data)
+        if not document:
+            raise HTTPException(
+                status_code=500,
+                detail="Failed to create document"
+            )
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error creating document: {str(e)}"
+        )
+
+    # Update the case_document_data with the new document ID and case ID
+    case_document_data.document_id = document.id
+    case_document_data.case_id = case_id
+
+    # Now create the case-document link
+    try:
+        case_document = await create_case_document(case_document_data)
+        if not case_document:
+            # If linking fails, we should probably clean up the document
+            raise HTTPException(
+                status_code=500,
+                detail="Failed to link document to case"
+            )
+    except Exception as e:
+        # Clean up the created document if linking fails
+        from server.database.documents_database import delete_document
+        await delete_document(document.id)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error linking document to case: {str(e)}"
+        )
+
+    return case_document
+
+
+@router.post(
+    "/cases/{case_id}/documents/create-and-upload",
+    response_model=CaseDocumentInDB,
+    status_code=status.HTTP_201_CREATED
+)
+async def create_document_with_upload(
+        case_id: UUID,
+        document_data: DocumentInCreate = Depends(),
+        case_document_data: CaseDocumentCreate = Depends(),
+        file: UploadFile = File(...),
+        background_tasks: BackgroundTasks = BackgroundTasks()
+):
+    """
+    Complete workflow to create a document, link it to a case, and upload the file.
+
+    This endpoint combines document creation, case-document linking, and file upload
+    into a single atomic operation.
+    """
+    # Verify case exists
+    existing_case = await get_case(case_id)
+    if not existing_case:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    # Import necessary functions
+    from server.database.documents_database import create_document
+
+    # Create the document first
+    try:
+        document = await create_document(document_data)
+        if not document:
+            raise HTTPException(
+                status_code=500,
+                detail="Failed to create document"
+            )
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error creating document: {str(e)}"
+        )
+
+    # Update the case_document_data with the new document ID and case ID
+    case_document_data.document_id = document.id
+    case_document_data.case_id = case_id
+
+    # Now create the case-document link
+    try:
+        case_document = await create_case_document(case_document_data)
+        if not case_document:
+            # If linking fails, we should clean up the document
+            from server.database.documents_database import delete_document
+            await delete_document(document.id)
+            raise HTTPException(
+                status_code=500,
+                detail="Failed to link document to case"
+            )
+    except Exception as e:
+        # Clean up the created document if linking fails
+        from server.database.documents_database import delete_document
+        await delete_document(document.id)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error linking document to case: {str(e)}"
+        )
+
+    # Upload the file
+    try:
+        # Define a local upload path
+        base_dir = "./mortgage_system/uploaded_files"
+        upload_dir = os.path.join(base_dir, str(case_id))
+        os.makedirs(upload_dir, exist_ok=True)
+
+        # Save the file to disk
+        file_path = os.path.join(upload_dir, file.filename)
+        content = await file.read()
+        with open(file_path, "wb") as out_file:
+            out_file.write(content)
+
+        # Update the case document with the file path
+        doc_update = CaseDocumentUpdate(file_path=file_path, processing_status="pending")
+        updated_doc = await update_case_document(case_id, document.id, doc_update)
+
+        if not updated_doc:
+            raise HTTPException(
+                status_code=500,
+                detail="Failed to update document with file path"
+            )
+
+        # Run document classification in the background
+        background_tasks.add_task(
+            classify_document_background,
+            file_path,
+            case_id,
+            document.id
+        )
+
+        return updated_doc
+    except Exception as e:
+        # Clean up on failure
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error uploading file: {str(e)}"
+        )
 @router.post("/cases/{case_id}/documents", response_model=CaseDocumentInDB, status_code=201)
 async def create_document_for_case(
-    case_id: UUID, 
-    doc_in: CaseDocumentCreate
+        case_id: UUID,
+        doc_in: CaseDocumentCreate
 ) -> CaseDocumentInDB:
     """
     Create a new case-document link for a given case.
+    Ensures the document exists in the documents table first.
     """
     if doc_in.case_id != case_id:
         raise HTTPException(status_code=400, detail="case_id mismatch")
@@ -285,6 +456,18 @@ async def create_document_for_case(
     if not existing:
         raise HTTPException(status_code=404, detail="Case not found")
 
+    # First, check if the document already exists in the documents table
+    from server.database.documents_database import get_document, DocumentInCreate, create_document
+
+    document = await get_document(doc_in.document_id)
+    if not document:
+        # Document doesn't exist yet, we need to create it first
+        raise HTTPException(
+            status_code=400,
+            detail="Document doesn't exist. Please create the document in the documents table first."
+        )
+
+    # Now create the case-document link
     return await create_case_document(doc_in)
 
 
@@ -346,17 +529,41 @@ async def upload_case_document_file(
 
     Then we update the `file_path` in the `case_documents` table.
     """
-    # 1. Check that the case_document link exists
+    # 1. Check that the case exists
+    case = await get_case(case_id)
+    if not case:
+        raise HTTPException(status_code=404, detail="Case not found")
+
+    # 2. Check that the document exists in the documents table
+    from server.database.documents_database import get_document
+    document = await get_document(document_id)
+    if not document:
+        raise HTTPException(status_code=404, detail="Document not found in the documents table")
+
+    # 3. Check that the case_document link exists
     doc_link = await get_case_document(case_id, document_id)
     if not doc_link:
-        raise HTTPException(status_code=404, detail="Case document link not found")
+        # If the link doesn't exist, create it
+        doc_in = CaseDocumentCreate(
+            case_id=case_id,
+            document_id=document_id,
+            status="pending",
+            processing_status="pending"
+        )
+        try:
+            doc_link = await create_case_document(doc_in)
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to create case-document link: {str(e)}"
+            )
 
-    # 2. Define a local upload path
+    # 4. Define a local upload path
     base_dir = "./mortgage_system/uploaded_files"
     upload_dir = os.path.join(base_dir, str(case_id))
     os.makedirs(upload_dir, exist_ok=True)
 
-    # 3. Save the file to disk
+    # 5. Save the file to disk
     file_path = os.path.join(upload_dir, file.filename)
     try:
         content = await file.read()
@@ -365,19 +572,83 @@ async def upload_case_document_file(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"File upload failed: {e}")
 
-    # 4. Update the DB record so `file_path` is stored
-    doc_update = CaseDocumentUpdate(file_path=file_path, processing_status_id=2)  # 2 corresponds to 'pending'
+    # 6. Update the DB record so `file_path` is stored
+    doc_update = CaseDocumentUpdate(file_path=file_path, processing_status="pending")
     updated_doc = await update_case_document(case_id, document_id, doc_update)
     if not updated_doc:
         raise HTTPException(status_code=404, detail="Could not update file path")
 
-    # Run document classification in the background
+    # 7. Run document classification in the background
     background_tasks.add_task(classify_document_background, file_path, case_id, document_id)
 
     # Return the updated record to the client
     return updated_doc
 
 
+@router.get("/document-types", response_model=List[Dict[str, Any]])
+async def get_document_types():
+    """
+    Get all available document types to help with document creation.
+
+    This helper endpoint makes it easier to create valid documents by showing
+    all available document types in the system.
+    """
+    try:
+        from server.database.lior_dropdown_options_database import get_dropdown_options_by_category
+
+        # Get document types from dropdown options
+        document_types = await get_dropdown_options_by_category("document_types")
+
+        if not document_types:
+            return []
+
+        # Convert to simple dict format
+        return [
+            {
+                "id": str(doc_type.id),
+                "name": doc_type.name,
+                "value": doc_type.value
+            }
+            for doc_type in document_types
+        ]
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error retrieving document types: {str(e)}"
+        )
+
+
+@router.get("/document-categories", response_model=List[Dict[str, Any]])
+async def get_document_categories():
+    """
+    Get all available document categories to help with document creation.
+
+    This helper endpoint makes it easier to create valid documents by showing
+    all available document categories in the system.
+    """
+    try:
+        from server.database.lior_dropdown_options_database import get_dropdown_options_by_category
+
+        # Get document categories from dropdown options
+        document_categories = await get_dropdown_options_by_category("document_categories")
+
+        if not document_categories:
+            return []
+
+        # Convert to simple dict format
+        return [
+            {
+                "id": str(category.id),
+                "name": category.name,
+                "value": category.value
+            }
+            for category in document_categories
+        ]
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error retrieving document categories: {str(e)}"
+        )
 # -----------------------------------------------------------------------------
 # Background Task for Document Classification
 # -----------------------------------------------------------------------------

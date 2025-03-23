@@ -1,0 +1,63 @@
+{
+    "id": "1756439315",
+    "name": "אישור מלאומי על הסרה שלו מהמשכנתה עם גרושתו",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "בהמתנה",
+            "value": "{\"index\":2,\"post_id\":null,\"changed_at\":\"2025-01-01T08:49:20.791Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1756439315",
+            "value": "{\"item_id\":\"1756439315\"}"
+        }
+    ],
+    "assets": []
+}

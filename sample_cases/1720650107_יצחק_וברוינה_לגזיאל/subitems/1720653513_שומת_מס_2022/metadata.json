@@ -1,0 +1,68 @@
+{
+    "id": "1720653513",
+    "name": "שומת מס 2022",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-11-05T09:54:34.257Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-01T12:16:22.538Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/83206332/combinepdf%20(81).pdf",
+            "value": "{\"files\":[{\"name\":\"combinepdf (81).pdf\",\"assetId\":83206332,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733055362075,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-01",
+            "value": "{\"date\":\"2024-12-01\",\"changed_at\":\"2024-12-01T12:16:23.792Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653513",
+            "value": "{\"item_id\":\"1720653513\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "combinepdf (81).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/83206332/combinepdf%20%2881%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=8409ebab346f7462ecf48e65fc53ae850c03f30171c49d26394e9a0a2770e748"
+        }
+    ]
+}

@@ -1,0 +1,3111 @@
+{
+    "id": "1720650269",
+    "name": "יעקב רחמים ופנינה בן הראש",
+    "column_values": [
+        {
+            "column": {
+                "id": "dropdown__1",
+                "title": "מהות התיק"
+            },
+            "text": "גיוס שונות לרכישה, גיוס לרכישת נכס, גיוס לאיחוד",
+            "value": "{\"ids\":[9,4,6]}"
+        },
+        {
+            "column": {
+                "id": "dropdown9__1",
+                "title": "סוג הלוואה"
+            },
+            "text": "משכון נכס",
+            "value": "{\"ids\":[1]}"
+        },
+        {
+            "column": {
+                "id": "project_status",
+                "title": "סטטוס הכנת תיק לקוח"
+            },
+            "text": "ביצוע",
+            "value": "{\"index\":12,\"post_id\":null,\"changed_at\":\"2025-01-26T12:41:59.039Z\"}"
+        },
+        {
+            "column": {
+                "id": "priority_1",
+                "title": "עדיפות"
+            },
+            "text": "חלש",
+            "value": "{\"index\":5,\"post_id\":null,\"changed_at\":\"2025-01-20T11:02:29.503Z\"}"
+        },
+        {
+            "column": {
+                "id": "subitems__1",
+                "title": "Subitems"
+            },
+            "text": null,
+            "value": "{\"changed_at\":\"2025-01-19 14:10:01 +0000\",\"linkedPulseIds\":[{\"linkedPulseId\":1720652687},{\"linkedPulseId\":1720652691},{\"linkedPulseId\":1720652697},{\"linkedPulseId\":1720652700},{\"linkedPulseId\":1720652702},{\"linkedPulseId\":1720652705},{\"linkedPulseId\":1720652708},{\"linkedPulseId\":1720652711},{\"linkedPulseId\":1720652713},{\"linkedPulseId\":1720652967},{\"linkedPulseId\":1720653014},{\"linkedPulseId\":1720653017},{\"linkedPulseId\":1720653042},{\"linkedPulseId\":1720653044},{\"linkedPulseId\":1720653132},{\"linkedPulseId\":1720653396},{\"linkedPulseId\":1720653398},{\"linkedPulseId\":1720653400},{\"linkedPulseId\":1720653402},{\"linkedPulseId\":1720653403},{\"linkedPulseId\":1720653404},{\"linkedPulseId\":1720653405},{\"linkedPulseId\":1720653407},{\"linkedPulseId\":1720653408},{\"linkedPulseId\":1720653409},{\"linkedPulseId\":1720653410},{\"linkedPulseId\":1720653411},{\"linkedPulseId\":1720653614},{\"linkedPulseId\":1720653615},{\"linkedPulseId\":1720653616},{\"linkedPulseId\":1720653622},{\"linkedPulseId\":1720653624},{\"linkedPulseId\":1720653625},{\"linkedPulseId\":1769298777},{\"linkedPulseId\":1769309319},{\"linkedPulseId\":1769314795},{\"linkedPulseId\":1769315673},{\"linkedPulseId\":1769318006},{\"linkedPulseId\":1769318840},{\"linkedPulseId\":1769319240},{\"linkedPulseId\":1769320594},{\"linkedPulseId\":1783179717},{\"linkedPulseId\":1783179733}]}"
+        },
+        {
+            "column": {
+                "id": "status_mkkr2t94",
+                "title": "הערות רוזי"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "id": "numbers6__1",
+                "title": "אחוז מגיוס"
+            },
+            "text": "0",
+            "value": "\"0\""
+        },
+        {
+            "column": {
+                "id": "numbers8__1",
+                "title": "שכ\"ט צפוי"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "id": "text7__1",
+                "title": "לקוח איתו מתנהלים"
+            },
+            "text": "פנינה",
+            "value": "\"פנינה\""
+        },
+        {
+            "column": {
+                "id": "phone__1",
+                "title": "טלפון"
+            },
+            "text": "0509660343",
+            "value": "{\"phone\":\"0509660343\",\"changed_at\":\"2024-10-31T12:59:33.832Z\",\"countryShortName\":\"IL\"}"
+        },
+        {
+            "column": {
+                "id": "text8__1",
+                "title": "ת.ז"
+            },
+            "text": "059609693",
+            "value": "\"059609693\""
+        },
+        {
+            "column": {
+                "id": "item_id_Mjj6uqvW",
+                "title": "Item ID"
+            },
+            "text": "1720650269",
+            "value": "{\"item_id\":\"1720650269\"}"
+        },
+        {
+            "column": {
+                "id": "date_mkkt63tm",
+                "title": "תאריך חיפוש פיתרון"
+            },
+            "text": "2025-01-09",
+            "value": "{\"date\":\"2025-01-09\",\"changed_at\":\"2025-01-09T10:20:28.422Z\"}"
+        },
+        {
+            "column": {
+                "id": "date_mkktze1j",
+                "title": "תאריך מעבר אחרון"
+            },
+            "text": "",
+            "value": null
+        }
+    ],
+    "assets": [],
+    "subitems": [
+        {
+            "id": "1720652713",
+            "name": "פענוח לקוח",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T11:41:32.321Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384022/%D7%A4%D7%A2%D7%A0%D7%95%D7%97(8).pdf",
+                    "value": "{\"files\":[{\"name\":\"פענוח(8).pdf\",\"assetId\":82384022,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1728819064764,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T11:41:34.518Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652713",
+                    "value": "{\"item_id\":\"1720652713\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "פענוח(8).pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384022/%D7%A4%D7%A2%D7%A0%D7%95%D7%97%288%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=74994421559107c1894e4cdead5c5590958e73ce5018c6b43218a7639bcb2207"
+                }
+            ]
+        },
+        {
+            "id": "1720652711",
+            "name": "ת.ז יעב",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:09.921Z\",\"personsAndTeams\":[]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-20T10:48:44.320Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384020/%D7%A1%D7%A4%D7%97(7).jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384021/%D7%AA%D7%A2%D7%95%D7%93%D7%AA%20%D7%96%D7%94%D7%95%D7%AA(19).jpeg",
+                    "value": "{\"files\":[{\"name\":\"ספח(7).jpeg\",\"assetId\":82384020,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1728819618597,\"createdBy\":\"67199198\"},{\"name\":\"תעודת זהות(19).jpeg\",\"assetId\":82384021,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1728819618601,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-20T10:48:48.404Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652711",
+                    "value": "{\"item_id\":\"1720652711\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "ספח(7).jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384020/%D7%A1%D7%A4%D7%97%287%29.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=05e5f5eabb72f47ebd6f738c7b5ad19fc7534706816d8a904de1286f586a2d6e"
+                },
+                {
+                    "name": "תעודת זהות(19).jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384021/%D7%AA%D7%A2%D7%95%D7%93%D7%AA%20%D7%96%D7%94%D7%95%D7%AA%2819%29.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c360c6c61939e084de852637439b15f9b8acad820f63ef2a351c84bffd57940e"
+                }
+            ]
+        },
+        {
+            "id": "1720652687",
+            "name": "דנא יעקב",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:12.900Z\",\"personsAndTeams\":[]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-20T10:48:50.312Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384018/13-10-2024_%D7%93%D7%95%D7%97%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D.pdf",
+                    "value": "{\"files\":[{\"name\":\"13-10-2024_דוח ריכוז נתונים.pdf\",\"assetId\":82384018,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1728821356339,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-20",
+                    "value": "{\"date\":\"2024-10-20\",\"changed_at\":\"2024-10-20T10:49:52.369Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652687",
+                    "value": "{\"item_id\":\"1720652687\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "13-10-2024_דוח ריכוז נתונים.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384018/13-10-2024_%D7%93%D7%95%D7%97%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6f607a90312dc0df547b194156dbb445cfaa9ece71b8cf10cd9ad33f7f683602"
+                }
+            ]
+        },
+        {
+            "id": "1720652691",
+            "name": "מעבר ליאור",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:20.336Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-15T14:13:43.893Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": "{\"files\":null}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-15",
+                    "value": "{\"date\":\"2024-10-15\",\"changed_at\":\"2024-10-15T14:13:45.970Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652691",
+                    "value": "{\"item_id\":\"1720652691\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720652967",
+            "name": "שיחה על נכס או לווה אחר",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-15T14:16:12.508Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-20T10:49:03.040Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-20",
+                    "value": "{\"date\":\"2024-10-20\",\"changed_at\":\"2024-10-20T10:49:04.493Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652967",
+                    "value": "{\"item_id\":\"1720652967\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720653132",
+            "name": "הסכם רכישה עמידר",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-27T16:01:55.139Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384116/WhatsApp%20Image%202024-10-22%20at%2014.10.01.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384117/WhatsApp%20Image%202024-10-22%20at%2014.10.11.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384118/WhatsApp%20Image%202024-10-22%20at%2014.09.53.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384119/WhatsApp%20Image%202024-10-22%20at%2014.09.46.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384120/WhatsApp%20Image%202024-10-22%20at%2014.09.35.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384121/WhatsApp%20Image%202024-10-22%20at%2014.09.25.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384122/WhatsApp%20Image%202024-10-22%20at%2014.09.12.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384123/WhatsApp%20Image%202024-10-22%20at%2014.09.04.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384124/WhatsApp%20Image%202024-10-22%20at%2014.08.54.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384125/WhatsApp%20Image%202024-10-22%20at%2014.08.43.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384126/WhatsApp%20Image%202024-10-22%20at%2014.02.41.jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-22 at 14.10.01.jpeg\",\"assetId\":82384116,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896053,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.10.11.jpeg\",\"assetId\":82384117,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896048,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.09.53.jpeg\",\"assetId\":82384118,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896059,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.09.46.jpeg\",\"assetId\":82384119,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896062,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.09.35.jpeg\",\"assetId\":82384120,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896065,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.09.25.jpeg\",\"assetId\":82384121,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896068,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.09.12.jpeg\",\"assetId\":82384122,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896074,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.09.04.jpeg\",\"assetId\":82384123,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896078,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.08.54.jpeg\",\"assetId\":82384124,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896081,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.08.43.jpeg\",\"assetId\":82384125,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896084,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.02.41.jpeg\",\"assetId\":82384126,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896088,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-27",
+                    "value": "{\"date\":\"2024-10-27\",\"changed_at\":\"2024-10-27T16:02:07.658Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653132",
+                    "value": "{\"item_id\":\"1720653132\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-10-22 at 14.10.01.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384116/WhatsApp%20Image%202024-10-22%20at%2014.10.01.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=28d2b108f9856927a34c05ec6c2edf057b955f731bf030a279c17e5c17d47bba"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-22 at 14.10.11.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384117/WhatsApp%20Image%202024-10-22%20at%2014.10.11.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=3289f9e5ce2cf73bb1b34b74c127744d687d828ce9bf7544447da8add5fa28f9"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-22 at 14.09.53.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384118/WhatsApp%20Image%202024-10-22%20at%2014.09.53.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=2ecbb69683faa3f1d770893631e538b5403a55632b53a3f966da348f123e2d7a"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-22 at 14.09.46.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384119/WhatsApp%20Image%202024-10-22%20at%2014.09.46.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6ea4c5d0434c94fc967bd2184b713b6efe10a17c0d8828bf991514c349443b2b"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-22 at 14.09.35.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384120/WhatsApp%20Image%202024-10-22%20at%2014.09.35.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a0c89252245d8dfd16e738b6bf7e8b162e85582ddd0a362a35ed70d3ea217ff1"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-22 at 14.09.25.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384121/WhatsApp%20Image%202024-10-22%20at%2014.09.25.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=f10d1c9fc59fb501d59d5bac1611ee126df728c32450b643d132d3fe6389a453"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-22 at 14.09.12.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384122/WhatsApp%20Image%202024-10-22%20at%2014.09.12.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=e3e0ba14620d54fc27daabe5a89e8323296508dd789c0bfbbf4565706ae924ed"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-22 at 14.09.04.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384123/WhatsApp%20Image%202024-10-22%20at%2014.09.04.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=dc9974e2a078ce9c78dea4703575444642ec78bd93e432bba00184623f9a9e7f"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-22 at 14.08.54.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384124/WhatsApp%20Image%202024-10-22%20at%2014.08.54.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=55fff08f06a3ae1c509cbfa2a1fb19bf2e166aa6a8db7e74c799a09d8db6bbc0"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-22 at 14.08.43.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384125/WhatsApp%20Image%202024-10-22%20at%2014.08.43.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c6ddaaf0b602931bd82d12097e204e7416a24239c7ea37b838333184e01ab29f"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-22 at 14.02.41.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384126/WhatsApp%20Image%202024-10-22%20at%2014.02.41.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=2ff4efb3f39d4158d4a9cf13599861982cade422dc6a5b9548ca58072724a7b8"
+                }
+            ]
+        },
+        {
+            "id": "1720652697",
+            "name": "לרשום את שאר הניירת הנדרשת",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:22.252Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-22T09:04:33.973Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-22",
+                    "value": "{\"date\":\"2024-10-22\",\"changed_at\":\"2024-10-22T09:04:35.920Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652697",
+                    "value": "{\"item_id\":\"1720652697\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720653017",
+            "name": "ת.ז אישה",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-22T16:15:04.346Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384084/WhatsApp%20Image%202024-10-22%20at%2019.13.11.jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-22 at 19.13.11.jpeg\",\"assetId\":82384084,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1729613693757,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-22",
+                    "value": "{\"date\":\"2024-10-22\",\"changed_at\":\"2024-10-22T16:15:12.401Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653017",
+                    "value": "{\"item_id\":\"1720653017\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-10-22 at 19.13.11.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384084/WhatsApp%20Image%202024-10-22%20at%2019.13.11.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=2e7ed757440079a85fa7038184b84a52d9c12cb688fb855ac9bd21c1fc5b81c4"
+                }
+            ]
+        },
+        {
+            "id": "1720653014",
+            "name": "דנא אישה",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-22T16:15:21.154Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384082/22-10-2024_%D7%93%D7%95%D7%97%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D.pdf",
+                    "value": "{\"files\":[{\"name\":\"22-10-2024_דוח ריכוז נתונים.pdf\",\"assetId\":82384082,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1729613718025,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-22",
+                    "value": "{\"date\":\"2024-10-22\",\"changed_at\":\"2024-10-22T16:15:29.212Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653014",
+                    "value": "{\"item_id\":\"1720653014\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "22-10-2024_דוח ריכוז נתונים.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384082/22-10-2024_%D7%93%D7%95%D7%97%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=92fb5f494cec6e044cfa38784922eb9d035cc0bea05c34080767585ec9e327b7"
+                }
+            ]
+        },
+        {
+            "id": "1720653044",
+            "name": "טאבו נכס חדש",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-22T16:15:52.672Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384097/%D7%A0%D7%A1%D7%97%20(18).pdf",
+                    "value": "{\"files\":[{\"name\":\"נסח (18).pdf\",\"assetId\":82384097,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1729613686182,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-22",
+                    "value": "{\"date\":\"2024-10-22\",\"changed_at\":\"2024-10-22T16:16:00.864Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653044",
+                    "value": "{\"item_id\":\"1720653044\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "נסח (18).pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384097/%D7%A0%D7%A1%D7%97%20%2818%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=f4f06a52eeaa4fa4725c84190971ec32457ea75d12a1056b7fe137965ef317a7"
+                }
+            ]
+        },
+        {
+            "id": "1720653042",
+            "name": "טאבו נכס קיים",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-22T16:15:54.458Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384095/%D7%A0%D7%A1%D7%97%20(1).pdf",
+                    "value": "{\"files\":[{\"name\":\"נסח (1).pdf\",\"assetId\":82384095,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1729613679392,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-22",
+                    "value": "{\"date\":\"2024-10-22\",\"changed_at\":\"2024-10-22T16:16:02.405Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653042",
+                    "value": "{\"item_id\":\"1720653042\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "נסח (1).pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384095/%D7%A0%D7%A1%D7%97%20%281%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=ef9af45bdb518291ad35a982c004fe48f2864df43cdacaa39a9c01b90c73ba5f"
+                }
+            ]
+        },
+        {
+            "id": "1720652705",
+            "name": "הזנת נתונים במערכת  💻",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:50.202Z\",\"personsAndTeams\":[]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-30T12:06:24.752Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-30",
+                    "value": "{\"date\":\"2024-10-30\",\"changed_at\":\"2024-10-30T12:06:26.604Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652705",
+                    "value": "{\"item_id\":\"1720652705\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720652700",
+            "name": "צילום גב ת.ז יעקב",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:07:56.907Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-31T11:51:47.441Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384019/WhatsApp%20Image%202024-10-31%20at%2013.19.38.jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-31 at 13.19.38.jpeg\",\"assetId\":82384019,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375748805,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-31",
+                    "value": "{\"date\":\"2024-10-31\",\"changed_at\":\"2024-10-31T11:52:03.849Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652700",
+                    "value": "{\"item_id\":\"1720652700\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 13.19.38.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384019/WhatsApp%20Image%202024-10-31%20at%2013.19.38.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=9535cf3a9fd1c86c0c0b64e2aaf77bb750dd667f3f7a0629cd290a035c4ae280"
+                }
+            ]
+        },
+        {
+            "id": "1720653400",
+            "name": "צילום ב ת.ז פנינה",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:07:58.798Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-31T11:55:51.301Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384190/WhatsApp%20Image%202024-10-31%20at%2013.15.42.jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-31 at 13.15.42.jpeg\",\"assetId\":82384190,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375733563,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-31",
+                    "value": "{\"date\":\"2024-10-31\",\"changed_at\":\"2024-10-31T11:56:07.163Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653400",
+                    "value": "{\"item_id\":\"1720653400\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 13.15.42.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384190/WhatsApp%20Image%202024-10-31%20at%2013.15.42.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=08ff54434af93cc3c0ed3ac759384cbac6b47620f8c31d6ba67d4932aea2cdea"
+                }
+            ]
+        },
+        {
+            "id": "1720653396",
+            "name": "צילום תעודה מזהה נוספת יעקב",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:08:02.046Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-04T13:33:39.782Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384185/WhatsApp%20Image%202024-10-30%20at%2020.16.59%20(1).jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-30 at 20.16.59 (1).jpeg\",\"assetId\":82384185,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730727189452,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-04",
+                    "value": "{\"date\":\"2024-11-04\",\"changed_at\":\"2024-11-04T13:33:42.961Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653396",
+                    "value": "{\"item_id\":\"1720653396\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-10-30 at 20.16.59 (1).jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384185/WhatsApp%20Image%202024-10-30%20at%2020.16.59%20%281%29.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=b2209d6bc7b80ef0f19d8cba7d6065ca154617526256edb9b7b4278882fd0e62"
+                }
+            ]
+        },
+        {
+            "id": "1720653398",
+            "name": "צילום תעודה מזהה נוספת פנינה",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:08:04.099Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-04T13:33:41.042Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384187/WhatsApp%20Image%202024-10-30%20at%2020.19.28.jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-30 at 20.19.28.jpeg\",\"assetId\":82384187,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730727218078,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-04",
+                    "value": "{\"date\":\"2024-11-04\",\"changed_at\":\"2024-11-04T13:33:43.763Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653398",
+                    "value": "{\"item_id\":\"1720653398\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-10-30 at 20.19.28.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384187/WhatsApp%20Image%202024-10-30%20at%2020.19.28.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=39a71b7116d50dbf3f8ae401655bcc454c8f98eed7905d948d8b9c2d208d7b3f"
+                }
+            ]
+        },
+        {
+            "id": "1720652702",
+            "name": "מעבר מלא על התיק",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:52.512Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-03T07:55:45.338Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-03",
+                    "value": "{\"date\":\"2024-11-03\",\"changed_at\":\"2024-11-03T07:55:47.701Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652702",
+                    "value": "{\"item_id\":\"1720652702\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720653402",
+            "name": "אישור ניהול + תנועות עוש + פירוט הלוואות בנק פועלים (יעקב)",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:11:51.866Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-31T11:53:45.498Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384193/WhatsApp%20Image%202024-10-31%20at%2013.16.25.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384194/WhatsApp%20Image%202024-10-31%20at%2013.17.00.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384195/WhatsApp%20Image%202024-10-31%20at%2013.18.27.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384198/WhatsApp%20Image%202024-10-31%20at%2013.18.06.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384199/WhatsApp%20Image%202024-10-31%20at%2013.17.42.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384197/WhatsApp%20Image%202024-10-31%20at%2013.17.13.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384200/WhatsApp%20Image%202024-10-31%20at%2013.16.45.jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-31 at 13.16.25.jpeg\",\"assetId\":82384193,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375490512,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 13.17.00.jpeg\",\"assetId\":82384194,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375540113,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 13.18.27.jpeg\",\"assetId\":82384195,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375615762,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 13.18.06.jpeg\",\"assetId\":82384198,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375615767,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 13.17.42.jpeg\",\"assetId\":82384199,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375615772,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 13.17.13.jpeg\",\"assetId\":82384197,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375615775,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 13.16.45.jpeg\",\"assetId\":82384200,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375615779,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-31",
+                    "value": "{\"date\":\"2024-10-31\",\"changed_at\":\"2024-10-31T11:54:01.345Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653402",
+                    "value": "{\"item_id\":\"1720653402\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 13.16.25.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384193/WhatsApp%20Image%202024-10-31%20at%2013.16.25.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=60312befb27ceca5b63d114f1d88e47e65ba263ed641d5adf467655af8d38fa3"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 13.17.00.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384194/WhatsApp%20Image%202024-10-31%20at%2013.17.00.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=8fcfa728c85da67b707c455dd9142a6c54a03af8dceb592d8432bafb9742e851"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 13.18.27.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384195/WhatsApp%20Image%202024-10-31%20at%2013.18.27.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=db28ec186439277f252968fc05303b2fa7146f03e5a8f8dfa868bd9d26323706"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 13.17.13.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384197/WhatsApp%20Image%202024-10-31%20at%2013.17.13.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=455be36926423700cb303deab9129986f40bd28eec270e50b41b1b8a7503ea2b"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 13.18.06.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384198/WhatsApp%20Image%202024-10-31%20at%2013.18.06.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=ef21b7c29eb89185b7e6dfd33adfdf12d75670e3dd8249755d2f611864f3ebdb"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 13.17.42.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384199/WhatsApp%20Image%202024-10-31%20at%2013.17.42.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=fb6e700adc2879e88743bf3a2e4501728e3a0705d45c476a9d6658f756199ffe"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 13.16.45.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384200/WhatsApp%20Image%202024-10-31%20at%2013.16.45.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=7d883a36e7daa4405844b5b228d9d4956a6f396ef09f6788576a8cacc1b84f77"
+                }
+            ]
+        },
+        {
+            "id": "1720653403",
+            "name": "אישור ניהול + תנועות עוש + פירוט הלוואות בנק טפחות(יעקב)",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:11:54.044Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-31T12:43:54.783Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384207/WhatsApp%20Image%202024-10-31%20at%2013.14.02.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384208/WhatsApp%20Image%202024-10-31%20at%2013.19.28.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384210/WhatsApp%20Image%202024-10-31%20at%2014.33.18.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384211/WhatsApp%20Image%202024-10-31%20at%2014.33.06.jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-31 at 13.14.02.jpeg\",\"assetId\":82384207,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375427254,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 13.19.28.jpeg\",\"assetId\":82384208,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375654629,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 14.33.18.jpeg\",\"assetId\":82384210,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730378633222,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 14.33.06.jpeg\",\"assetId\":82384211,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730378633227,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-31",
+                    "value": "{\"date\":\"2024-10-31\",\"changed_at\":\"2024-10-31T12:44:11.416Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653403",
+                    "value": "{\"item_id\":\"1720653403\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 13.14.02.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384207/WhatsApp%20Image%202024-10-31%20at%2013.14.02.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=9435050b8a63c0589517bc1cef9dae43ca0f1b48834f12e03f18cc986ae12f11"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 13.19.28.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384208/WhatsApp%20Image%202024-10-31%20at%2013.19.28.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a502ab38b283625ad8a46afa7b9bfe298da2fcec9eec6955e5e1d656907f572c"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 14.33.18.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384210/WhatsApp%20Image%202024-10-31%20at%2014.33.18.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=17300b7b31159ec822458c9e4bd2496270645240b22c6e9ae03ef1aef89ea71d"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 14.33.06.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384211/WhatsApp%20Image%202024-10-31%20at%2014.33.06.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=b28a96c4ee9ddbe627aca413a32b3efee3080da8b469ec13b9d70271fc628365"
+                }
+            ]
+        },
+        {
+            "id": "1720653404",
+            "name": "אישור ניהול + תנועות עוש + פירוט הלוואות בנק טפחות (פנינה)",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:11:55.688Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-31T11:49:46.792Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384214/WhatsApp%20Image%202024-10-30%20at%2020.28.01.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384216/WhatsApp%20Image%202024-10-30%20at%2020.28.25.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384217/WhatsApp%20Image%202024-10-30%20at%2020.29.28.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384218/WhatsApp%20Image%202024-10-31%20at%2013.13.44.jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-30 at 20.28.01.jpeg\",\"assetId\":82384214,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730369389166,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-30 at 20.28.25.jpeg\",\"assetId\":82384216,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730369389160,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-30 at 20.29.28.jpeg\",\"assetId\":82384217,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730369421305,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 13.13.44.jpeg\",\"assetId\":82384218,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375367883,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-31",
+                    "value": "{\"date\":\"2024-10-31\",\"changed_at\":\"2024-10-31T11:50:03.153Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653404",
+                    "value": "{\"item_id\":\"1720653404\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-10-30 at 20.28.01.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384214/WhatsApp%20Image%202024-10-30%20at%2020.28.01.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6d43292b7fdfd93584640869822c9931062b6fddc2845ae0c8ee723c68a11d00"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-30 at 20.28.25.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384216/WhatsApp%20Image%202024-10-30%20at%2020.28.25.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=43f389e9225e8708c2b41a7437f61d1f6c2c542efa4a02d15a403b2f7144b7e7"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-30 at 20.29.28.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384217/WhatsApp%20Image%202024-10-30%20at%2020.29.28.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=0c3e82795d23666450a3c4785431808c884934ffa0c15b5db88777fdb98d411d"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-31 at 13.13.44.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384218/WhatsApp%20Image%202024-10-31%20at%2013.13.44.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d180bc15cc2a1a17acdf9e4c9c25a79cc94a0bcd7703a06e9db651e1e27a39da"
+                }
+            ]
+        },
+        {
+            "id": "1720653405",
+            "name": "פירוט הלוואה ישראכרט",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:11:57.430Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-03T07:55:25.493Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-03",
+                    "value": "{\"date\":\"2024-11-03\",\"changed_at\":\"2024-11-03T07:55:27.656Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653405",
+                    "value": "{\"item_id\":\"1720653405\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720653407",
+            "name": "פירוט הלוואה לאומי",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:11:59.012Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-31T10:00:10.271Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384219/WhatsApp%20Image%202024-10-30%20at%2020.13.23.jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-30 at 20.13.23.jpeg\",\"assetId\":82384219,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730368806191,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653407",
+                    "value": "{\"item_id\":\"1720653407\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-10-30 at 20.13.23.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384219/WhatsApp%20Image%202024-10-30%20at%2020.13.23.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=3597ad9986a3aa55d0a14f04ccd236fe6ec5d20578c27329d1bed7ca56ed944c"
+                }
+            ]
+        },
+        {
+            "id": "1720653408",
+            "name": "פירוט הלוואה מימון ישיר",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:12:01.887Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-03T07:55:39.095Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-03",
+                    "value": "{\"date\":\"2024-11-03\",\"changed_at\":\"2024-11-03T07:55:40.728Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653408",
+                    "value": "{\"item_id\":\"1720653408\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720653409",
+            "name": "קצבאות מביטוח לאומי ( ילד ויעקב)",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:34:55.926Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-31T10:09:00.488Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384221/WhatsApp%20Image%202024-10-30%20at%2020.12.56.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384222/WhatsApp%20Image%202024-10-30%20at%2020.21.31.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384223/WhatsApp%20Image%202024-10-30%20at%2020.22.25.jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-30 at 20.12.56.jpeg\",\"assetId\":82384221,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730368747429,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-30 at 20.21.31.jpeg\",\"assetId\":82384222,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730369312498,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-30 at 20.22.25.jpeg\",\"assetId\":82384223,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730369338353,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653409",
+                    "value": "{\"item_id\":\"1720653409\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-10-30 at 20.12.56.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384221/WhatsApp%20Image%202024-10-30%20at%2020.12.56.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c1b28a0f7b6f8f723db364fca1e975484d12302332b7f8f99eb36dbfc1057e86"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-30 at 20.21.31.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384222/WhatsApp%20Image%202024-10-30%20at%2020.21.31.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=1ce5376e888aaba4358b09f6951846011b1dcb06c5aa8bc04d1716fb7a531fc5"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-30 at 20.22.25.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384223/WhatsApp%20Image%202024-10-30%20at%2020.22.25.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d0805ffec7f2bc036eba892529863976575da47b3079e619004e1a91a02b1cba"
+                }
+            ]
+        },
+        {
+            "id": "1720653410",
+            "name": "שלושה תלושי משכורת אחרונים מגמלאות יעקב",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:34:57.529Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-31T11:21:09.360Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384224/WhatsApp%20Image%202024-10-30%20at%2020.14.00.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384225/WhatsApp%20Image%202024-10-30%20at%2020.15.50.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384226/CamScanner%2010-31-2024%2013.13.08.pdf",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-30 at 20.14.00.jpeg\",\"assetId\":82384224,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730368838544,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-30 at 20.15.50.jpeg\",\"assetId\":82384225,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730368900142,\"createdBy\":\"67199198\"},{\"name\":\"CamScanner 10-31-2024 13.13.08.pdf\",\"assetId\":82384226,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1730373658418,\"createdBy\":\"67199198\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-31",
+                    "value": "{\"date\":\"2024-10-31\",\"changed_at\":\"2024-10-31T11:21:26.308Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653410",
+                    "value": "{\"item_id\":\"1720653410\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-10-30 at 20.14.00.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384224/WhatsApp%20Image%202024-10-30%20at%2020.14.00.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=752d3b7c98cdcdcc4ad94cfe061df5cc9347f6aa1c9f3e14b32cd648576dd0d3"
+                },
+                {
+                    "name": "WhatsApp Image 2024-10-30 at 20.15.50.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384225/WhatsApp%20Image%202024-10-30%20at%2020.15.50.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=f63116a6b6723f5ebaf4cd25fae9a4b4596c4d192da9b068c5e3d833deeda1a2"
+                },
+                {
+                    "name": "CamScanner 10-31-2024 13.13.08.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384226/CamScanner%2010-31-2024%2013.13.08.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=07511f3b7c7ed85aa0bb107916c58054a8995979bf6dae9c9004f5e1a5d27c5e"
+                }
+            ]
+        },
+        {
+            "id": "1720653411",
+            "name": "לברר על הכנסות נוספות",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "בר",
+                    "value": "{\"changed_at\":\"2024-10-30T12:34:59.140Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-03T07:55:42.101Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-03",
+                    "value": "{\"date\":\"2024-11-03\",\"changed_at\":\"2024-11-03T07:56:03.822Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653411",
+                    "value": "{\"item_id\":\"1720653411\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720652708",
+            "name": "שיחת תיאום ציפיות עם הלקוח",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:54.214Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-03T07:55:47.453Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-03",
+                    "value": "{\"date\":\"2024-11-03\",\"changed_at\":\"2024-11-03T07:55:49.015Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652708",
+                    "value": "{\"item_id\":\"1720652708\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720653614",
+            "name": "אישור לצמיתות פנינה",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-24T10:17:26.829Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384414/%D7%A4%D7%A0%D7%99%D7%A0%D7%94.pdf",
+                    "value": "{\"files\":[{\"name\":\"פנינה.pdf\",\"assetId\":82384414,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732443030356,\"createdBy\":\"68003642\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-24",
+                    "value": "{\"date\":\"2024-11-24\",\"changed_at\":\"2024-11-24T10:10:03.380Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653614",
+                    "value": "{\"item_id\":\"1720653614\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "פנינה.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384414/%D7%A4%D7%A0%D7%99%D7%A0%D7%94.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=3c4b7e5d91d2320b09c6ff1f1112664e9d2b653a79f5f566b967724664bd8ea5"
+                }
+            ]
+        },
+        {
+            "id": "1720653615",
+            "name": "אישור לצמיתות יעקוב",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-24T10:17:28.686Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384415/%D7%90%D7%99%D7%A9%D7%95%D7%A8%20%D7%A0%D7%9B%D7%95%D7%AA%20%D7%A8%D7%A4%D7%95%D7%90%D7%99%D7%AA%20(1).pdf",
+                    "value": "{\"files\":[{\"name\":\"אישור נכות רפואית (1).pdf\",\"assetId\":82384415,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732443337395,\"createdBy\":\"68003642\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-24",
+                    "value": "{\"date\":\"2024-11-24\",\"changed_at\":\"2024-11-24T10:15:32.394Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653615",
+                    "value": "{\"item_id\":\"1720653615\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "אישור נכות רפואית (1).pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384415/%D7%90%D7%99%D7%A9%D7%95%D7%A8%20%D7%A0%D7%9B%D7%95%D7%AA%20%D7%A8%D7%A4%D7%95%D7%90%D7%99%D7%AA%20%281%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=53805f146a020e440f94e2fbaee1a4206fdd6ebbae000b39f1a2c4258545822a"
+                }
+            ]
+        },
+        {
+            "id": "1720653616",
+            "name": "אישור לצמיתות ליאור",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-24T11:36:39.885Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384417/WhatsApp%20Image%202024-11-24%20at%2013.17.15%20(2).jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-11-24 at 13.17.15 (2).jpeg\",\"assetId\":82384417,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1732448197489,\"createdBy\":\"68003642\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-24",
+                    "value": "{\"date\":\"2024-11-24\",\"changed_at\":\"2024-11-24T11:36:41.358Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653616",
+                    "value": "{\"item_id\":\"1720653616\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-11-24 at 13.17.15 (2).jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384417/WhatsApp%20Image%202024-11-24%20at%2013.17.15%20%282%29.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=3d0388d590d4fc6f2421ff534b982e2246be49de12721b5109ac6c008f1f5357"
+                }
+            ]
+        },
+        {
+            "id": "1720653622",
+            "name": "תנועות עוש מכל החשבונות יעקב מ28/10 עד היום",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-11-26T08:17:11.833Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-26T12:35:27.191Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384420/combinepdf%20(65).pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384421/WhatsApp%20Image%202024-11-26%20at%2014.05.03%20(1)%20(1).jpeg",
+                    "value": "{\"files\":[{\"name\":\"combinepdf (65).pdf\",\"assetId\":82384420,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732623011983,\"createdBy\":\"68003642\"},{\"name\":\"WhatsApp Image 2024-11-26 at 14.05.03 (1) (1).jpeg\",\"assetId\":82384421,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1732624520426,\"createdBy\":\"68003642\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-26",
+                    "value": "{\"date\":\"2024-11-26\",\"changed_at\":\"2024-11-26T12:10:19.825Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653622",
+                    "value": "{\"item_id\":\"1720653622\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "combinepdf (65).pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384420/combinepdf%20%2865%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=757f724294a1c512dadd8789a786e984c4a73ed228c66d895c3a511786d19976"
+                },
+                {
+                    "name": "WhatsApp Image 2024-11-26 at 14.05.03 (1) (1).jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384421/WhatsApp%20Image%202024-11-26%20at%2014.05.03%20%281%29%20%281%29.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=960dc12bdad7449399f6e5665ea7e1d318bbb3a9d743707926b8f74193baed57"
+                }
+            ]
+        },
+        {
+            "id": "1720653624",
+            "name": "תלוש גמלאות 10 יעקב",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-11-26T08:17:13.257Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-26T12:35:25.212Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384423/WhatsApp%20Image%202024-11-26%20at%2014.05.06.jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-11-26 at 14.05.06.jpeg\",\"assetId\":82384423,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1732623147949,\"createdBy\":\"68003642\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-26",
+                    "value": "{\"date\":\"2024-11-26\",\"changed_at\":\"2024-11-26T12:12:49.070Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653624",
+                    "value": "{\"item_id\":\"1720653624\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-11-26 at 14.05.06.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384423/WhatsApp%20Image%202024-11-26%20at%2014.05.06.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=f79f09f244ef6711f294019c3a3f51692a0d4e2b8e92f21c648e585d7c8036ec"
+                }
+            ]
+        },
+        {
+            "id": "1720653625",
+            "name": "תנועות עוש כל החשבונות פנינה מ21/10 עד היום",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-11-26T08:17:14.930Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-26T12:35:31.754Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384424/combinepdf%20(67).pdf",
+                    "value": "{\"files\":[{\"name\":\"combinepdf (67).pdf\",\"assetId\":82384424,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732623517221,\"createdBy\":\"68003642\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-11-26",
+                    "value": "{\"date\":\"2024-11-26\",\"changed_at\":\"2024-11-26T12:15:39.537Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653625",
+                    "value": "{\"item_id\":\"1720653625\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "combinepdf (67).pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384424/combinepdf%20%2867%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=92e4cab27772e1232ddf5e21ff732f040c25c132a63e66d227857a1a625c631a"
+                }
+            ]
+        },
+        {
+            "id": "1769298777",
+            "name": "שיחה עם הלקוחות",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2025-01-09T10:20:47.551Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-09T10:20:49.255Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2025-01-07",
+                    "value": "{\"date\":\"2025-01-07\",\"changed_at\":\"2025-01-09T10:20:54.200Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1769298777",
+                    "value": "{\"item_id\":\"1769298777\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1769309319",
+            "name": "תנועות עוש פנינה (503) מ24/11 עד היום",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2025-01-09T10:28:12.710Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-12T08:26:34.971Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/90376378/%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%A2%D7%95%D7%A9%20%D7%A4%D7%A0%D7%99%D7%A0%D7%94%20(503)%20%D7%9E2411%20%D7%A2%D7%93%20%D7%94%D7%99%D7%95%D7%9D.pdf",
+                    "value": "{\"files\":[{\"name\":\"תנועות עוש פנינה (503) מ2411 עד היום.pdf\",\"assetId\":90376378,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736670393182,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2025-01-12",
+                    "value": "{\"date\":\"2025-01-12\",\"changed_at\":\"2025-01-12T08:26:36.684Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1769309319",
+                    "value": "{\"item_id\":\"1769309319\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "תנועות עוש פנינה (503) מ2411 עד היום.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/90376378/%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%A2%D7%95%D7%A9%20%D7%A4%D7%A0%D7%99%D7%A0%D7%94%20%28503%29%20%D7%9E2411%20%D7%A2%D7%93%20%D7%94%D7%99%D7%95%D7%9D.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a808bab737e71434338490d7a127db122a6ee22b98ccfc786977bbe969c06985"
+                }
+            ]
+        },
+        {
+            "id": "1769314795",
+            "name": "תנועות עוש יעקב פועלים מ25/11 עד היום",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2025-01-09T10:28:14.402Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-12T08:20:29.432Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/90376076/%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%A2%D7%95%D7%A9%20%D7%99%D7%A2%D7%A7%D7%91%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20%D7%9E2511%20%D7%A2%D7%93%20%D7%94%D7%99%D7%95%D7%9D.pdf",
+                    "value": "{\"files\":[{\"name\":\"תנועות עוש יעקב פועלים מ2511 עד היום.pdf\",\"assetId\":90376076,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736670036605,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2025-01-12",
+                    "value": "{\"date\":\"2025-01-12\",\"changed_at\":\"2025-01-12T08:20:31.113Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1769314795",
+                    "value": "{\"item_id\":\"1769314795\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "תנועות עוש יעקב פועלים מ2511 עד היום.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/90376076/%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%A2%D7%95%D7%A9%20%D7%99%D7%A2%D7%A7%D7%91%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20%D7%9E2511%20%D7%A2%D7%93%20%D7%94%D7%99%D7%95%D7%9D.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5ddf0055b1f06527fbd838d094a1acf5baa44b680ea75047a90d8ac8b921000f"
+                }
+            ]
+        },
+        {
+            "id": "1769315673",
+            "name": "תנועות עוש יעקב מ11/11 עד היום",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2025-01-09T10:28:16.280Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-12T08:17:44.441Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/90375989/%D7%99%D7%A2%D7%A7%D7%95%D7%91%20%D7%9E%D7%96%D7%A8%D7%97%D7%99%20%D7%98%D7%A4%D7%97%D7%95%D7%AA.pdf",
+                    "value": "{\"files\":[{\"name\":\"יעקוב מזרחי טפחות.pdf\",\"assetId\":90375989,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736669868916,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2025-01-12",
+                    "value": "{\"date\":\"2025-01-12\",\"changed_at\":\"2025-01-12T08:17:46.096Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1769315673",
+                    "value": "{\"item_id\":\"1769315673\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "יעקוב מזרחי טפחות.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/90375989/%D7%99%D7%A2%D7%A7%D7%95%D7%91%20%D7%9E%D7%96%D7%A8%D7%97%D7%99%20%D7%98%D7%A4%D7%97%D7%95%D7%AA.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=719e0c6b4c5bba855572ccd2a98ccffcf9a992b68abde5c54fc0c00b964fc64f"
+                }
+            ]
+        },
+        {
+            "id": "1769318006",
+            "name": "תלושים גמאות יעקב 11 + 12",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2025-01-09T10:28:17.687Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-12T08:27:35.007Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/90376437/%D7%AA%D7%9C%D7%95%D7%A9%D7%99%D7%9D%20%D7%92%D7%9E%D7%90%D7%95%D7%AA%20%D7%99%D7%A2%D7%A7%D7%91%2011%20+%2010.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/90383565/FaxMessage.pdf",
+                    "value": "{\"files\":[{\"name\":\"תלושים גמאות יעקב 11 + 10.pdf\",\"assetId\":90376437,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736670515493,\"createdBy\":\"68720225\"},{\"name\":\"FaxMessage.pdf\",\"assetId\":90383565,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736675843931,\"createdBy\":\"68720131\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2025-01-12",
+                    "value": "{\"date\":\"2025-01-12\",\"changed_at\":\"2025-01-12T08:27:36.588Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1769318006",
+                    "value": "{\"item_id\":\"1769318006\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "תלושים גמאות יעקב 11 + 10.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/90376437/%D7%AA%D7%9C%D7%95%D7%A9%D7%99%D7%9D%20%D7%92%D7%9E%D7%90%D7%95%D7%AA%20%D7%99%D7%A2%D7%A7%D7%91%2011%20%2B%2010.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=696b4dfeb27aab37315b1ec1696a33a288501084fd602e1b05e2d03b2349b281"
+                },
+                {
+                    "name": "FaxMessage.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/90383565/FaxMessage.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=96978137ef8c0782efe24b63001434453c6182f3844f00621ad76ec6cd33abf3"
+                }
+            ]
+        },
+        {
+            "id": "1769318840",
+            "name": "דנא יעקב",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2025-01-09T10:28:19.360Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-12T15:22:52.838Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/90405173/%D7%93%D7%95%D7%97%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D%20-%2012-01-2025.pdf",
+                    "value": "{\"files\":[{\"name\":\"דוח ריכוז נתונים - 12-01-2025.pdf\",\"assetId\":90405173,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736695363134,\"createdBy\":\"68720131\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2025-01-12",
+                    "value": "{\"date\":\"2025-01-12\",\"changed_at\":\"2025-01-12T15:22:54.784Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1769318840",
+                    "value": "{\"item_id\":\"1769318840\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "דוח ריכוז נתונים - 12-01-2025.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/90405173/%D7%93%D7%95%D7%97%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D%20-%2012-01-2025.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a5bc52cc8d3f255c60c024cd1b038b5d7bcf5fb9e6b7b19cfd5090929f0bcb92"
+                }
+            ]
+        },
+        {
+            "id": "1769319240",
+            "name": "דנא פנינה",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2025-01-09T10:28:21.192Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-12T13:11:01.496Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/90396562/%D7%93%D7%A0%D7%90%20%D7%A4%D7%A0%D7%99%D7%A0%D7%94.pdf",
+                    "value": "{\"files\":[{\"name\":\"דנא פנינה.pdf\",\"assetId\":90396562,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736687458324,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2025-01-12",
+                    "value": "{\"date\":\"2025-01-12\",\"changed_at\":\"2025-01-12T13:11:02.848Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1769319240",
+                    "value": "{\"item_id\":\"1769319240\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "דנא פנינה.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/90396562/%D7%93%D7%A0%D7%90%20%D7%A4%D7%A0%D7%99%D7%A0%D7%94.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=374d5906918f103dbdc8a725144ceaebcf97fc220e8784c3c58ce91b9fffc5b8"
+                }
+            ]
+        },
+        {
+            "id": "1769320594",
+            "name": "נסח טאבו עדכני - 1564 | 107 | 16",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2025-01-09T10:28:23.173Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-12T08:36:40.107Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/90377717/%D7%A0%D7%A1%D7%97%20%D7%98%D7%90%D7%91%D7%95%20%D7%A4%D7%A0%D7%99%D7%A0%D7%94%20%D7%95%D7%99%D7%A2%D7%A7%D7%95%D7%91.pdf",
+                    "value": "{\"files\":[{\"name\":\"נסח טאבו פנינה ויעקוב.pdf\",\"assetId\":90377717,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736671016094,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2025-01-12",
+                    "value": "{\"date\":\"2025-01-12\",\"changed_at\":\"2025-01-12T08:36:42.013Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1769320594",
+                    "value": "{\"item_id\":\"1769320594\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "נסח טאבו פנינה ויעקוב.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/90377717/%D7%A0%D7%A1%D7%97%20%D7%98%D7%90%D7%91%D7%95%20%D7%A4%D7%A0%D7%99%D7%A0%D7%94%20%D7%95%D7%99%D7%A2%D7%A7%D7%95%D7%91.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=bdc7bcee94979a8f63bc6234ddad96d6ea63184d84d00af9af0a473b19f6e1ea"
+                }
+            ]
+        },
+        {
+            "id": "1783179717",
+            "name": "תלוש 12  יארין",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2025-01-19T14:10:08.853Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-20T10:08:14.808Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/92037344/%D7%AA%D7%9C%D7%95%D7%A9%20%D7%90%D7%9C%D7%95%D7%9C%20%D7%99%D7%90%D7%A8%D7%99%D7%9F%20%D7%97%D7%95%D7%93%D7%A9%2012.pdf",
+                    "value": "{\"files\":[{\"name\":\"תלוש אלול יארין חודש 12.pdf\",\"assetId\":92037344,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1737365754024,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2025-01-20",
+                    "value": "{\"date\":\"2025-01-20\",\"changed_at\":\"2025-01-20T10:08:16.331Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1783179717",
+                    "value": "{\"item_id\":\"1783179717\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "תלוש אלול יארין חודש 12.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/92037344/%D7%AA%D7%9C%D7%95%D7%A9%20%D7%90%D7%9C%D7%95%D7%9C%20%D7%99%D7%90%D7%A8%D7%99%D7%9F%20%D7%97%D7%95%D7%93%D7%A9%2012.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=9f1840ae453b77a44b8a2095822a35cfcae4b8a8267563a8141dc685f570be32"
+                }
+            ]
+        },
+        {
+            "id": "1783179733",
+            "name": "תנועות יארין",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2025-01-19T14:10:10.380Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-20T10:08:16.350Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/92050669/%D7%A9%D7%9C%D7%95%D7%A9%D7%94%20%D7%97%D7%95%D7%93%D7%A9%D7%99%D7%9D%20%D7%99%D7%90%D7%A8%D7%99%D7%9F.pdf",
+                    "value": "{\"files\":[{\"name\":\"שלושה חודשים יארין.pdf\",\"assetId\":92050669,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1737367749298,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2025-01-20",
+                    "value": "{\"date\":\"2025-01-20\",\"changed_at\":\"2025-01-20T10:08:17.664Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1783179733",
+                    "value": "{\"item_id\":\"1783179733\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "שלושה חודשים יארין.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/92050669/%D7%A9%D7%9C%D7%95%D7%A9%D7%94%20%D7%97%D7%95%D7%93%D7%A9%D7%99%D7%9D%20%D7%99%D7%90%D7%A8%D7%99%D7%9F.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c3359e03c01126cea8de6c8044420bc2f894607abf2350166dfdd945d4b41488"
+                }
+            ]
+        }
+    ]
+}

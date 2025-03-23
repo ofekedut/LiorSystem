@@ -1,0 +1,63 @@
+{
+    "id": "1720654375",
+    "name": "הזנת החומר במערכת",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "Lior Arbiv",
+            "value": "{\"changed_at\":\"2024-11-17T13:03:55.254Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-22T17:55:28.049Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-22",
+            "value": "{\"date\":\"2024-12-22\",\"changed_at\":\"2024-12-22T17:55:29.778Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720654375",
+            "value": "{\"item_id\":\"1720654375\"}"
+        }
+    ],
+    "assets": []
+}

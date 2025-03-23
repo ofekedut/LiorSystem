@@ -1,0 +1,68 @@
+{
+    "id": "1720653042",
+    "name": "טאבו נכס קיים",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-22T16:15:54.458Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384095/%D7%A0%D7%A1%D7%97%20(1).pdf",
+            "value": "{\"files\":[{\"name\":\"נסח (1).pdf\",\"assetId\":82384095,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1729613679392,\"createdBy\":\"67199198\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-10-22",
+            "value": "{\"date\":\"2024-10-22\",\"changed_at\":\"2024-10-22T16:16:02.405Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653042",
+            "value": "{\"item_id\":\"1720653042\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "נסח (1).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384095/%D7%A0%D7%A1%D7%97%20%281%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=ef9af45bdb518291ad35a982c004fe48f2864df43cdacaa39a9c01b90c73ba5f"
+        }
+    ]
+}

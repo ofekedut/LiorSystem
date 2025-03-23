@@ -1,0 +1,76 @@
+{
+    "id": "1729600548",
+    "name": "אישור ניהול + פירוט הלוואות + תנועות טפחות",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-04T09:56:34.541Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-11T13:41:56.804Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/85561422/CamScanner%2012-11-2024%2015.39.41.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/85561420/CamScanner%2012-11-2024%2015.40.10.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/85561419/CamScanner%2012-11-2024%2015.40.42.pdf",
+            "value": "{\"files\":[{\"name\":\"CamScanner 12-11-2024 15.39.41.pdf\",\"assetId\":85561422,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733924513848,\"createdBy\":\"68720131\"},{\"name\":\"CamScanner 12-11-2024 15.40.10.pdf\",\"assetId\":85561420,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733924513842,\"createdBy\":\"68720131\"},{\"name\":\"CamScanner 12-11-2024 15.40.42.pdf\",\"assetId\":85561419,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733924513835,\"createdBy\":\"68720131\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-11",
+            "value": "{\"date\":\"2024-12-11\",\"changed_at\":\"2024-12-11T13:41:58.855Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1729600548",
+            "value": "{\"item_id\":\"1729600548\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "CamScanner 12-11-2024 15.40.42.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/85561419/CamScanner%2012-11-2024%2015.40.42.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=0faa3f2e39d22b14a2c8dab4306ef72da580f845cd78eb07f4b932135b2a2764"
+        },
+        {
+            "name": "CamScanner 12-11-2024 15.40.10.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/85561420/CamScanner%2012-11-2024%2015.40.10.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c512517a8852ec1e2fe65bb6d2982b8cf3bb93398702c423f579edb64562438b"
+        },
+        {
+            "name": "CamScanner 12-11-2024 15.39.41.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/85561422/CamScanner%2012-11-2024%2015.39.41.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=2f279b05293eee53f81e69132ac4d9b7e76b254e80b4ad12b87c5f803079c506"
+        }
+    ]
+}

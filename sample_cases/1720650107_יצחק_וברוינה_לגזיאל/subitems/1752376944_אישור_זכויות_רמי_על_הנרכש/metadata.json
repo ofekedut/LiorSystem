@@ -1,0 +1,68 @@
+{
+    "id": "1752376944",
+    "name": "אישור זכויות רמי (על הנרכש)",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-22T09:14:47.623Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקוע",
+            "value": "{\"index\":0,\"post_id\":null,\"changed_at\":\"2024-12-22T12:43:15.609Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87592580/image.png",
+            "value": "{\"files\":[{\"name\":\"image.png\",\"assetId\":87592580,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1734871398630,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1752376944",
+            "value": "{\"item_id\":\"1752376944\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "image.png",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87592580/image.png?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=bdb855097baf873e515cc954c90f1de6febe01dc20635cb2265ec88dfe8bd04a"
+        }
+    ]
+}

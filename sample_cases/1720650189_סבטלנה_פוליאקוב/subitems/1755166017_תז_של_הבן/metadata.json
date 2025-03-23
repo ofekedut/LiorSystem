@@ -1,0 +1,72 @@
+{
+    "id": "1755166017",
+    "name": "תז של הבן",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-26T13:03:15.677Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-29T13:39:47.179Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/88185428/WhatsApp%20Image%202024-12-29%20at%2015.38.14%20(1).jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/88185430/WhatsApp%20Image%202024-12-29%20at%2015.38.14.jpeg",
+            "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-12-29 at 15.38.14 (1).jpeg\",\"assetId\":88185428,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1735479585112,\"createdBy\":\"68720131\"},{\"name\":\"WhatsApp Image 2024-12-29 at 15.38.14.jpeg\",\"assetId\":88185430,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1735479585117,\"createdBy\":\"68720131\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-29",
+            "value": "{\"date\":\"2024-12-29\",\"changed_at\":\"2024-12-29T13:39:49.699Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1755166017",
+            "value": "{\"item_id\":\"1755166017\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "WhatsApp Image 2024-12-29 at 15.38.14 (1).jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/88185428/WhatsApp%20Image%202024-12-29%20at%2015.38.14%20%281%29.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=0d87d95c678998846d9d968eeae4cf3a8732dc5a1d6699e4ade6674f7a79c8c1"
+        },
+        {
+            "name": "WhatsApp Image 2024-12-29 at 15.38.14.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/88185430/WhatsApp%20Image%202024-12-29%20at%2015.38.14.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=b63fbb99c3a9d7519eca4c8fa28b6f9db41a60ed3493511bfb5674825c6a07b2"
+        }
+    ]
+}

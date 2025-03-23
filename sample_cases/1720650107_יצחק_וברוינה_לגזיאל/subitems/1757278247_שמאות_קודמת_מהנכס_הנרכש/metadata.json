@@ -1,0 +1,76 @@
+{
+    "id": "1757278247",
+    "name": "שמאות קודמת מהנכס הנרכש",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-30T11:32:45.375Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-02T08:24:07.935Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/88470426/%D7%A9%D7%9E%D7%90%D7%95%D7%AA%20%D7%99%D7%A6%D7%97%D7%A7.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/88533382/%D7%A9%D7%9E%D7%90%D7%95%D7%AA%20%D7%A7%D7%95%D7%93%D7%9E%D7%AA%20%D7%99%D7%A6%D7%97%D7%A7.zip, https://baroffice11s-team.monday.com/protected_static/26576015/resources/88533489/%D7%A9%D7%9E%D7%90%D7%95%D7%AA%20%D7%A7%D7%95%D7%93%D7%9E%D7%AA%20%D7%99%D7%A6%D7%97%D7%A7.pdf",
+            "value": "{\"files\":[{\"name\":\"שמאות יצחק.jpeg\",\"assetId\":88470426,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1735721006162,\"createdBy\":\"68720225\"},{\"name\":\"שמאות קודמת יצחק.zip\",\"assetId\":88533382,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735806114575,\"createdBy\":\"68720225\"},{\"name\":\"שמאות קודמת יצחק.pdf\",\"assetId\":88533489,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735806174642,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2025-01-02",
+            "value": "{\"date\":\"2025-01-02\",\"changed_at\":\"2025-01-02T08:24:08.296Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1757278247",
+            "value": "{\"item_id\":\"1757278247\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "שמאות יצחק.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/88470426/%D7%A9%D7%9E%D7%90%D7%95%D7%AA%20%D7%99%D7%A6%D7%97%D7%A7.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c2ba959f6ab4ddc9d8dd8426de12cb0d8b2fe404fb9ed7ec868150cc0d52f2de"
+        },
+        {
+            "name": "שמאות קודמת יצחק.zip",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/88533382/%D7%A9%D7%9E%D7%90%D7%95%D7%AA%20%D7%A7%D7%95%D7%93%D7%9E%D7%AA%20%D7%99%D7%A6%D7%97%D7%A7.zip?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=bc042da95ca2baefd24d60994c9196061ef632a07308a21be4621dee458178d2"
+        },
+        {
+            "name": "שמאות קודמת יצחק.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/88533489/%D7%A9%D7%9E%D7%90%D7%95%D7%AA%20%D7%A7%D7%95%D7%93%D7%9E%D7%AA%20%D7%99%D7%A6%D7%97%D7%A7.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=548b8944bb9aff7e72f70193232e4d7e7e942cbec77cfcff787cf991ba8ece62"
+        }
+    ]
+}

@@ -1,0 +1,68 @@
+{
+    "id": "1729702909",
+    "name": "הכנסות מגדל חודשים 08-10",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-04T09:56:36.313Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-05T09:08:55.918Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/84096103/combinepdf%20-%202024-12-05T110800.980.pdf",
+            "value": "{\"files\":[{\"name\":\"combinepdf - 2024-12-05T110800.980.pdf\",\"assetId\":84096103,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733389699096,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-05",
+            "value": "{\"date\":\"2024-12-05\",\"changed_at\":\"2024-12-05T09:08:57.419Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1729702909",
+            "value": "{\"item_id\":\"1729702909\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "combinepdf - 2024-12-05T110800.980.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/84096103/combinepdf%20-%202024-12-05T110800.980.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=91ddba77cd965bc9ebb222dd6b455e3110fad238f6d2525449f0bd75cfc6389a"
+        }
+    ]
+}

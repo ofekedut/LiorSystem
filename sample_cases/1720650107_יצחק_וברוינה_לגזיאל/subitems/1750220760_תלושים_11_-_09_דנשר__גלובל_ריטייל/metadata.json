@@ -1,0 +1,72 @@
+{
+    "id": "1750220760",
+    "name": "תלושים 11 - 09 דנשר + גלובל ריטייל",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-19T14:37:37.787Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-22T12:31:11.181Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "2024-12-18 - 2024-12-22",
+            "value": "{\"to\":\"2024-12-22\",\"from\":\"2024-12-18\",\"changed_at\":\"2024-12-22T07:56:11.325Z\"}"
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87589267/%D7%AA%D7%9C%D7%95%D7%A9%D7%99%20%D7%A9%D7%9B%D7%A8%209-11%20%D7%92%D7%9C%D7%95%D7%91%D7%9C%20%D7%91%D7%A8%D7%95%D7%A0%D7%99%D7%94.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/87591651/%D7%AA%D7%9C%D7%95%D7%A9%D7%99%20%D7%A9%D7%9B%D7%A8%20%D7%93%D7%A0%D7%A9%D7%A8%20%D7%9C%D7%92%D7%96%D7%99%D7%90%D7%9C%20%D7%99%D7%A6%D7%97%D7%A7.pdf",
+            "value": "{\"files\":[{\"name\":\"תלושי שכר 9-11 גלובל ברוניה.pdf\",\"assetId\":87589267,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734868140084,\"createdBy\":\"68720225\"},{\"name\":\"תלושי שכר דנשר לגזיאל יצחק.pdf\",\"assetId\":87591651,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734870667714,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-22",
+            "value": "{\"date\":\"2024-12-22\",\"changed_at\":\"2024-12-22T12:31:12.579Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1750220760",
+            "value": "{\"item_id\":\"1750220760\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "תלושי שכר 9-11 גלובל ברוניה.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87589267/%D7%AA%D7%9C%D7%95%D7%A9%D7%99%20%D7%A9%D7%9B%D7%A8%209-11%20%D7%92%D7%9C%D7%95%D7%91%D7%9C%20%D7%91%D7%A8%D7%95%D7%A0%D7%99%D7%94.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=f7cdac40b619b7aa23a935b1ed0b6f9178b66854fdcc3ad065f9c4d4a50f9a95"
+        },
+        {
+            "name": "תלושי שכר דנשר לגזיאל יצחק.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87591651/%D7%AA%D7%9C%D7%95%D7%A9%D7%99%20%D7%A9%D7%9B%D7%A8%20%D7%93%D7%A0%D7%A9%D7%A8%20%D7%9C%D7%92%D7%96%D7%99%D7%90%D7%9C%20%D7%99%D7%A6%D7%97%D7%A7.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c9a9b3386054ee5823bee1d68fb015476d4955e99ddb7c8ad380671d5826f343"
+        }
+    ]
+}

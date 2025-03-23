@@ -1,0 +1,63 @@
+{
+    "id": "1783165219",
+    "name": "הסכם עבודה מול הבחור של הנכיון",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "Lior Arbiv",
+            "value": "{\"changed_at\":\"2025-01-19T14:05:30.482Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-20T08:28:38.205Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2025-01-20",
+            "value": "{\"date\":\"2025-01-20\",\"changed_at\":\"2025-01-20T08:28:39.930Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1783165219",
+            "value": "{\"item_id\":\"1783165219\"}"
+        }
+    ],
+    "assets": []
+}

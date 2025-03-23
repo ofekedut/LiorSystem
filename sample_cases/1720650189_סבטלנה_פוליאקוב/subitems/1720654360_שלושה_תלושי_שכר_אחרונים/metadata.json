@@ -1,0 +1,68 @@
+{
+    "id": "1720654360",
+    "name": "שלושה תלושי שכר אחרונים",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-10-31T10:00:16.998Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-11T14:27:10.048Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "2024-12-04 - 2024-12-06",
+            "value": "{\"to\":\"2024-12-06\",\"from\":\"2024-12-04\",\"changed_at\":\"2024-12-04T11:23:14.324Z\"}"
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/85577816/CamScanner%2012-11-2024%2016.26.30.pdf",
+            "value": "{\"files\":[{\"name\":\"CamScanner 12-11-2024 16.26.30.pdf\",\"assetId\":85577816,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733927228098,\"createdBy\":\"68720131\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-11",
+            "value": "{\"date\":\"2024-12-11\",\"changed_at\":\"2024-12-11T14:27:11.535Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720654360",
+            "value": "{\"item_id\":\"1720654360\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "CamScanner 12-11-2024 16.26.30.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/85577816/CamScanner%2012-11-2024%2016.26.30.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=676cf3e0dccbef361158695927794d941e84460b66f5fcf53ef7c4517b2d3e45"
+        }
+    ]
+}

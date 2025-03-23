@@ -1,0 +1,88 @@
+{
+    "id": "1720654362",
+    "name": "אישור ניהול + תנועות + ריכוז יתרות של שתי חשבונות פועלים",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-10-31T10:00:25.438Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-11T14:33:49.441Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/85578304/CamScanner%2012-11-2024%2016.28.06.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/85578996/CamScanner%2012-11-2024%2016.29.15.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/85579159/CamScanner%2012-11-2024%2016.31.07.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/85579383/CamScanner%2012-11-2024%2016.31.54.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/85579595/CamScanner%2012-11-2024%2016.32.30.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/85579800/CamScanner%2012-11-2024%2016.33.22.pdf",
+            "value": "{\"files\":[{\"name\":\"CamScanner 12-11-2024 16.28.06.pdf\",\"assetId\":85578304,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733927326538,\"createdBy\":\"68720131\"},{\"name\":\"CamScanner 12-11-2024 16.29.15.pdf\",\"assetId\":85578996,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733927459962,\"createdBy\":\"68720131\"},{\"name\":\"CamScanner 12-11-2024 16.31.07.pdf\",\"assetId\":85579159,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733927493076,\"createdBy\":\"68720131\"},{\"name\":\"CamScanner 12-11-2024 16.31.54.pdf\",\"assetId\":85579383,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733927536147,\"createdBy\":\"68720131\"},{\"name\":\"CamScanner 12-11-2024 16.32.30.pdf\",\"assetId\":85579595,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733927591832,\"createdBy\":\"68720131\"},{\"name\":\"CamScanner 12-11-2024 16.33.22.pdf\",\"assetId\":85579800,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733927622561,\"createdBy\":\"68720131\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-11",
+            "value": "{\"date\":\"2024-12-11\",\"changed_at\":\"2024-12-11T14:33:50.839Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720654362",
+            "value": "{\"item_id\":\"1720654362\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "CamScanner 12-11-2024 16.28.06.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/85578304/CamScanner%2012-11-2024%2016.28.06.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=0094a798d3c4b34f4be48e7f1beb9b8eb44d46adf28362a56760daaabb13bd60"
+        },
+        {
+            "name": "CamScanner 12-11-2024 16.29.15.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/85578996/CamScanner%2012-11-2024%2016.29.15.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=eb11c1d16478cf1471a856b10eafd849b9d60ebc24cdff45973e758b758b5444"
+        },
+        {
+            "name": "CamScanner 12-11-2024 16.31.07.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/85579159/CamScanner%2012-11-2024%2016.31.07.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=8e6b37c8be943ec400cf7488cccee2152d6908e5a5166dfa0c6fed8a0dd940e3"
+        },
+        {
+            "name": "CamScanner 12-11-2024 16.31.54.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/85579383/CamScanner%2012-11-2024%2016.31.54.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=869a8bc2d1f5776cfc01d96db60ddc36034e779a23dd9c8ce734087968b12411"
+        },
+        {
+            "name": "CamScanner 12-11-2024 16.32.30.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/85579595/CamScanner%2012-11-2024%2016.32.30.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=af0004105d5fd746230914a6c222f12127d1e266ed743d822362bc9e6aeba391"
+        },
+        {
+            "name": "CamScanner 12-11-2024 16.33.22.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/85579800/CamScanner%2012-11-2024%2016.33.22.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5242526a3d20074ab73d29110e8dd98b029e26a26806e39171c6d769b1645150"
+        }
+    ]
+}

@@ -1,0 +1,68 @@
+{
+    "id": "1720653516",
+    "name": "היתר בניה",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-11-05T09:54:41.281Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-28T09:00:15.492Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82723099/%D7%94%D7%99%D7%AA%D7%A8%20%D7%91%D7%A0%D7%99%D7%99%D7%94%20%D7%99%D7%A6%D7%97%D7%A7.pdf",
+            "value": "{\"files\":[{\"name\":\"היתר בנייה יצחק.pdf\",\"assetId\":82723099,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732784407530,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-11-28",
+            "value": "{\"date\":\"2024-11-28\",\"changed_at\":\"2024-11-28T09:00:18.138Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653516",
+            "value": "{\"item_id\":\"1720653516\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "היתר בנייה יצחק.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82723099/%D7%94%D7%99%D7%AA%D7%A8%20%D7%91%D7%A0%D7%99%D7%99%D7%94%20%D7%99%D7%A6%D7%97%D7%A7.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=95600ce66f0586f1f63c9644dad38f6083cd56f32a34add5b5ed185e7396047d"
+        }
+    ]
+}

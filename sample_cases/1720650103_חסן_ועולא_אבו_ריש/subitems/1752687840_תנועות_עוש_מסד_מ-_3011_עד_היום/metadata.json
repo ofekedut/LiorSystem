@@ -1,0 +1,68 @@
+{
+    "id": "1752687840",
+    "name": "תנועות עוש מסד מ- 30/11 עד היום",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-22T23:09:59.014Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-25T08:23:43.585Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87915988/%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%91%D7%97%D7%A9%D7%91%D7%95%D7%9F%20%D7%9E%D7%A1%D7%93%20%D7%9E%2027-11%20%D7%95%D7%A2%D7%93%20%D7%94%D7%99%D7%95%D7%9D%20%D7%97%D7%A1%D7%9F.pdf",
+            "value": "{\"files\":[{\"name\":\"תנועות בחשבון מסד מ 27-11 ועד היום חסן.pdf\",\"assetId\":87915988,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735115009802,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-25",
+            "value": "{\"date\":\"2024-12-25\",\"changed_at\":\"2024-12-25T08:23:45.386Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1752687840",
+            "value": "{\"item_id\":\"1752687840\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "תנועות בחשבון מסד מ 27-11 ועד היום חסן.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87915988/%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%91%D7%97%D7%A9%D7%91%D7%95%D7%9F%20%D7%9E%D7%A1%D7%93%20%D7%9E%2027-11%20%D7%95%D7%A2%D7%93%20%D7%94%D7%99%D7%95%D7%9D%20%D7%97%D7%A1%D7%9F.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a22b5d360dac911fef871ca71279b31c499513d6d9aeda7e9436b6e32304014d"
+        }
+    ]
+}

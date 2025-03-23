@@ -1,0 +1,76 @@
+{
+    "id": "1721069277",
+    "name": "נוספים",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-01T12:17:54.343Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-01T12:17:41.868Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82450744/WhatsApp%20Image%202024-11-26%20at%2014.54.14%20(1).jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82450856/WhatsApp%20Image%202024-11-26%20at%2014.54.14%20(2).jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82723933/%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D%20%D7%99%D7%A6%D7%97%D7%A7.pdf",
+            "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-11-26 at 14.54.14 (1).jpeg\",\"assetId\":82450744,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1732700195408,\"createdBy\":\"68720225\"},{\"name\":\"WhatsApp Image 2024-11-26 at 14.54.14 (2).jpeg\",\"assetId\":82450856,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1732700217321,\"createdBy\":\"68720225\"},{\"name\":\"נוספים יצחק.pdf\",\"assetId\":82723933,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732784549280,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-01",
+            "value": "{\"date\":\"2024-12-01\",\"changed_at\":\"2024-12-01T12:17:43.927Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1721069277",
+            "value": "{\"item_id\":\"1721069277\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "WhatsApp Image 2024-11-26 at 14.54.14 (1).jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82450744/WhatsApp%20Image%202024-11-26%20at%2014.54.14%20%281%29.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=178a37242804a6f58107946feae524055494eb7912f25ff210bea3c964468e42"
+        },
+        {
+            "name": "WhatsApp Image 2024-11-26 at 14.54.14 (2).jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82450856/WhatsApp%20Image%202024-11-26%20at%2014.54.14%20%282%29.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=38c4722efa59122dfcbba5248862ac40902a25999cd39e9df67cb611801826d7"
+        },
+        {
+            "name": "נוספים יצחק.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82723933/%D7%A0%D7%95%D7%A1%D7%A4%D7%99%D7%9D%20%D7%99%D7%A6%D7%97%D7%A7.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4fa1fc895f393a75e46025217db87dd6b5497c28f3a92882691423d3eb93d4be"
+        }
+    ]
+}

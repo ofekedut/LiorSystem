@@ -1,0 +1,72 @@
+{
+    "id": "1755057187",
+    "name": "אישור ניהול + תנועות(פועלים מיכאל)",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-26T11:38:42.292Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-29T07:53:38.903Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87993307/Account_management_approval_HE_26.12.2024_13.21.37%20(3).pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/88159636/%D7%A9%D7%9C%D7%95%D7%A9%D7%94%20%D7%97%D7%95%D7%93%D7%A9%D7%99%20%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%A2%D7%95%D7%A9%20%D7%9E%D7%99%D7%9B%D7%90%D7%9C%D7%99.pdf",
+            "value": "{\"files\":[{\"name\":\"Account_management_approval_HE_26.12.2024_13.21.37 (3).pdf\",\"assetId\":87993307,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735215328956,\"createdBy\":\"68720225\"},{\"name\":\"שלושה חודשי תנועות עוש מיכאלי.pdf\",\"assetId\":88159636,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735458829700,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-29",
+            "value": "{\"date\":\"2024-12-29\",\"changed_at\":\"2024-12-29T07:53:40.453Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1755057187",
+            "value": "{\"item_id\":\"1755057187\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "Account_management_approval_HE_26.12.2024_13.21.37 (3).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87993307/Account_management_approval_HE_26.12.2024_13.21.37%20%283%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=cc8af3441656e92ccb5126ec2acc359152c5e402f61aeb05cd8b9e620d3fdd6a"
+        },
+        {
+            "name": "שלושה חודשי תנועות עוש מיכאלי.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/88159636/%D7%A9%D7%9C%D7%95%D7%A9%D7%94%20%D7%97%D7%95%D7%93%D7%A9%D7%99%20%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%A2%D7%95%D7%A9%20%D7%9E%D7%99%D7%9B%D7%90%D7%9C%D7%99.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c14afccf491e3c1cffdea48f69efe0f31fc34075b672bf14b1328b4eb2ffad43"
+        }
+    ]
+}

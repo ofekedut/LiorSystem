@@ -1,0 +1,76 @@
+{
+    "id": "1752635504",
+    "name": "אישור ניהול חשבון פועלים 469",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-23T08:16:51.034Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "בהמתנה",
+            "value": "{\"index\":2,\"post_id\":null,\"changed_at\":\"2024-12-29T08:25:48.605Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/88161606/%D7%A4%D7%99%D7%A8%D7%95%D7%98%20%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20469.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/88161608/%D7%A4%D7%99%D7%A8%D7%95%D7%98%20%D7%94%D7%9C%D7%95%D7%95%D7%90%D7%95%D7%AA%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20469.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/88161618/%D7%A9%D7%99%D7%A2%D7%A8%D7%95%D7%9A%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%99%D7%AA%D7%A8%D7%95%D7%AA%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20469.pdf",
+            "value": "{\"files\":[{\"name\":\"פירוט תנועות פועלים 469.pdf\",\"assetId\":88161606,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735460732599,\"createdBy\":\"68720225\"},{\"name\":\"פירוט הלוואות פועלים 469.pdf\",\"assetId\":88161608,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735460737558,\"createdBy\":\"68720225\"},{\"name\":\"שיערוך ריכוז יתרות פועלים 469.pdf\",\"assetId\":88161618,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735460742985,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-26",
+            "value": "{\"date\":\"2024-12-26\",\"changed_at\":\"2024-12-26T12:13:37.636Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1752635504",
+            "value": "{\"item_id\":\"1752635504\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "פירוט תנועות פועלים 469.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/88161606/%D7%A4%D7%99%D7%A8%D7%95%D7%98%20%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20469.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=0a5c32bf7bf6c488afad043aa4cccdd554b492eb3514e885472b517fa27cc40d"
+        },
+        {
+            "name": "פירוט הלוואות פועלים 469.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/88161608/%D7%A4%D7%99%D7%A8%D7%95%D7%98%20%D7%94%D7%9C%D7%95%D7%95%D7%90%D7%95%D7%AA%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20469.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5b5ca8ee32180c1128b7411d25ec7267dd5def4600e77ffdde764b7571953448"
+        },
+        {
+            "name": "שיערוך ריכוז יתרות פועלים 469.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/88161618/%D7%A9%D7%99%D7%A2%D7%A8%D7%95%D7%9A%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%99%D7%AA%D7%A8%D7%95%D7%AA%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20469.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=51d69d18774dc7b4f7cf38ec713995a73b30e21f0fc14862ada4d7273bc8da59"
+        }
+    ]
+}

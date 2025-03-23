@@ -1,0 +1,68 @@
+{
+    "id": "1752688032",
+    "name": "עמוד 2 נסח טאבו",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-22T23:10:02.336Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-24T10:26:59.717Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87854417/%D7%A0%D7%A1%D7%97%20%D7%98%D7%90%D7%91%D7%95%20(4).pdf",
+            "value": "{\"files\":[{\"name\":\"נסח טאבו (4).pdf\",\"assetId\":87854417,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735036016681,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-24",
+            "value": "{\"date\":\"2024-12-24\",\"changed_at\":\"2024-12-24T10:27:01.427Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1752688032",
+            "value": "{\"item_id\":\"1752688032\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "נסח טאבו (4).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87854417/%D7%A0%D7%A1%D7%97%20%D7%98%D7%90%D7%91%D7%95%20%284%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=11bfdaa6eb86e1c334180d1ba6370fc83b8f3ff2de5516505214d2e6b3560ba8"
+        }
+    ]
+}

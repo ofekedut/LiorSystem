@@ -1,0 +1,80 @@
+{
+    "id": "1720653403",
+    "name": "אישור ניהול + תנועות עוש + פירוט הלוואות בנק טפחות(יעקב)",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "בר",
+            "value": "{\"changed_at\":\"2024-10-30T12:11:54.044Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-31T12:43:54.783Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384207/WhatsApp%20Image%202024-10-31%20at%2013.14.02.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384208/WhatsApp%20Image%202024-10-31%20at%2013.19.28.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384210/WhatsApp%20Image%202024-10-31%20at%2014.33.18.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384211/WhatsApp%20Image%202024-10-31%20at%2014.33.06.jpeg",
+            "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-31 at 13.14.02.jpeg\",\"assetId\":82384207,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375427254,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 13.19.28.jpeg\",\"assetId\":82384208,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375654629,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 14.33.18.jpeg\",\"assetId\":82384210,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730378633222,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-31 at 14.33.06.jpeg\",\"assetId\":82384211,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730378633227,\"createdBy\":\"67199198\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-10-31",
+            "value": "{\"date\":\"2024-10-31\",\"changed_at\":\"2024-10-31T12:44:11.416Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653403",
+            "value": "{\"item_id\":\"1720653403\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "WhatsApp Image 2024-10-31 at 13.14.02.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384207/WhatsApp%20Image%202024-10-31%20at%2013.14.02.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=9435050b8a63c0589517bc1cef9dae43ca0f1b48834f12e03f18cc986ae12f11"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-31 at 13.19.28.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384208/WhatsApp%20Image%202024-10-31%20at%2013.19.28.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a502ab38b283625ad8a46afa7b9bfe298da2fcec9eec6955e5e1d656907f572c"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-31 at 14.33.18.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384210/WhatsApp%20Image%202024-10-31%20at%2014.33.18.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=17300b7b31159ec822458c9e4bd2496270645240b22c6e9ae03ef1aef89ea71d"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-31 at 14.33.06.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384211/WhatsApp%20Image%202024-10-31%20at%2014.33.06.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=b28a96c4ee9ddbe627aca413a32b3efee3080da8b469ec13b9d70271fc628365"
+        }
+    ]
+}

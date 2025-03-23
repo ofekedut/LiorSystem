@@ -1,0 +1,108 @@
+{
+    "id": "1720653132",
+    "name": "הסכם רכישה עמידר",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-27T16:01:55.139Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384116/WhatsApp%20Image%202024-10-22%20at%2014.10.01.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384117/WhatsApp%20Image%202024-10-22%20at%2014.10.11.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384118/WhatsApp%20Image%202024-10-22%20at%2014.09.53.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384119/WhatsApp%20Image%202024-10-22%20at%2014.09.46.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384120/WhatsApp%20Image%202024-10-22%20at%2014.09.35.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384121/WhatsApp%20Image%202024-10-22%20at%2014.09.25.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384122/WhatsApp%20Image%202024-10-22%20at%2014.09.12.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384123/WhatsApp%20Image%202024-10-22%20at%2014.09.04.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384124/WhatsApp%20Image%202024-10-22%20at%2014.08.54.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384125/WhatsApp%20Image%202024-10-22%20at%2014.08.43.jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384126/WhatsApp%20Image%202024-10-22%20at%2014.02.41.jpeg",
+            "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-22 at 14.10.01.jpeg\",\"assetId\":82384116,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896053,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.10.11.jpeg\",\"assetId\":82384117,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896048,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.09.53.jpeg\",\"assetId\":82384118,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896059,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.09.46.jpeg\",\"assetId\":82384119,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896062,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.09.35.jpeg\",\"assetId\":82384120,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896065,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.09.25.jpeg\",\"assetId\":82384121,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896068,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.09.12.jpeg\",\"assetId\":82384122,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896074,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.09.04.jpeg\",\"assetId\":82384123,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896078,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.08.54.jpeg\",\"assetId\":82384124,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896081,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.08.43.jpeg\",\"assetId\":82384125,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896084,\"createdBy\":\"67199198\"},{\"name\":\"WhatsApp Image 2024-10-22 at 14.02.41.jpeg\",\"assetId\":82384126,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730044896088,\"createdBy\":\"67199198\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-10-27",
+            "value": "{\"date\":\"2024-10-27\",\"changed_at\":\"2024-10-27T16:02:07.658Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653132",
+            "value": "{\"item_id\":\"1720653132\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "WhatsApp Image 2024-10-22 at 14.10.01.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384116/WhatsApp%20Image%202024-10-22%20at%2014.10.01.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=28d2b108f9856927a34c05ec6c2edf057b955f731bf030a279c17e5c17d47bba"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-22 at 14.10.11.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384117/WhatsApp%20Image%202024-10-22%20at%2014.10.11.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=3289f9e5ce2cf73bb1b34b74c127744d687d828ce9bf7544447da8add5fa28f9"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-22 at 14.09.53.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384118/WhatsApp%20Image%202024-10-22%20at%2014.09.53.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=2ecbb69683faa3f1d770893631e538b5403a55632b53a3f966da348f123e2d7a"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-22 at 14.09.46.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384119/WhatsApp%20Image%202024-10-22%20at%2014.09.46.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6ea4c5d0434c94fc967bd2184b713b6efe10a17c0d8828bf991514c349443b2b"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-22 at 14.09.35.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384120/WhatsApp%20Image%202024-10-22%20at%2014.09.35.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a0c89252245d8dfd16e738b6bf7e8b162e85582ddd0a362a35ed70d3ea217ff1"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-22 at 14.09.25.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384121/WhatsApp%20Image%202024-10-22%20at%2014.09.25.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=f10d1c9fc59fb501d59d5bac1611ee126df728c32450b643d132d3fe6389a453"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-22 at 14.09.12.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384122/WhatsApp%20Image%202024-10-22%20at%2014.09.12.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=e3e0ba14620d54fc27daabe5a89e8323296508dd789c0bfbbf4565706ae924ed"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-22 at 14.09.04.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384123/WhatsApp%20Image%202024-10-22%20at%2014.09.04.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=dc9974e2a078ce9c78dea4703575444642ec78bd93e432bba00184623f9a9e7f"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-22 at 14.08.54.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384124/WhatsApp%20Image%202024-10-22%20at%2014.08.54.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=55fff08f06a3ae1c509cbfa2a1fb19bf2e166aa6a8db7e74c799a09d8db6bbc0"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-22 at 14.08.43.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384125/WhatsApp%20Image%202024-10-22%20at%2014.08.43.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c6ddaaf0b602931bd82d12097e204e7416a24239c7ea37b838333184e01ab29f"
+        },
+        {
+            "name": "WhatsApp Image 2024-10-22 at 14.02.41.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384126/WhatsApp%20Image%202024-10-22%20at%2014.02.41.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=2ff4efb3f39d4158d4a9cf13599861982cade422dc6a5b9548ca58072724a7b8"
+        }
+    ]
+}

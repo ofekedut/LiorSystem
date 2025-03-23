@@ -1,0 +1,68 @@
+{
+    "id": "1756439042",
+    "name": "נסח טאבו לאחר הסרת הגרושה",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2025-01-01T08:49:23.363Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-08T13:01:44.586Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/89666064/%D7%A0%D7%A1%D7%97.pdf",
+            "value": "{\"files\":[{\"name\":\"נסח.pdf\",\"assetId\":89666064,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736341216979,\"createdBy\":\"69012971\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2025-01-08",
+            "value": "{\"date\":\"2025-01-08\",\"changed_at\":\"2025-01-08T13:01:46.256Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1756439042",
+            "value": "{\"item_id\":\"1756439042\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "נסח.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/89666064/%D7%A0%D7%A1%D7%97.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d44830bd3b9ca12ccd597644a7a93b66cff42fd8039f3f1343c2e3a91a9b96b7"
+        }
+    ]
+}

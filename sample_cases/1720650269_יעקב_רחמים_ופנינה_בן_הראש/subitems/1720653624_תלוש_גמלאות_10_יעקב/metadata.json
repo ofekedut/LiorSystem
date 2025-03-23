@@ -1,0 +1,68 @@
+{
+    "id": "1720653624",
+    "name": "תלוש גמלאות 10 יעקב",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-11-26T08:17:13.257Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-26T12:35:25.212Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384423/WhatsApp%20Image%202024-11-26%20at%2014.05.06.jpeg",
+            "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-11-26 at 14.05.06.jpeg\",\"assetId\":82384423,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1732623147949,\"createdBy\":\"68003642\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-11-26",
+            "value": "{\"date\":\"2024-11-26\",\"changed_at\":\"2024-11-26T12:12:49.070Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653624",
+            "value": "{\"item_id\":\"1720653624\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "WhatsApp Image 2024-11-26 at 14.05.06.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384423/WhatsApp%20Image%202024-11-26%20at%2014.05.06.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=f79f09f244ef6711f294019c3a3f51692a0d4e2b8e92f21c648e585d7c8036ec"
+        }
+    ]
+}

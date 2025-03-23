@@ -1,0 +1,72 @@
+{
+    "id": "1720652711",
+    "name": "ת.ז יעב",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "",
+            "value": "{\"changed_at\":\"2024-10-06T16:26:09.921Z\",\"personsAndTeams\":[]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-20T10:48:44.320Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384020/%D7%A1%D7%A4%D7%97(7).jpeg, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384021/%D7%AA%D7%A2%D7%95%D7%93%D7%AA%20%D7%96%D7%94%D7%95%D7%AA(19).jpeg",
+            "value": "{\"files\":[{\"name\":\"ספח(7).jpeg\",\"assetId\":82384020,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1728819618597,\"createdBy\":\"67199198\"},{\"name\":\"תעודת זהות(19).jpeg\",\"assetId\":82384021,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1728819618601,\"createdBy\":\"67199198\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-10-13",
+            "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-20T10:48:48.404Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720652711",
+            "value": "{\"item_id\":\"1720652711\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "ספח(7).jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384020/%D7%A1%D7%A4%D7%97%287%29.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=05e5f5eabb72f47ebd6f738c7b5ad19fc7534706816d8a904de1286f586a2d6e"
+        },
+        {
+            "name": "תעודת זהות(19).jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384021/%D7%AA%D7%A2%D7%95%D7%93%D7%AA%20%D7%96%D7%94%D7%95%D7%AA%2819%29.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c360c6c61939e084de852637439b15f9b8acad820f63ef2a351c84bffd57940e"
+        }
+    ]
+}

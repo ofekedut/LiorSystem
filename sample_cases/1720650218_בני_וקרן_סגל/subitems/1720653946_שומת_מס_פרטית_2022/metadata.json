@@ -1,0 +1,72 @@
+{
+    "id": "1720653946",
+    "name": "שומת מס פרטית 2022",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-11-13T07:24:01.100Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-26T08:14:32.290Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384530/%D7%A9%D7%95%D7%9E%D7%AA%20%D7%9E%D7%A1%20%D7%A2%D7%95%D7%A1%D7%A7%202022.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384531/%D7%A9%D7%95%D7%9E%D7%AA%20%D7%9E%D7%A1%202022%20%D7%91%D7%A0%D7%99.pdf",
+            "value": "{\"files\":[{\"name\":\"שומת מס עוסק 2022.pdf\",\"assetId\":82384530,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732006731527,\"createdBy\":\"68003642\"},{\"name\":\"שומת מס 2022 בני.pdf\",\"assetId\":82384531,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732610025797,\"createdBy\":\"68003642\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-11-26",
+            "value": "{\"date\":\"2024-11-26\",\"changed_at\":\"2024-11-26T08:14:32.991Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653946",
+            "value": "{\"item_id\":\"1720653946\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "שומת מס עוסק 2022.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384530/%D7%A9%D7%95%D7%9E%D7%AA%20%D7%9E%D7%A1%20%D7%A2%D7%95%D7%A1%D7%A7%202022.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=993ca46ef4c14afa7860a5347cdcacc37c15e42959a700707574eb0abc646a22"
+        },
+        {
+            "name": "שומת מס 2022 בני.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384531/%D7%A9%D7%95%D7%9E%D7%AA%20%D7%9E%D7%A1%202022%20%D7%91%D7%A0%D7%99.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=888e86fd7d80af8361ddd6ead5badc7021f26c8d0b67d2d00fef713163d730e6"
+        }
+    ]
+}

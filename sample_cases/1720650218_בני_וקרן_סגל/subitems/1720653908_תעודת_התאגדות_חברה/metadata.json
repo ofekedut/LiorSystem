@@ -1,0 +1,68 @@
+{
+    "id": "1720653908",
+    "name": "תעודת התאגדות חברה",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-10-31T10:00:25.438Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-19T08:57:53.326Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384521/%D7%94%D7%AA%D7%90%D7%92%D7%93%D7%95%D7%AA%20%D7%90%D7%A7%D7%A1%D7%9C%D7%A0%D7%A1%20%D7%95%D7%9E%D7%95%D7%A8%D7%A9%D7%94.pdf",
+            "value": "{\"files\":[{\"name\":\"התאגדות אקסלנס ומורשה.pdf\",\"assetId\":82384521,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732006653157,\"createdBy\":\"68003642\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-11-19",
+            "value": "{\"date\":\"2024-11-19\",\"changed_at\":\"2024-11-19T08:57:54.882Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653908",
+            "value": "{\"item_id\":\"1720653908\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "התאגדות אקסלנס ומורשה.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384521/%D7%94%D7%AA%D7%90%D7%92%D7%93%D7%95%D7%AA%20%D7%90%D7%A7%D7%A1%D7%9C%D7%A0%D7%A1%20%D7%95%D7%9E%D7%95%D7%A8%D7%A9%D7%94.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c91db111ac513c5b815a71623fb369917dcb4cbfb2baebdb1a62e268b5da3133"
+        }
+    ]
+}

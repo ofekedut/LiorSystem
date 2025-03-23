@@ -1,0 +1,68 @@
+{
+    "id": "1757277852",
+    "name": "שובר ארנונה",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-30T11:32:43.670Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-01T08:44:17.458Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/89030407/%D7%90%D7%A8%D7%A0%D7%95%D7%A0%D7%94%20%D7%99%D7%A6%D7%97%D7%A7.pdf",
+            "value": "{\"files\":[{\"name\":\"ארנונה יצחק.pdf\",\"assetId\":89030407,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736153718922,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2025-01-01",
+            "value": "{\"date\":\"2025-01-01\",\"changed_at\":\"2025-01-01T08:44:18.482Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1757277852",
+            "value": "{\"item_id\":\"1757277852\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "ארנונה יצחק.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/89030407/%D7%90%D7%A8%D7%A0%D7%95%D7%A0%D7%94%20%D7%99%D7%A6%D7%97%D7%A7.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161539Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=4686592d4b0f9c2baf03ea2f8ede2a9bf2f9a5c3a791c28e38a1cf3d709e54ba"
+        }
+    ]
+}

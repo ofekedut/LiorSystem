@@ -1,0 +1,72 @@
+{
+    "id": "1725574581",
+    "name": "יתרה לסילוק + התנהלות משכנתה טפחות",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-12-01T11:35:24.778Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-12T11:12:29.253Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/85732161/443055800_20241014_00550_00001_00000.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/85744908/POLYAKOVA.SVETLAN.pdf",
+            "value": "{\"files\":[{\"name\":\"443055800_20241014_00550_00001_00000.pdf\",\"assetId\":85732161,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733999763173,\"createdBy\":\"68720131\"},{\"name\":\"POLYAKOVA.SVETLAN.pdf\",\"assetId\":85744908,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734001838356,\"createdBy\":\"68720131\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-12",
+            "value": "{\"date\":\"2024-12-12\",\"changed_at\":\"2024-12-12T11:12:31.364Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1725574581",
+            "value": "{\"item_id\":\"1725574581\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "443055800_20241014_00550_00001_00000.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/85732161/443055800_20241014_00550_00001_00000.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=9bd164c7759c7c35f6d21ca0cbee8296220f28cfa29f5ba4ae1456bf2ce38183"
+        },
+        {
+            "name": "POLYAKOVA.SVETLAN.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/85744908/POLYAKOVA.SVETLAN.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=aeac76165dad058a2027043d8e9a058549acf7bbe23f4e43c34fca3552318ae3"
+        }
+    ]
+}

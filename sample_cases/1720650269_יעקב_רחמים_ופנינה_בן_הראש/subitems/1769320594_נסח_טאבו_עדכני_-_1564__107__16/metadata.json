@@ -1,0 +1,68 @@
+{
+    "id": "1769320594",
+    "name": "נסח טאבו עדכני - 1564 | 107 | 16",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2025-01-09T10:28:23.173Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-12T08:36:40.107Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/90377717/%D7%A0%D7%A1%D7%97%20%D7%98%D7%90%D7%91%D7%95%20%D7%A4%D7%A0%D7%99%D7%A0%D7%94%20%D7%95%D7%99%D7%A2%D7%A7%D7%95%D7%91.pdf",
+            "value": "{\"files\":[{\"name\":\"נסח טאבו פנינה ויעקוב.pdf\",\"assetId\":90377717,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736671016094,\"createdBy\":\"68720225\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2025-01-12",
+            "value": "{\"date\":\"2025-01-12\",\"changed_at\":\"2025-01-12T08:36:42.013Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1769320594",
+            "value": "{\"item_id\":\"1769320594\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "נסח טאבו פנינה ויעקוב.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/90377717/%D7%A0%D7%A1%D7%97%20%D7%98%D7%90%D7%91%D7%95%20%D7%A4%D7%A0%D7%99%D7%A0%D7%94%20%D7%95%D7%99%D7%A2%D7%A7%D7%95%D7%91.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=bdc7bcee94979a8f63bc6234ddad96d6ea63184d84d00af9af0a473b19f6e1ea"
+        }
+    ]
+}

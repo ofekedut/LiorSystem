@@ -1,0 +1,68 @@
+{
+    "id": "1720652700",
+    "name": "צילום גב ת.ז יעקב",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "בר",
+            "value": "{\"changed_at\":\"2024-10-30T12:07:56.907Z\",\"personsAndTeams\":[{\"id\":68720131,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-31T11:51:47.441Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384019/WhatsApp%20Image%202024-10-31%20at%2013.19.38.jpeg",
+            "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-10-31 at 13.19.38.jpeg\",\"assetId\":82384019,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1730375748805,\"createdBy\":\"67199198\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-10-31",
+            "value": "{\"date\":\"2024-10-31\",\"changed_at\":\"2024-10-31T11:52:03.849Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720652700",
+            "value": "{\"item_id\":\"1720652700\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "WhatsApp Image 2024-10-31 at 13.19.38.jpeg",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384019/WhatsApp%20Image%202024-10-31%20at%2013.19.38.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=9535cf3a9fd1c86c0c0b64e2aaf77bb750dd667f3f7a0629cd290a035c4ae280"
+        }
+    ]
+}

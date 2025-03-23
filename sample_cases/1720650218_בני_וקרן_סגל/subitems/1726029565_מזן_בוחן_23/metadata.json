@@ -1,0 +1,68 @@
+{
+    "id": "1726029565",
+    "name": "מזן בוחן 23",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-02T08:07:20.638Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/83262562/%D7%9E%D7%90%D7%96%D7%9F%20%D7%91%D7%95%D7%97%D7%9F%202023%20%D7%90%D7%A7%D7%A1%D7%9C%D7%A0%D7%A1.pdf",
+            "value": "{\"files\":[{\"name\":\"מאזן בוחן 2023 אקסלנס.pdf\",\"assetId\":83262562,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1733126856118,\"createdBy\":\"69012971\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-02",
+            "value": "{\"date\":\"2024-12-02\",\"changed_at\":\"2024-12-02T08:07:22.415Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1726029565",
+            "value": "{\"item_id\":\"1726029565\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "מאזן בוחן 2023 אקסלנס.pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/83262562/%D7%9E%D7%90%D7%96%D7%9F%20%D7%91%D7%95%D7%97%D7%9F%202023%20%D7%90%D7%A7%D7%A1%D7%9C%D7%A0%D7%A1.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=6ff35b91b1aef9c9cabfb78503641e44b75bdabc5a32acc7b6fb95a9739118c0"
+        }
+    ]
+}

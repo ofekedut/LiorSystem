@@ -1,0 +1,84 @@
+{
+    "id": "1720653986",
+    "name": "תנועות עוש + ריכוז יתרות + אישור ניהול לחשבונות החברה",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "רוזי יוסף",
+            "value": "{\"changed_at\":\"2024-11-13T07:24:48.175Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-11-19T09:20:59.239Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384600/%D7%A2%D7%95%D7%A9%20%D7%97%D7%91%D7%A8%D7%94%20%D7%93%D7%99%D7%A1%D7%A7%D7%95%D7%A0%D7%98%20(1).pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384604/%D7%A2%D7%95%D7%A9%20%D7%97%D7%91%D7%A8%D7%94%20%D7%9E%D7%96%D7%A8%D7%97%D7%99%20(1).pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384605/%D7%90%D7%99%D7%A9%D7%95%D7%A8%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%97%D7%91%D7%A8%D7%94%20%D7%9E%D7%96%D7%A8%D7%97%D7%99%20(1).pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384609/%D7%90%D7%99%D7%A9%D7%95%D7%A8%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%97%D7%91%D7%A8%D7%94%20%D7%93%D7%99%D7%A1%D7%A7%D7%95%D7%A0%D7%98%20(1).pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/82384613/%D7%90%D7%99%D7%A9%D7%95%D7%A8%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%97%D7%91%D7%A8%D7%94%20%D7%93%D7%99%D7%A1%D7%A7%D7%95%D7%A0%D7%98%20(1).pdf",
+            "value": "{\"files\":[{\"name\":\"עוש חברה דיסקונט (1).pdf\",\"assetId\":82384600,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732008206929,\"createdBy\":\"68003642\"},{\"name\":\"עוש חברה מזרחי (1).pdf\",\"assetId\":82384604,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732008209924,\"createdBy\":\"68003642\"},{\"name\":\"אישור ניהול חברה מזרחי (1).pdf\",\"assetId\":82384605,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732008213046,\"createdBy\":\"68003642\"},{\"name\":\"אישור ניהול חברה דיסקונט (1).pdf\",\"assetId\":82384609,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732008218270,\"createdBy\":\"68003642\"},{\"name\":\"אישור ניהול חברה דיסקונט (1).pdf\",\"assetId\":82384613,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1732008223593,\"createdBy\":\"68003642\"}]}"
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-11-19",
+            "value": "{\"date\":\"2024-11-19\",\"changed_at\":\"2024-11-19T09:21:00.622Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1720653986",
+            "value": "{\"item_id\":\"1720653986\"}"
+        }
+    ],
+    "assets": [
+        {
+            "name": "עוש חברה דיסקונט (1).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384600/%D7%A2%D7%95%D7%A9%20%D7%97%D7%91%D7%A8%D7%94%20%D7%93%D7%99%D7%A1%D7%A7%D7%95%D7%A0%D7%98%20%281%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=b82a6e22334a5cc3550e9b550c05aec6138728d4e2d3f0693116cff28d079763"
+        },
+        {
+            "name": "עוש חברה מזרחי (1).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384604/%D7%A2%D7%95%D7%A9%20%D7%97%D7%91%D7%A8%D7%94%20%D7%9E%D7%96%D7%A8%D7%97%D7%99%20%281%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=98a6a051dfaed61148a87eddbae0b93cd2cba2cbab30695613b72393d2ac5d2a"
+        },
+        {
+            "name": "אישור ניהול חברה מזרחי (1).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384605/%D7%90%D7%99%D7%A9%D7%95%D7%A8%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%97%D7%91%D7%A8%D7%94%20%D7%9E%D7%96%D7%A8%D7%97%D7%99%20%281%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d47a7708dc16b47213a5c0c7bd2d3af0513566dc0eb7f3477f831ea0d1954c51"
+        },
+        {
+            "name": "אישור ניהול חברה דיסקונט (1).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384609/%D7%90%D7%99%D7%A9%D7%95%D7%A8%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%97%D7%91%D7%A8%D7%94%20%D7%93%D7%99%D7%A1%D7%A7%D7%95%D7%A0%D7%98%20%281%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=189d1223df917879db3de4b35a1cd658c35726e62f17e651d6b926f40902a0ac"
+        },
+        {
+            "name": "אישור ניהול חברה דיסקונט (1).pdf",
+            "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/82384613/%D7%90%D7%99%D7%A9%D7%95%D7%A8%20%D7%A0%D7%99%D7%94%D7%95%D7%9C%20%D7%97%D7%91%D7%A8%D7%94%20%D7%93%D7%99%D7%A1%D7%A7%D7%95%D7%A0%D7%98%20%281%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=95b6940ec8a803f6095ca118ac0af68d8f396c66b97ae3b12cba4ad67e82d843"
+        }
+    ]
+}

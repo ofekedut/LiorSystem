@@ -1,0 +1,63 @@
+{
+    "id": "1754663666",
+    "name": "אישור רוח על הכנסות אקסלנס 23 + 24",
+    "column_values": [
+        {
+            "column": {
+                "title": "בטיפול",
+                "id": "people__1"
+            },
+            "text": "Lior Arbiv",
+            "value": "{\"changed_at\":\"2024-12-25T12:57:05.952Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+        },
+        {
+            "column": {
+                "title": "סטטוס סאבים",
+                "id": "status"
+            },
+            "text": "תקין",
+            "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-29T13:34:53.702Z\"}"
+        },
+        {
+            "column": {
+                "title": "ציר זמן",
+                "id": "timeline3__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "קבצים",
+                "id": "files__1"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "תאריך",
+                "id": "date__1"
+            },
+            "text": "2024-12-29",
+            "value": "{\"date\":\"2024-12-29\",\"changed_at\":\"2024-12-29T13:34:55.274Z\"}"
+        },
+        {
+            "column": {
+                "title": "Date",
+                "id": "date_mkmcxhj7"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "title": "Item ID",
+                "id": "item_id_Mjj6mEi1"
+            },
+            "text": "1754663666",
+            "value": "{\"item_id\":\"1754663666\"}"
+        }
+    ],
+    "assets": []
+}
