@@ -28,6 +28,9 @@ from server.routers.person_relationships_router import router as person_relation
 from server.routers.companies_router import router as companies_router
 from server.routers.case_formatter_router import router as case_formatter_router
 from server.routers.lior_dropdown_options_router import router as dropdown_options_router
+from server.routers.case_wizard_router import router as case_wizard_router
+from server.routers.bulk_documents_router import router as bulk_documents_router
+from server.routers.case_overview_router import router as case_overview_router
 
 from server.features.docs_processing.docs_processing_router import router as docs_processing_router
 
@@ -89,6 +92,9 @@ app.include_router(companies_router)
 app.include_router(case_formatter_router)
 app.include_router(dropdown_options_router)
 app.include_router(unique_docs_router)
+app.include_router(case_wizard_router)
+app.include_router(bulk_documents_router)
+app.include_router(case_overview_router)
 
 
 async def create_schema_and_admin():
