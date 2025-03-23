@@ -1,0 +1,2206 @@
+{
+    "id": "1720650103",
+    "name": "חסן ועולא אבו ריש",
+    "column_values": [
+        {
+            "column": {
+                "id": "dropdown__1",
+                "title": "מהות התיק"
+            },
+            "text": "גיוס לאיחוד",
+            "value": "{\"ids\":[6]}"
+        },
+        {
+            "column": {
+                "id": "dropdown9__1",
+                "title": "סוג הלוואה"
+            },
+            "text": "משכון נכס",
+            "value": "{\"ids\":[1]}"
+        },
+        {
+            "column": {
+                "id": "project_status",
+                "title": "סטטוס הכנת תיק לקוח"
+            },
+            "text": "ביצוע",
+            "value": "{\"index\":12,\"post_id\":null,\"changed_at\":\"2025-02-09T11:26:58.626Z\"}"
+        },
+        {
+            "column": {
+                "id": "priority_1",
+                "title": "עדיפות"
+            },
+            "text": "חלש",
+            "value": "{\"index\":5,\"post_id\":null,\"changed_at\":\"2025-02-03T12:42:06.959Z\"}"
+        },
+        {
+            "column": {
+                "id": "subitems__1",
+                "title": "Subitems"
+            },
+            "text": null,
+            "value": "{\"changed_at\":\"2024-12-29 09:56:52 +0000\",\"linkedPulseIds\":[{\"linkedPulseId\":1720650665},{\"linkedPulseId\":1720650667},{\"linkedPulseId\":1720650670},{\"linkedPulseId\":1720650672},{\"linkedPulseId\":1720650675},{\"linkedPulseId\":1720650678},{\"linkedPulseId\":1720650680},{\"linkedPulseId\":1720650687},{\"linkedPulseId\":1720650689},{\"linkedPulseId\":1720650692},{\"linkedPulseId\":1720650695},{\"linkedPulseId\":1720650698},{\"linkedPulseId\":1720652645},{\"linkedPulseId\":1720652648},{\"linkedPulseId\":1720652651},{\"linkedPulseId\":1720653518},{\"linkedPulseId\":1720653521},{\"linkedPulseId\":1720653522},{\"linkedPulseId\":1720653523},{\"linkedPulseId\":1720653524},{\"linkedPulseId\":1720653525},{\"linkedPulseId\":1720653526},{\"linkedPulseId\":1720653527},{\"linkedPulseId\":1745804089},{\"linkedPulseId\":1745804177},{\"linkedPulseId\":1752687840},{\"linkedPulseId\":1752687880},{\"linkedPulseId\":1752688032},{\"linkedPulseId\":1752688506},{\"linkedPulseId\":1755243415},{\"linkedPulseId\":1756439042},{\"linkedPulseId\":1756439315}]}"
+        },
+        {
+            "column": {
+                "id": "status_mkkr2t94",
+                "title": "הערות רוזי"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "id": "numbers6__1",
+                "title": "אחוז מגיוס"
+            },
+            "text": "3.5",
+            "value": "\"3.5\""
+        },
+        {
+            "column": {
+                "id": "numbers8__1",
+                "title": "שכ\"ט צפוי"
+            },
+            "text": "30000",
+            "value": "\"30000\""
+        },
+        {
+            "column": {
+                "id": "text7__1",
+                "title": "לקוח איתו מתנהלים"
+            },
+            "text": "חסן",
+            "value": "\"חסן\""
+        },
+        {
+            "column": {
+                "id": "phone__1",
+                "title": "טלפון"
+            },
+            "text": "0506223153",
+            "value": "{\"phone\":\"0506223153\",\"changed_at\":\"2024-11-06T11:48:20.326Z\",\"countryShortName\":\"IL\"}"
+        },
+        {
+            "column": {
+                "id": "text8__1",
+                "title": "ת.ז"
+            },
+            "text": "028204063",
+            "value": "\"028204063\""
+        },
+        {
+            "column": {
+                "id": "item_id_Mjj6uqvW",
+                "title": "Item ID"
+            },
+            "text": "1720650103",
+            "value": "{\"item_id\":\"1720650103\"}"
+        },
+        {
+            "column": {
+                "id": "date_mkkt63tm",
+                "title": "תאריך חיפוש פיתרון"
+            },
+            "text": "",
+            "value": null
+        },
+        {
+            "column": {
+                "id": "date_mkktze1j",
+                "title": "תאריך מעבר אחרון"
+            },
+            "text": "",
+            "value": null
+        }
+    ],
+    "assets": [],
+    "subitems": [
+        {
+            "id": "1720650665",
+            "name": "שיחה עם הלקוח והבנה עמוקה של הצרכים",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:07.161Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-08T19:55:06.123Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-08",
+                    "value": "{\"date\":\"2024-10-08\",\"changed_at\":\"2024-10-08T19:55:07.777Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720650665",
+                    "value": "{\"item_id\":\"1720650665\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720650698",
+            "name": "ת.ז של כל הקשורים",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:09.921Z\",\"personsAndTeams\":[]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T04:55:18.769Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T04:55:20.584Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720650698",
+                    "value": "{\"item_id\":\"1720650698\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720650667",
+            "name": "הפקת דנות לכל הקשורים",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:12.900Z\",\"personsAndTeams\":[]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T04:55:34.258Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T04:55:36.356Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720650667",
+                    "value": "{\"item_id\":\"1720650667\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720650670",
+            "name": "הפקת אישורי זכויות וצילומי ארנונה לכל הנכסים הקשורים",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:14.618Z\",\"personsAndTeams\":[]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T04:55:43.201Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T04:55:44.895Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720650670",
+                    "value": "{\"item_id\":\"1720650670\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720650672",
+            "name": "הזנת נתונים במערכת  💻",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:18.435Z\",\"personsAndTeams\":[]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T04:55:50.785Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T04:55:52.538Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720650672",
+                    "value": "{\"item_id\":\"1720650672\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720650675",
+            "name": "מציאת פתרון לתיק",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:20.336Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T04:55:52.361Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T04:55:54.134Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720650675",
+                    "value": "{\"item_id\":\"1720650675\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720650678",
+            "name": "לרשום את שאר הניירת הנדרשת",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:22.252Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T04:55:55.833Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T04:55:57.584Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720650678",
+                    "value": "{\"item_id\":\"1720650678\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720650680",
+            "name": "תלושים",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:46.284Z\",\"personsAndTeams\":[]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T04:56:20.729Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": "{\"files\":null}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T04:56:22.875Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720650680",
+                    "value": "{\"item_id\":\"1720650680\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720650687",
+            "name": "בנקים",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:48.316Z\",\"personsAndTeams\":[]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T04:56:26.745Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T04:56:28.510Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720650687",
+                    "value": "{\"item_id\":\"1720650687\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720652648",
+            "name": "כתבי הסמכה",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T04:56:41.524Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T04:56:43.600Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652648",
+                    "value": "{\"item_id\":\"1720652648\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720650692",
+            "name": "הזנת נתונים במערכת  💻",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:50.202Z\",\"personsAndTeams\":[]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T04:56:47.242Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T04:56:48.892Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720650692",
+                    "value": "{\"item_id\":\"1720650692\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720650689",
+            "name": "מעבר מלא על התיק",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:52.512Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T04:56:49.457Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T04:56:51.403Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720650689",
+                    "value": "{\"item_id\":\"1720650689\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720650695",
+            "name": "שיחת תיאום ציפיות עם הלקוח",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:54.214Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-10-13T04:56:59.993Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-10-13",
+                    "value": "{\"date\":\"2024-10-13\",\"changed_at\":\"2024-10-13T04:57:01.833Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720650695",
+                    "value": "{\"item_id\":\"1720650695\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720652651",
+            "name": "נסח טאבו מתוקן",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-11-06T10:14:12.362Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-17T07:56:32.382Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "2024-12-09 - 2024-12-13",
+                    "value": "{\"to\":\"2024-12-13\",\"from\":\"2024-12-09\",\"changed_at\":\"2024-12-09T10:41:34.505Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/86152540/WhatsApp%20Image%202024-12-15%20at%2016.33.16.jpeg",
+                    "value": "{\"files\":[{\"name\":\"WhatsApp Image 2024-12-15 at 16.33.16.jpeg\",\"assetId\":86152540,\"isImage\":\"true\",\"fileType\":\"ASSET\",\"createdAt\":1734273375620,\"createdBy\":\"68720131\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-17",
+                    "value": "{\"date\":\"2024-12-17\",\"changed_at\":\"2024-12-17T07:56:34.198Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652651",
+                    "value": "{\"item_id\":\"1720652651\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "WhatsApp Image 2024-12-15 at 16.33.16.jpeg",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/86152540/WhatsApp%20Image%202024-12-15%20at%2016.33.16.jpeg?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=56a6de1a441dcc5feceeaff5b06345dbd58b885fcfbbbbbfaf43cd2be584fb3d"
+                }
+            ]
+        },
+        {
+            "id": "1720652645",
+            "name": "גב ת.ז עולא",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-11-06T10:14:14.225Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-19T10:24:00.068Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87100722/%D7%AA.%D7%96%20%D7%A2%D7%95%D7%9C%D7%90.pdf",
+                    "value": "{\"files\":[{\"name\":\"ת.ז עולא.pdf\",\"assetId\":87100722,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734603838175,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-19",
+                    "value": "{\"date\":\"2024-12-19\",\"changed_at\":\"2024-12-19T10:24:01.363Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720652645",
+                    "value": "{\"item_id\":\"1720652645\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "ת.ז עולא.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87100722/%D7%AA.%D7%96%20%D7%A2%D7%95%D7%9C%D7%90.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=b5f271314aaea4e7c7e81fb8b2dc5feeb902c6e67e3d937e42cda54f2c042572"
+                }
+            ]
+        },
+        {
+            "id": "1745804089",
+            "name": "דנא עדכנית חסן",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-12-17T07:57:37.224Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-19T13:04:01.100Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87165282/%D7%93%D7%95%D7%97%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D%20-%2019-12-2024%20(1).pdf",
+                    "value": "{\"files\":[{\"name\":\"דוח ריכוז נתונים - 19-12-2024 (1).pdf\",\"assetId\":87165282,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734613444655,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-19",
+                    "value": "{\"date\":\"2024-12-19\",\"changed_at\":\"2024-12-19T13:04:02.455Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1745804089",
+                    "value": "{\"item_id\":\"1745804089\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "דוח ריכוז נתונים - 19-12-2024 (1).pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87165282/%D7%93%D7%95%D7%97%20%D7%A8%D7%99%D7%9B%D7%95%D7%96%20%D7%A0%D7%AA%D7%95%D7%A0%D7%99%D7%9D%20-%2019-12-2024%20%281%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=b5a521e8267f59744d9b71ef5c267b843865c8c181817bdfa90da07a591c3d11"
+                }
+            ]
+        },
+        {
+            "id": "1745804177",
+            "name": "דנא עדכנית עולא",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-12-17T07:57:38.872Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-22T12:54:28.751Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87593224/%D7%93%D7%A0%D7%90%20%D7%A2%D7%95%D7%9C%D7%90.pdf",
+                    "value": "{\"files\":[{\"name\":\"דנא עולא.pdf\",\"assetId\":87593224,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734872062770,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-22",
+                    "value": "{\"date\":\"2024-12-22\",\"changed_at\":\"2024-12-22T12:54:29.970Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1745804177",
+                    "value": "{\"item_id\":\"1745804177\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "דנא עולא.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87593224/%D7%93%D7%A0%D7%90%20%D7%A2%D7%95%D7%9C%D7%90.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=04fecf73ab0365486879af0ed6d3940dc607700abb696d51cf0457c0cbbb0847"
+                }
+            ]
+        },
+        {
+            "id": "1720653518",
+            "name": "תלושים 9 + 10 + 11 חסן",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-11-06T10:14:15.824Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-19T09:08:06.057Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87074285/%D7%97%D7%A1%D7%9F%20%D7%AA%D7%9C%D7%95%D7%A9%D7%99%20%D7%A9%D7%9B%D7%A8.pdf",
+                    "value": "{\"files\":[{\"name\":\"חסן תלושי שכר.pdf\",\"assetId\":87074285,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734599283709,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-19",
+                    "value": "{\"date\":\"2024-12-19\",\"changed_at\":\"2024-12-19T09:08:07.452Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653518",
+                    "value": "{\"item_id\":\"1720653518\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "חסן תלושי שכר.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87074285/%D7%97%D7%A1%D7%9F%20%D7%AA%D7%9C%D7%95%D7%A9%D7%99%20%D7%A9%D7%9B%D7%A8.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=5909fb2ffbf8423eae175e5f5d472f0a2a3cad3e4caaf4d3f27954ee7a6e085d"
+                }
+            ]
+        },
+        {
+            "id": "1720653521",
+            "name": "תלושים 9 + 10 + 11 עולא",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-11-06T10:14:18.006Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-19T10:00:46.163Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87091765/%D7%A2%D7%95%D7%9C%D7%90%20%D7%AA%D7%9C%D7%95%D7%A9%D7%99%20%D7%A9%D7%9B%D7%A8.pdf",
+                    "value": "{\"files\":[{\"name\":\"עולא תלושי שכר.pdf\",\"assetId\":87091765,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734602442554,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-19",
+                    "value": "{\"date\":\"2024-12-19\",\"changed_at\":\"2024-12-19T10:00:47.565Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653521",
+                    "value": "{\"item_id\":\"1720653521\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "עולא תלושי שכר.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87091765/%D7%A2%D7%95%D7%9C%D7%90%20%D7%AA%D7%9C%D7%95%D7%A9%D7%99%20%D7%A9%D7%9B%D7%A8.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=1c15f3b1f03b68545a1d8935149a641ba6364aa28d3bc196d17e5cd6721f72bc"
+                }
+            ]
+        },
+        {
+            "id": "1720653522",
+            "name": "תנועות עוש מסד",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-11-06T10:14:19.639Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-19T09:55:28.060Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87090030/%D7%97%D7%A1%D7%9F%20%D7%9E%D7%A1%D7%93%20%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%97%D7%A9%D7%91%D7%95%D7%9F.pdf",
+                    "value": "{\"files\":[{\"name\":\"חסן מסד תנועות חשבון.pdf\",\"assetId\":87090030,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734602125501,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-19",
+                    "value": "{\"date\":\"2024-12-19\",\"changed_at\":\"2024-12-19T09:55:29.191Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653522",
+                    "value": "{\"item_id\":\"1720653522\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "חסן מסד תנועות חשבון.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87090030/%D7%97%D7%A1%D7%9F%20%D7%9E%D7%A1%D7%93%20%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%97%D7%A9%D7%91%D7%95%D7%9F.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=9a31eb3248a3028d415d975c12c75345f36d738c079ba6a82dff0ffe08b97fa1"
+                }
+            ]
+        },
+        {
+            "id": "1720653523",
+            "name": "תנועות עוש פועלים",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-11-06T10:14:21.312Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-19T09:54:15.035Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87089686/%D7%97%D7%A1%D7%9F%20%D7%94%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20-%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%91%D7%97%D7%A9%D7%91%D7%95%D7%9F.pdf",
+                    "value": "{\"files\":[{\"name\":\"חסן הפועלים -תנועות בחשבון.pdf\",\"assetId\":87089686,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734602053208,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-19",
+                    "value": "{\"date\":\"2024-12-19\",\"changed_at\":\"2024-12-19T09:54:16.495Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653523",
+                    "value": "{\"item_id\":\"1720653523\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "חסן הפועלים -תנועות בחשבון.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87089686/%D7%97%D7%A1%D7%9F%20%D7%94%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20-%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%91%D7%97%D7%A9%D7%91%D7%95%D7%9F.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=c6bde299f0cb7f0365181d7f6dd96bf498cbcf2ff9618286827e654a20ceede5"
+                }
+            ]
+        },
+        {
+            "id": "1720653524",
+            "name": "תנועות עוש דיסקונט",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-11-06T10:14:23.592Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-19T09:06:19.130Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87073801/%D7%97%D7%A1%D7%9F%20%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%A2%D7%95%D7%A9%20%D7%93%D7%99%D7%A1%D7%A7%D7%95%D7%A0%D7%98.pdf",
+                    "value": "{\"files\":[{\"name\":\"חסן תנועות עוש דיסקונט.pdf\",\"assetId\":87073801,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1734599172865,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-19",
+                    "value": "{\"date\":\"2024-12-19\",\"changed_at\":\"2024-12-19T09:06:20.894Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653524",
+                    "value": "{\"item_id\":\"1720653524\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "חסן תנועות עוש דיסקונט.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87073801/%D7%97%D7%A1%D7%9F%20%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%A2%D7%95%D7%A9%20%D7%93%D7%99%D7%A1%D7%A7%D7%95%D7%A0%D7%98.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=105a1450d496088d0bb088180ff65a8f08071d3381ea5d682e14439d7a8af22d"
+                }
+            ]
+        },
+        {
+            "id": "1720653525",
+            "name": "הזנת נתונים במערכת  💻",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2024-11-06T10:14:50.907Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-22T22:49:48.821Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-23",
+                    "value": "{\"date\":\"2024-12-23\",\"changed_at\":\"2024-12-22T22:49:50.672Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653525",
+                    "value": "{\"item_id\":\"1720653525\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720653526",
+            "name": "מעבר מלא על התיק",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:52.512Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-22T23:06:22.980Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-23",
+                    "value": "{\"date\":\"2024-12-23\",\"changed_at\":\"2024-12-22T23:06:24.922Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653526",
+                    "value": "{\"item_id\":\"1720653526\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1752688032",
+            "name": "עמוד 2 נסח טאבו",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-12-22T23:10:02.336Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-24T10:26:59.717Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87854417/%D7%A0%D7%A1%D7%97%20%D7%98%D7%90%D7%91%D7%95%20(4).pdf",
+                    "value": "{\"files\":[{\"name\":\"נסח טאבו (4).pdf\",\"assetId\":87854417,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735036016681,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-24",
+                    "value": "{\"date\":\"2024-12-24\",\"changed_at\":\"2024-12-24T10:27:01.427Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1752688032",
+                    "value": "{\"item_id\":\"1752688032\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "נסח טאבו (4).pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87854417/%D7%A0%D7%A1%D7%97%20%D7%98%D7%90%D7%91%D7%95%20%284%29.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=11bfdaa6eb86e1c334180d1ba6370fc83b8f3ff2de5516505214d2e6b3560ba8"
+                }
+            ]
+        },
+        {
+            "id": "1752687840",
+            "name": "תנועות עוש מסד מ- 30/11 עד היום",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-12-22T23:09:59.014Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-25T08:23:43.585Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87915988/%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%91%D7%97%D7%A9%D7%91%D7%95%D7%9F%20%D7%9E%D7%A1%D7%93%20%D7%9E%2027-11%20%D7%95%D7%A2%D7%93%20%D7%94%D7%99%D7%95%D7%9D%20%D7%97%D7%A1%D7%9F.pdf",
+                    "value": "{\"files\":[{\"name\":\"תנועות בחשבון מסד מ 27-11 ועד היום חסן.pdf\",\"assetId\":87915988,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735115009802,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-25",
+                    "value": "{\"date\":\"2024-12-25\",\"changed_at\":\"2024-12-25T08:23:45.386Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1752687840",
+                    "value": "{\"item_id\":\"1752687840\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "תנועות בחשבון מסד מ 27-11 ועד היום חסן.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87915988/%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%91%D7%97%D7%A9%D7%91%D7%95%D7%9F%20%D7%9E%D7%A1%D7%93%20%D7%9E%2027-11%20%D7%95%D7%A2%D7%93%20%D7%94%D7%99%D7%95%D7%9D%20%D7%97%D7%A1%D7%9F.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=a22b5d360dac911fef871ca71279b31c499513d6d9aeda7e9436b6e32304014d"
+                }
+            ]
+        },
+        {
+            "id": "1752687880",
+            "name": "תנועות עוש פועלים מ - 27/11 עד היום",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2024-12-22T23:10:00.753Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-29T07:31:15.903Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/87915992/%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%91%D7%97%D7%A9%D7%91%D7%95%D7%9F%20%D7%9E27-11%20%D7%95%D7%A2%D7%93%20%D7%94%D7%99%D7%95%D7%9D.pdf, https://baroffice11s-team.monday.com/protected_static/26576015/resources/88158813/%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%A2%D7%95%D7%A9%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20%D7%9E27.11%20%D7%97%D7%A1%D7%9F%20%D7%90%D7%91%D7%95%20%D7%A8%D7%99%D7%A9.pdf",
+                    "value": "{\"files\":[{\"name\":\"תנועות בחשבון מ27-11 ועד היום.pdf\",\"assetId\":87915992,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735115018733,\"createdBy\":\"68720225\"},{\"name\":\"תנועות עוש פועלים מ27.11 חסן אבו ריש.pdf\",\"assetId\":88158813,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1735457473183,\"createdBy\":\"68720225\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-29",
+                    "value": "{\"date\":\"2024-12-29\",\"changed_at\":\"2024-12-29T07:31:17.315Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1752687880",
+                    "value": "{\"item_id\":\"1752687880\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "תנועות בחשבון מ27-11 ועד היום.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/87915992/%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%91%D7%97%D7%A9%D7%91%D7%95%D7%9F%20%D7%9E27-11%20%D7%95%D7%A2%D7%93%20%D7%94%D7%99%D7%95%D7%9D.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=1eab28f7d56dffb8ede72a0c0121366eae24e0dee4b05cdbac411ad3b2a16cec"
+                },
+                {
+                    "name": "תנועות עוש פועלים מ27.11 חסן אבו ריש.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/88158813/%D7%AA%D7%A0%D7%95%D7%A2%D7%95%D7%AA%20%D7%A2%D7%95%D7%A9%20%D7%A4%D7%95%D7%A2%D7%9C%D7%99%D7%9D%20%D7%9E27.11%20%D7%97%D7%A1%D7%9F%20%D7%90%D7%91%D7%95%20%D7%A8%D7%99%D7%A9.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=9019378f4f12221eef2a494f560bd88f192005b3b5fc92b6b8970161f0d113b5"
+                }
+            ]
+        },
+        {
+            "id": "1752688506",
+            "name": "מעבר על ההשלמות",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-26T14:52:07.276Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-26",
+                    "value": "{\"date\":\"2024-12-26\",\"changed_at\":\"2024-12-26T14:52:08.878Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1752688506",
+                    "value": "{\"item_id\":\"1752688506\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1720653527",
+            "name": "שיחת תיאום ציפיות עם הלקוח",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2024-10-06T16:26:54.214Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2024-12-26T14:52:08.801Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2024-12-26",
+                    "value": "{\"date\":\"2024-12-26\",\"changed_at\":\"2024-12-26T14:52:10.243Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1720653527",
+                    "value": "{\"item_id\":\"1720653527\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1755243415",
+            "name": "העתק שטר מהטאבו על פיו נרשמה הבעלות של חסן",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "Lior Arbiv",
+                    "value": "{\"changed_at\":\"2025-01-19T10:34:41.593Z\",\"personsAndTeams\":[{\"id\":69012971,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "בטיפול",
+                    "value": "{\"index\":3,\"post_id\":null,\"changed_at\":\"2025-01-19T10:21:38.336Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": "{\"files\":[]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2025-01-08",
+                    "value": "{\"date\":\"2025-01-08\",\"changed_at\":\"2025-01-08T09:31:36.840Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1755243415",
+                    "value": "{\"item_id\":\"1755243415\"}"
+                }
+            ],
+            "assets": []
+        },
+        {
+            "id": "1756439042",
+            "name": "נסח טאבו לאחר הסרת הגרושה",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "רוזי יוסף",
+                    "value": "{\"changed_at\":\"2025-01-01T08:49:23.363Z\",\"personsAndTeams\":[{\"id\":68720225,\"kind\":\"person\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "תקין",
+                    "value": "{\"index\":1,\"post_id\":null,\"changed_at\":\"2025-01-08T13:01:44.586Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "https://baroffice11s-team.monday.com/protected_static/26576015/resources/89666064/%D7%A0%D7%A1%D7%97.pdf",
+                    "value": "{\"files\":[{\"name\":\"נסח.pdf\",\"assetId\":89666064,\"isImage\":\"false\",\"fileType\":\"ASSET\",\"createdAt\":1736341216979,\"createdBy\":\"69012971\"}]}"
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "2025-01-08",
+                    "value": "{\"date\":\"2025-01-08\",\"changed_at\":\"2025-01-08T13:01:46.256Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1756439042",
+                    "value": "{\"item_id\":\"1756439042\"}"
+                }
+            ],
+            "assets": [
+                {
+                    "name": "נסח.pdf",
+                    "public_url": "https://prod-euc1-files-monday-com.s3.eu-central-1.amazonaws.com/26576015/resources/89666064/%D7%A0%D7%A1%D7%97.pdf?response-content-disposition=attachment&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA4MPVJMFXJ4YPAV7U%2F20250214%2Feu-central-1%2Fs3%2Faws4_request&X-Amz-Date=20250214T161538Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=d44830bd3b9ca12ccd597644a7a93b66cff42fd8039f3f1343c2e3a91a9b96b7"
+                }
+            ]
+        },
+        {
+            "id": "1756439315",
+            "name": "אישור מלאומי על הסרה שלו מהמשכנתה עם גרושתו",
+            "column_values": [
+                {
+                    "column": {
+                        "title": "בטיפול",
+                        "id": "people__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "סטטוס סאבים",
+                        "id": "status"
+                    },
+                    "text": "בהמתנה",
+                    "value": "{\"index\":2,\"post_id\":null,\"changed_at\":\"2025-01-01T08:49:20.791Z\"}"
+                },
+                {
+                    "column": {
+                        "title": "ציר זמן",
+                        "id": "timeline3__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "קבצים",
+                        "id": "files__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "תאריך",
+                        "id": "date__1"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Date",
+                        "id": "date_mkmcxhj7"
+                    },
+                    "text": "",
+                    "value": null
+                },
+                {
+                    "column": {
+                        "title": "Item ID",
+                        "id": "item_id_Mjj6mEi1"
+                    },
+                    "text": "1756439315",
+                    "value": "{\"item_id\":\"1756439315\"}"
+                }
+            ],
+            "assets": []
+        }
+    ]
+}

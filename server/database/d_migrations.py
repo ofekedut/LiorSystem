@@ -6,15 +6,16 @@ import logging
 import os
 import datetime
 import uuid
+import json
 from pathlib import Path
 
 from server.database.database import drop_all_tables, get_connection
 from server.database.lior_dropdown_options_database import DropdownOptionCreate, create_dropdown_option
 from server.database.unique_docs_database import (
-    UniqueDocTypeCreate, 
-    DocumentCategory, 
-    DocumentTargetObject, 
-    DocumentType, 
+    UniqueDocTypeCreate,
+    DocumentCategory,
+    DocumentTargetObject,
+    DocumentType,
     DocumentFrequency,
     RequiredFor,
     Links,
@@ -225,11 +226,11 @@ async def seed_document_types():
             links_data = None
             if doc_type.get("links"):
                 links_data = Links(**doc_type["links"])
-                
+
             contact_info_data = None
             if doc_type.get("contact_info"):
                 contact_info_data = ContactInfo(**doc_type["contact_info"])
-                
+
             create_data = UniqueDocTypeCreate(
                 display_name=doc_type["display_name"],
                 category=doc_type["category"],
@@ -242,51 +243,126 @@ async def seed_document_types():
                 links=links_data,
                 contact_info=contact_info_data
             )
-            
+
             await create_unique_doc_type(create_data)
             logger.info(f"Created document type: {doc_type['display_name']}")
-            
+
         except Exception as e:
             logger.error(f"Error seeding document type {doc_type['display_name']}: {str(e)}")
-            
+
     logger.info("Document types seeded successfully")
 
 
-async def create_sample_case():
+async def create_sample_cases():
     """
-    Create a sample case with persons and related objects.
-    This function does NOT add any documents to the case.
+    Create sample cases from JSON files.
+    This function creates multiple cases based on JSON data from sample_cases_as_jsons folder.
     """
-    logger.info("Creating sample case...")
+    logger.info("Creating sample cases from JSON files...")
+
+    # Path to sample case JSON files
+    json_folder = Path("/Users/nikotsy/OTECH/REPOS/LiorSystem/sample_cases_as_jsons")
+    case_files = sorted(list(json_folder.glob("case_*.json")))
     
+    if not case_files:
+        logger.warning("No sample case JSON files found")
+        return []
+    
+    case_ids = []
+    
+    for case_file in case_files:
+        logger.info(f"Processing case file: {case_file.name}")
+        
+        try:
+            # Load JSON data
+            with open(case_file, "r", encoding="utf-8") as f:
+                case_data = json.load(f)
+            
+            # Process each case
+            case_id = await create_case_from_json(case_data)
+            if case_id:
+                case_ids.append(case_id)
+                logger.info(f"Successfully created case from {case_file.name} with ID: {case_id}")
+            else:
+                logger.error(f"Failed to create case from {case_file.name}")
+                
+        except Exception as e:
+            logger.error(f"Error processing case file {case_file.name}: {str(e)}")
+    
+    return case_ids
+
+async def create_case_from_json(case_data):
+    """
+    Create a case, persons, and related objects from JSON data.
+    
+    Args:
+        case_data: JSON data containing case information
+        
+    Returns:
+        UUID of the created case if successful, None otherwise
+    """
     conn = await get_connection()
     try:
         async with conn.transaction():
-            # 1. Create a new case
+            # Extract basic case information
             case_id = uuid.uuid4()
-            case_name = "בקשת משכנתא - משפחת כהן"
+            case_name = case_data.get("name", "Case from JSON")
+            
+            # Get loan type from column values if available
+            loan_type = "mortgage"  # Default loan type
+            loan_purpose = "גיוס משכנתא"  # Default purpose
+            status = "in_progress"
+            
+            # Extract information from column_values
+            phone = None
+            id_number = None
+            primary_contact_name = None
+            
+            for col_val in case_data.get("column_values", []):
+                col_title = col_val.get("column", {}).get("title", "")
+                col_text = col_val.get("text", "")
+                
+                if col_title == "סוג הלוואה" and col_text:
+                    loan_type = col_text
+                elif col_title == "מהות התיק" and col_text:
+                    loan_purpose = col_text
+                elif col_title == "סטטוס הכנת תיק לקוח" and col_text:
+                    status = col_text.lower()
+                elif col_title == "טלפון" and col_text:
+                    phone = col_text
+                elif col_title == "ת.ז" and col_text:
+                    id_number = col_text
+                elif col_title == "לקוח איתו מתנהלים" and col_text:
+                    primary_contact_name = col_text
+            
+            # Create the case
             case_query = """
             INSERT INTO cases (
                 id, name, status, title, description, case_purpose, loan_type_id
-            ) VALUES ($1, $2, $3, $4, $5, $6, 
+            ) VALUES ($1, $2, $3, $4, $5, $6,
                 (SELECT id FROM lior_dropdown_options WHERE category = 'loan_types' AND value = 'mortgage' LIMIT 1)
             )
             RETURNING id
             """
-            
+
             await conn.fetchrow(
                 case_query,
                 case_id,
                 case_name,
-                "in_progress",
-                "בקשת משכנתא למשפחת כהן",
-                "בקשת משכנתא לרכישת דירה ראשונה",
-                "רכישת דירה ראשונה"
+                status,
+                f"תיק {case_name}",
+                f"תיק {loan_purpose}",
+                loan_purpose
             )
             
-            logger.info(f"Created sample case: {case_name} with ID: {case_id}")
+            logger.info(f"Created case: {case_name} with ID: {case_id}")
             
-            # 2. Create primary applicant
+            # Create primary applicant based on case name
+            # Split the name to extract first and last name
+            name_parts = case_name.split()
+            first_name = name_parts[0] if name_parts else "לקוח"
+            last_name = name_parts[1] if len(name_parts) > 1 else "חדש"
+            
             primary_person_id = uuid.uuid4()
             primary_person_query = """
             INSERT INTO case_persons (
@@ -299,128 +375,89 @@ async def create_sample_case():
             )
             RETURNING id
             """
-            
+
             await conn.fetchrow(
                 primary_person_query,
                 primary_person_id,
                 case_id,
-                "ישראל",
-                "כהן",
-                "012345678",
-                "male",
-                datetime.date(1985, 5, 15),
-                "0501234567",
-                "israel.cohen@example.com"
+                first_name,
+                last_name,
+                id_number or "000000000",
+                "male",  # Default gender
+                datetime.date(1980, 1, 1),  # Default birth date
+                phone or "0500000000",
+                f"{first_name.lower()}.{last_name.lower()}@example.com"
             )
             
-            logger.info(f"Created primary applicant: ישראל כהן with ID: {primary_person_id}")
+            logger.info(f"Created primary applicant: {first_name} {last_name} with ID: {primary_person_id}")
             
-            # 3. Create spouse
-            spouse_person_id = uuid.uuid4()
-            spouse_person_query = """
-            INSERT INTO case_persons (
-                id, case_id, first_name, last_name, id_number, gender, birth_date,
-                phone, email, role_id, marital_status_id
-            ) VALUES (
-                $1, $2, $3, $4, $5, $6, $7, $8, $9,
-                (SELECT id FROM lior_dropdown_options WHERE category = 'person_roles' AND value = 'spouse' LIMIT 1),
-                (SELECT id FROM lior_dropdown_options WHERE category = 'person_marital_statuses' AND value = 'married' LIMIT 1)
-            )
-            RETURNING id
-            """
-            
-            await conn.fetchrow(
-                spouse_person_query,
-                spouse_person_id,
-                case_id,
-                "שרה",
-                "כהן",
-                "012345679",
-                "female",
-                datetime.date(1987, 8, 22),
-                "0501234568",
-                "sarah.cohen@example.com"
-            )
-            
-            logger.info(f"Created spouse: שרה כהן with ID: {spouse_person_id}")
-            
-            # 4. Set primary contact for the case
+            # Set primary contact for the case
             update_case_query = """
             UPDATE cases SET primary_contact_id = $1 WHERE id = $2
             """
-            
             await conn.execute(update_case_query, primary_person_id, case_id)
             
-            # 5. Create a relationship between primary applicant and spouse
-            relationship_query = """
-            INSERT INTO case_person_relations (
-                from_person_id, to_person_id, relationship_type_id
-            ) VALUES (
-                $1, $2,
-                (SELECT id FROM lior_dropdown_options WHERE category = 'related_person_relationships_types' AND value = 'spouse' LIMIT 1)
-            )
-            """
+            # Check if there are subitems in the case
+            if case_data.get("subitems"):
+                # Process the first 5 subitems as documents
+                for idx, subitem in enumerate(case_data.get("subitems", [])[:5]):
+                    doc_name = subitem.get("name", f"Document {idx+1}")
+                    
+                    # Check if the subitem has files
+                    assets = subitem.get("assets", [])
+                    if assets:
+                        for asset_idx, asset in enumerate(assets[:2]):  # Process up to 2 assets per subitem
+                            doc_id = uuid.uuid4()
+                            doc_query = """
+                            INSERT INTO case_documents (
+                                id, case_id, person_id, name, document_type_id, 
+                                status, description, file_url
+                            ) VALUES (
+                                $1, $2, $3, $4, 
+                                (SELECT id FROM unique_doc_types WHERE display_name = 'תעודת זהות - צד קדמי' LIMIT 1),
+                                $5, $6, $7
+                            )
+                            """
+                            
+                            await conn.execute(
+                                doc_query,
+                                doc_id,
+                                case_id,
+                                primary_person_id,
+                                f"{doc_name} - {asset.get('name', f'File {asset_idx+1}')}",
+                                "uploaded",
+                                f"מסמך {doc_name} שהועלה מהמערכת",
+                                asset.get("public_url", "")
+                            )
+                    else:
+                        # Create a placeholder document entry even without files
+                        doc_id = uuid.uuid4()
+                        doc_query = """
+                        INSERT INTO case_documents (
+                            id, case_id, person_id, name, document_type_id, 
+                            status, description
+                        ) VALUES (
+                            $1, $2, $3, $4, 
+                            (SELECT id FROM unique_doc_types WHERE display_name = 'תעודת זהות - צד קדמי' LIMIT 1),
+                            $5, $6
+                        )
+                        """
+                        
+                        await conn.execute(
+                            doc_query,
+                            doc_id,
+                            case_id,
+                            primary_person_id,
+                            doc_name,
+                            "pending",
+                            f"מסמך {doc_name} בהמתנה"
+                        )
             
-            await conn.execute(relationship_query, primary_person_id, spouse_person_id)
-            
-            # 6. Create bank account for primary person
-            bank_account_id = uuid.uuid4()
-            bank_account_query = """
-            INSERT INTO person_bank_accounts (
-                id, person_id, account_type_id, bank_name, account_number
-            ) VALUES (
-                $1, $2,
-                (SELECT id FROM lior_dropdown_options WHERE category = 'loan_types' AND value = 'mortgage' LIMIT 1),
-                $3, $4
-            )
-            RETURNING id
-            """
-            
-            await conn.fetchrow(
-                bank_account_query,
-                bank_account_id,
-                primary_person_id,
-                "בנק לאומי",
-                "12-345-67890"
-            )
-            
-            logger.info(f"Created bank account for primary applicant with ID: {bank_account_id}")
-            
-            # 7. Create employment history for primary person
-            employment_query = """
-            INSERT INTO person_employment_history (
-                person_id, employer_name, position, employment_type_id, current_employer
-            ) VALUES (
-                $1, $2, $3,
-                (SELECT id FROM lior_dropdown_options WHERE category = 'loan_types' AND value = 'mortgage' LIMIT 1),
-                $4
-            )
-            """
-            
-            await conn.execute(
-                employment_query,
-                primary_person_id,
-                "חברת היי-טק בע\"מ",
-                "מהנדס תוכנה",
-                True
-            )
-            
-            # 8. Create employment history for spouse
-            await conn.execute(
-                employment_query,
-                spouse_person_id,
-                "משרד החינוך",
-                "מורה",
-                True
-            )
-            
-            logger.info(f"Created employment history for both applicants")
-            
-            logger.info(f"Sample case created successfully with ID: {case_id}")
+            logger.info(f"Case created successfully with ID: {case_id}")
             return case_id
-            
+
     except Exception as e:
-        logger.error(f"Error creating sample case: {str(e)}")
+        logger.error(f"Error creating case from JSON: {str(e)}")
         return None
     finally:
         await conn.close()
@@ -542,12 +579,12 @@ def generate_html_report(seeded_categories) -> str:
     <body>
         <h1>Database Schema Creation Report</h1>
         <div class="timestamp">Generated on {datetime.datetime.now().strftime("%Y-%m-%d at %H:%M:%S")}</div>
-        
+
         <div class="summary">
             <h2>Schema Created Successfully</h2>
             <p>Database schema has been created and seeded with initial data for the following categories:</p>
         </div>
-        
+
         <h2>Seeded Dropdown Options</h2>
         {category_details}
     </body>
@@ -590,15 +627,15 @@ async def run_migrations():
     except Exception as e:
         logger.error(f"Error seeding document types: {str(e)}")
 
-    # Create a sample case
+    # Create sample cases from JSON files
     try:
-        sample_case_id = await create_sample_case()
-        if sample_case_id:
-            logger.info(f"Sample case created with ID: {sample_case_id}")
+        sample_case_ids = await create_sample_cases()
+        if sample_case_ids:
+            logger.info(f"Created {len(sample_case_ids)} sample cases from JSON files")
         else:
-            logger.error("Failed to create sample case")
+            logger.error("Failed to create sample cases from JSON files")
     except Exception as e:
-        logger.error(f"Error creating sample case: {str(e)}")
+        logger.error(f"Error creating sample cases: {str(e)}")
 
     # Create report with seeded data information
     try:
