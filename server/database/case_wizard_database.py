@@ -17,7 +17,7 @@ from server.database.cases_database import (
     CasePersonRelationCreate, 
     create_person_relation
 )
-from server.database.companies_database import CompanyCreate, create_company
+from server.database.companies_database import CompanyInCreate, create_company
 from server.database.bank_accounts_database import BankAccountInCreate, create_bank_account
 from server.database.credit_cards_database import CreditCardInCreate, create_credit_card
 from server.database.person_loans_database import PersonLoanInCreate, create_person_loan
@@ -235,7 +235,7 @@ async def create_case_with_wizard(survey: CaseDeclarationSurvey) -> WizardResult
                         errors.append(f"Invalid owner person index for company {company_declaration.name}")
                         continue
                         
-                    company_data = CompanyCreate(
+                    company_data = CompanyInCreate(
                         case_id=case.id,
                         name=company_declaration.name,
                         company_type_id=company_declaration.company_type_id,
