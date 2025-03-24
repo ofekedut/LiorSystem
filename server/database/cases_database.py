@@ -149,7 +149,6 @@ class CaseDocumentBase(BaseModel):
     reviewed_at: Optional[datetime] = None
     target_object_id: Optional[UUID] = None
     target_object_type: Optional[str] = None
-    notes: Optional[str] = None
 
 
 class CaseDocumentCreate(CaseDocumentBase):
@@ -176,7 +175,6 @@ class CaseDocumentUpdate(BaseModel):
     file_path: Optional[str] = None
     target_object_id: Optional[UUID] = None
     target_object_type: Optional[str] = None
-    notes: Optional[str] = None
 
 
 # ----------------------------
@@ -797,8 +795,7 @@ async def get_case_document(case_id: UUID, document_id: UUID) -> Optional[CaseDo
             """
             SELECT id, case_id, document_id, doc_type_id, status,
                    target_object_type, target_object_id, processing_status,
-                   uploaded_at, reviewed_at, file_path, created_at, updated_at,
-                   notes
+                   uploaded_at, reviewed_at, file_path, created_at, updated_at
             FROM case_documents
             WHERE case_id = $1
               AND document_id = $2
@@ -820,8 +817,7 @@ async def list_case_documents(case_id: UUID) -> List[CaseDocumentInDB]:
         query = """
         SELECT id, case_id, document_id, doc_type_id, status,
                target_object_type, target_object_id, processing_status,
-               uploaded_at, reviewed_at, file_path, created_at, updated_at,
-               notes
+               uploaded_at, reviewed_at, file_path, created_at, updated_at
         FROM case_documents
         WHERE case_id = $1
         """
@@ -854,10 +850,9 @@ async def update_case_document(case_id: UUID, document_id: UUID, doc_update: Cas
                     reviewed_at       = $3,
                     file_path         = $4,     -- We want to set it exactly, even if it's None
                     target_object_id  = $5,
-                    target_object_type = $6,
-                    notes             = $7
-                WHERE case_id = $8
-                  AND document_id = $9
+                    target_object_type = $6
+                WHERE case_id = $7
+                  AND document_id = $8
                 RETURNING *
                 """,
                 updated_data.status,
@@ -866,7 +861,6 @@ async def update_case_document(case_id: UUID, document_id: UUID, doc_update: Cas
                 updated_data.file_path,
                 updated_data.target_object_id,
                 updated_data.target_object_type,
-                updated_data.notes,
                 case_id,
                 document_id,
             )

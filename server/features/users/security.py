@@ -10,7 +10,7 @@ from server.database.users_database import UserInDB, get_user, UserStatus, get_u
 SECRET_KEY = '123123' # for dev
 
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 15
+ACCESS_TOKEN_EXPIRE_MINUTES = 90
 REFRESH_TOKEN_EXPIRE_DAYS = 7
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

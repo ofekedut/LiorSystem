@@ -692,8 +692,8 @@ async def classify_document_background(file_path: str, case_id: UUID, document_i
         
         # Try to open the file for manual review
         try:
-            logger.info(f"Opening file for manual review from background task")
-            os.system(f'open "{file_path}"')
+            # logger.info(f"Opening file for manual review from background task")
+            # os.system(f'open "{file_path}"')
             print(f"\n📂 Opening file for review from background task: {file_path}\n")
         except Exception as e:
             logger.warning(f"Failed to open file for review: {e}")
@@ -712,10 +712,11 @@ async def classify_document_background(file_path: str, case_id: UUID, document_i
         logger.info(f"Starting classification for document at {file_path}")
         print(f"\nStarting classification for document: {os.path.basename(file_path)}\n")
         
-        result = await classify_document(
-            labels=labels,
-            filepath=file_path
-        )
+        # result = await classify_document(
+        #     labels=labels,
+        #     filepath=file_path
+        # )
+        result = None
         
         if not result or "predicted_label" not in result:
             logger.warning(f"Document classification failed or returned no prediction")
