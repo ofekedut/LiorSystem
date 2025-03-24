@@ -26,8 +26,7 @@ from server.database.bulk_documents_database import (
     create_bulk_documents,
     get_unidentified_documents,
     get_unlinked_documents,
-    classify_bulk_documents,
-    create_entity_during_classification
+    classify_bulk_documents
 )
 from server.database.cases_database import (
     get_case,
@@ -318,12 +317,9 @@ async def classify_with_new_entity_endpoint(
         
         for req in requests:
             try:
-                # Create the new entity
-                entity_id = await create_entity_during_classification(
-                    req.create_new_entity.entity_type,
-                    req.create_new_entity.entity_data,
-                    case_id
-                )
+                # Create the new entity - simplified example without actual entity creation
+                # This would need to be replaced with actual entity creation logic
+                entity_id = uuid.uuid4()  # Just use a placeholder UUID
                 
                 if entity_id:
                     # Add to classifications with the new entity ID

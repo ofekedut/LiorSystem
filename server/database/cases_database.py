@@ -147,6 +147,9 @@ class CaseDocumentBase(BaseModel):
     processing_status: str = "pending"  # Changed from enum to string with default
     uploaded_at: Optional[datetime] = None
     reviewed_at: Optional[datetime] = None
+    target_object_id: Optional[UUID] = None
+    target_object_type: Optional[str] = None
+    notes: Optional[str] = None
 
 
 class CaseDocumentCreate(CaseDocumentBase):
@@ -171,6 +174,9 @@ class CaseDocumentUpdate(BaseModel):
     processing_status: Optional[str] = None
     reviewed_at: Optional[datetime] = None
     file_path: Optional[str] = None
+    target_object_id: Optional[UUID] = None
+    target_object_type: Optional[str] = None
+    notes: Optional[str] = None
 
 
 # ----------------------------
@@ -789,7 +795,10 @@ async def get_case_document(case_id: UUID, document_id: UUID) -> Optional[CaseDo
     try:
         row = await conn.fetchrow(
             """
-            SELECT *
+            SELECT id, case_id, document_id, doc_type_id, status,
+                   target_object_type, target_object_id, processing_status,
+                   uploaded_at, reviewed_at, file_path, created_at, updated_at,
+                   notes
             FROM case_documents
             WHERE case_id = $1
               AND document_id = $2
@@ -808,7 +817,15 @@ async def list_case_documents(case_id: UUID) -> List[CaseDocumentInDB]:
     """
     conn = await get_connection()
     try:
-        rows = await conn.fetch("SELECT * FROM case_documents WHERE case_id = $1", case_id)
+        query = """
+        SELECT id, case_id, document_id, doc_type_id, status,
+               target_object_type, target_object_id, processing_status,
+               uploaded_at, reviewed_at, file_path, created_at, updated_at,
+               notes
+        FROM case_documents
+        WHERE case_id = $1
+        """
+        rows = await conn.fetch(query, case_id)
         return [CaseDocumentInDB(**dict(row)) for row in rows]
     finally:
         await conn.close()
@@ -835,15 +852,21 @@ async def update_case_document(case_id: UUID, document_id: UUID, doc_update: Cas
                     status            = $1,
                     processing_status = $2,
                     reviewed_at       = $3,
-                    file_path         = $4      -- We want to set it exactly, even if it's None
-                WHERE case_id = $5
-                  AND document_id = $6
+                    file_path         = $4,     -- We want to set it exactly, even if it's None
+                    target_object_id  = $5,
+                    target_object_type = $6,
+                    notes             = $7
+                WHERE case_id = $8
+                  AND document_id = $9
                 RETURNING *
                 """,
                 updated_data.status,
                 updated_data.processing_status,
                 updated_data.reviewed_at,
                 updated_data.file_path,
+                updated_data.target_object_id,
+                updated_data.target_object_type,
+                updated_data.notes,
                 case_id,
                 document_id,
             )

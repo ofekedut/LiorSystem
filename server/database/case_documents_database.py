@@ -63,6 +63,7 @@ class DocumentVersionHistory(BaseModel):
 class CaseDocumentWithTypeInfo(CaseDocumentInDB):
     document_type: Optional[UniqueDocTypeInDB] = None
     previous_versions: Optional[List[DocumentVersionHistory]] = None
+    target_object: Optional[Dict[str, Any]] = None
 
     @computed_field
     @property
@@ -75,7 +76,7 @@ class CaseDocumentWithTypeInfo(CaseDocumentInDB):
     def has_target_linkage(self) -> bool:
         """Indicates if the document is linked to a target object."""
         return self.target_object_id is not None and self.target_object_type is not None
-        
+
     @computed_field
     @property
     def has_version_history(self) -> bool:
@@ -152,21 +153,21 @@ async def get_document_version_history(doc_id: UUID) -> List[DocumentVersionHist
     conn = await get_connection()
     try:
         query = """
-        SELECT id, case_document_id, version_number, file_path, 
+        SELECT id, case_document_id, version_number, file_path,
                uploaded_at, uploaded_by, created_at
         FROM document_version_history
         WHERE case_document_id = $1
         ORDER BY version_number DESC
         """
         records = await conn.fetch(query, doc_id)
-        
+
         return [DocumentVersionHistory(**dict(record)) for record in records]
     finally:
         await conn.close()
 
 
 async def add_document_to_version_history(
-    doc_id: UUID, 
+    doc_id: UUID,
     version_number: int,
     file_path: str,
     uploaded_by: Optional[UUID] = None
@@ -182,11 +183,11 @@ async def add_document_to_version_history(
             case_document_id, version_number, file_path, uploaded_by
         )
         VALUES ($1, $2, $3, $4)
-        RETURNING id, case_document_id, version_number, file_path, 
+        RETURNING id, case_document_id, version_number, file_path,
                   uploaded_at, uploaded_by, created_at
         """
         record = await conn.fetchrow(query, doc_id, version_number, file_path, uploaded_by)
-        
+
         return DocumentVersionHistory(**dict(record))
     finally:
         await conn.close()
@@ -195,7 +196,7 @@ async def add_document_to_version_history(
 async def update_case_document(doc_id: UUID, doc_update: CaseDocumentUpdate) -> Optional[CaseDocumentInDB]:
     """
     Update an existing case document by ID.
-    If the document is of type "updatable" and file_path is being updated, 
+    If the document is of type "updatable" and file_path is being updated,
     the previous version is stored in version history.
     """
     conn = await get_connection()
@@ -204,15 +205,15 @@ async def update_case_document(doc_id: UUID, doc_update: CaseDocumentUpdate) -> 
         existing_doc = await get_case_document(doc_id)
         if not existing_doc:
             return None
-            
+
         # Get document type to check if it's updatable
         is_updatable = False
         if existing_doc.doc_type_id:
             doc_type = await get_unique_doc_type(existing_doc.doc_type_id)
             if doc_type and doc_type.document_type == DocumentType.UPDATABLE:
                 is_updatable = True
-        
-        # If this is an updatable document and file_path is being updated, 
+
+        # If this is an updatable document and file_path is being updated,
         # we need to archive the current version
         if is_updatable and doc_update.file_path and doc_update.file_path != existing_doc.file_path:
             # Add current version to history before updating
@@ -222,10 +223,10 @@ async def update_case_document(doc_id: UUID, doc_update: CaseDocumentUpdate) -> 
                 existing_doc.file_path,
                 None  # We don't know who uploaded the original
             )
-            
+
             # Increment version number for the update
             new_version = existing_doc.version_number + 1
-            
+
             # Add version number to the update fields
             doc_update.version_number = new_version
 
@@ -269,7 +270,7 @@ async def update_case_document(doc_id: UUID, doc_update: CaseDocumentUpdate) -> 
             fields_to_update.append(f"reviewed_at = ${param_idx}")
             params.append(doc_update.reviewed_at)
             param_idx += 1
-            
+
         # Add version update fields if this is an updatable document with file change
         if is_updatable and doc_update.file_path and doc_update.file_path != existing_doc.file_path:
             fields_to_update.append(f"version_number = ${param_idx}")
@@ -390,18 +391,25 @@ async def get_case_document_with_type_info(doc_id: UUID) -> Optional[CaseDocumen
         document = await get_case_document(doc_id)
         if not document:
             return None
-            
+
         # Create the enhanced document info
         document_info = CaseDocumentWithTypeInfo(**document.model_dump())
-        
+
         # Add document type info if available
         if document.doc_type_id:
             document_info.document_type = await get_unique_doc_type(document.doc_type_id)
-            
+
             # If this is an updatable document, get its version history
             if document_info.document_type and document_info.document_type.document_type == DocumentType.UPDATABLE:
                 document_info.previous_versions = await get_document_version_history(doc_id)
-                
+        
+        # Set basic target object info if available
+        if document.target_object_type and document.target_object_id:
+            document_info.target_object = {
+                "id": str(document.target_object_id),
+                "type": document.target_object_type
+            }
+
         return document_info
     finally:
         await conn.close()

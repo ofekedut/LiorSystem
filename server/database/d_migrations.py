@@ -121,6 +121,27 @@ PERSON_MARITAL_STATUSES = [
     {"name": "ידוע/ה בציבור", "value": "common_law"},
 ]
 
+# Company types sample data (Israeli companies)
+COMPANY_TYPES = [
+    {"name": "עוסק פטור", "value": "patur"},
+    {"name": "עוסק מורשה", "value": "murshe"},
+    {"name": "חברה בע\"מ", "value": "baam"},
+]
+
+# Income sources types sample data
+INCOME_SOURCES_TYPES = [
+    {"name": "משכורת", "value": "salary"},
+    {"name": "קצבת נכות", "value": "disability"},
+    {"name": "קצבת זקנה", "value": "pension"},
+    {"name": "שכר דירה", "value": "rental_income"},
+    {"name": "רווחים מעסק", "value": "business_income"},
+    {"name": "דיבידנדים", "value": "dividends"},
+    {"name": "הכנסות מהשקעות", "value": "investment_income"},
+    {"name": "קצבת שארים", "value": "survivors_benefit"},
+    {"name": "מענקים", "value": "grants"},
+    {"name": "הכנסות אחרות", "value": "other_income"},
+]
+
 # Loan types sample data
 LOAN_TYPES = [
     {"name": "משכנתא", "value": "mortgage"},
@@ -171,6 +192,80 @@ RELATED_PERSON_RELATIONSHIPS_TYPES = [
     {"name": "שותף/ה עסקי/ת", "value": "business_partner"},
 ]
 
+# Bank account types sample data
+BANK_ACCOUNT_TYPES = [
+    {"name": "חשבון עו\"ש", "value": "checking"},
+    {"name": "חשבון חיסכון", "value": "savings"},
+    {"name": "פיקדון", "value": "deposit"},
+    {"name": "חשבון השקעות", "value": "investment"},
+    {"name": "חשבון משותף", "value": "joint"},
+    {"name": "חשבון עסקי", "value": "business"},
+]
+
+# Credit card types sample data
+CREDIT_CARD_TYPES = [
+    {"name": "ויזה", "value": "visa"},
+    {"name": "מאסטרקארד", "value": "mastercard"},
+    {"name": "אמריקן אקספרס", "value": "amex"},
+    {"name": "ישראכרט", "value": "isracard"},
+    {"name": "דיינרס", "value": "diners"},
+    {"name": "מאסטרקארד דירקט", "value": "mastercard_direct"},
+]
+
+# Asset types sample data
+ASSET_TYPES = [
+    {"name": "בית מגורים", "value": "house"},
+    {"name": "דירה", "value": "apartment"},
+    {"name": "קרקע", "value": "land"},
+    {"name": "נכס מסחרי", "value": "commercial_property"},
+    {"name": "מניות", "value": "stocks"},
+    {"name": "אגרות חוב", "value": "bonds"},
+    {"name": "קרנות נאמנות", "value": "mutual_funds"},
+    {"name": "תוכניות חיסכון", "value": "savings_plans"},
+    {"name": "רכב", "value": "car"},
+    {"name": "תכשיטים", "value": "jewelry"},
+    {"name": "אוספים", "value": "collections"},
+    {"name": "ציוד עסקי", "value": "business_equipment"},
+]
+
+# Document categories sample data
+DOCUMENT_CATEGORIES = [
+    {"name": "זיהוי", "value": "identification"},
+    {"name": "פיננסי", "value": "financial"},
+    {"name": "תעסוקה", "value": "employment"},
+    {"name": "מיסוי", "value": "tax"},
+    {"name": "נכסים", "value": "assets"},
+    {"name": "ביטוח", "value": "insurance"},
+    {"name": "משפטי", "value": "legal"},
+    {"name": "אחר", "value": "other"},
+]
+
+# Employment types sample data
+EMPLOYMENT_TYPES = [
+    {"name": "שכיר/ה", "value": "employee"},
+    {"name": "עצמאי/ת", "value": "self_employed"},
+    {"name": "בעל/ת עסק", "value": "business_owner"},
+    {"name": "פנסיונר/ית", "value": "retired"},
+    {"name": "סטודנט/ית", "value": "student"},
+    {"name": "לא עובד/ת", "value": "unemployed"},
+    {"name": "פרילנסר/ית", "value": "freelancer"},
+    {"name": "חופשת לידה", "value": "maternity_leave"},
+    {"name": "חייל/ת בשירות חובה", "value": "military_service"},
+    {"name": "בעל/ת שליטה", "value": "controlling_shareholder"},
+]
+
+# Financial organization types sample data
+FIN_ORG_TYPES = [
+    {"name": "בנק", "value": "bank"},
+    {"name": "חברת ביטוח", "value": "insurance_company"},
+    {"name": "חברת אשראי", "value": "credit_company"},
+    {"name": "בית השקעות", "value": "investment_house"},
+    {"name": "גוף מוסדי", "value": "institutional_body"},
+    {"name": "גמ\"ח", "value": "gmach"},
+    {"name": "חברת מימון חוץ בנקאי", "value": "non_bank_finance"},
+    {"name": "אחר", "value": "other"},
+]
+
 # ------------------------------------------------
 # Seed Data Functions
 # ------------------------------------------------
@@ -185,10 +280,18 @@ async def seed_dropdown_options():
     options_to_seed = [
         {"category": "person_roles", "options": PERSON_ROLES},
         {"category": "person_marital_statuses", "options": PERSON_MARITAL_STATUSES},
+        {"category": "company_types", "options": COMPANY_TYPES},
+        {"category": "income_sources_types", "options": INCOME_SOURCES_TYPES},
         {"category": "loan_types", "options": LOAN_TYPES},
         {"category": "loan_goals", "options": LOAN_GOALS},
         {"category": "case_status", "options": CASE_STATUS},
         {"category": "related_person_relationships_types", "options": RELATED_PERSON_RELATIONSHIPS_TYPES},
+        {"category": "bank_account_types", "options": BANK_ACCOUNT_TYPES},
+        {"category": "credit_card_types", "options": CREDIT_CARD_TYPES},
+        {"category": "asset_types", "options": ASSET_TYPES},
+        {"category": "document_categories", "options": DOCUMENT_CATEGORIES},
+        {"category": "employment_types", "options": EMPLOYMENT_TYPES},
+        {"category": "fin_org_types", "options": FIN_ORG_TYPES},
     ]
 
     # Create each option in the database
@@ -481,6 +584,10 @@ def generate_html_report(seeded_categories) -> str:
             options_data = PERSON_ROLES
         elif category == "person_marital_statuses":
             options_data = PERSON_MARITAL_STATUSES
+        elif category == "company_types":
+            options_data = COMPANY_TYPES
+        elif category == "income_sources_types":
+            options_data = INCOME_SOURCES_TYPES
         elif category == "loan_types":
             options_data = LOAN_TYPES
         elif category == "loan_goals":
@@ -489,6 +596,18 @@ def generate_html_report(seeded_categories) -> str:
             options_data = CASE_STATUS
         elif category == "related_person_relationships_types":
             options_data = RELATED_PERSON_RELATIONSHIPS_TYPES
+        elif category == "bank_account_types":
+            options_data = BANK_ACCOUNT_TYPES
+        elif category == "credit_card_types":
+            options_data = CREDIT_CARD_TYPES
+        elif category == "asset_types":
+            options_data = ASSET_TYPES
+        elif category == "document_categories":
+            options_data = DOCUMENT_CATEGORIES
+        elif category == "employment_types":
+            options_data = EMPLOYMENT_TYPES
+        elif category == "fin_org_types":
+            options_data = FIN_ORG_TYPES
 
         if options_data:
             for option in options_data:
@@ -597,10 +716,18 @@ async def run_migrations():
     seeded_categories = [
         "person_roles",
         "person_marital_statuses",
+        "company_types",
+        "income_sources_types",
         "loan_types",
         "loan_goals",
         "case_status",
-        "related_person_relationships_types"
+        "related_person_relationships_types",
+        "bank_account_types",
+        "credit_card_types",
+        "asset_types",
+        "document_categories",
+        "employment_types",
+        "fin_org_types"
     ]
 
     # Seed dropdown options
