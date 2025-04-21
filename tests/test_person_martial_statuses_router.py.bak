@@ -1,0 +1,218 @@
+# tests/test_person_marital_statuses_router.py
+import pytest
+from httpx import AsyncClient
+import uuid
+
+@pytest.mark.asyncio
+class TestPersonMaritalStatusRouter:
+    """Tests for the person_marital_statuses_router endpoints."""
+
+    async def test_create_person_martial_status(self, async_client: AsyncClient, admin_token):
+        """Test creating a new person marital status."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        new_status = {
+            "name": "Test Marital Status",
+            "value": "test_marital_status"
+        }
+        
+        # Create the marital status
+        response = await async_client.post("/person_marital_statuses/", json=new_status, headers=headers)
+        assert response.status_code == 201, response.text
+        
+        data = response.json()
+        assert data['name'] == new_status['name']
+        assert data['value'] == new_status['value']
+        assert 'id' in data
+        
+        # Clean up - delete the created marital status
+        delete_response = await async_client.delete(f"/person_marital_statuses/{data['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_read_person_marital_statuses(self, async_client: AsyncClient, admin_token):
+        """Test listing all person marital statuses."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test marital status first
+        new_status = {
+            "name": "Test Marital Status List",
+            "value": "test_marital_status_list"
+        }
+        create_response = await async_client.post("/person_marital_statuses/", json=new_status, headers=headers)
+        assert create_response.status_code == 201
+        created_status = create_response.json()
+        
+        # Get all marital statuses
+        response = await async_client.get("/person_marital_statuses/", headers=headers)
+        assert response.status_code == 200
+        
+        data = response.json()
+        assert isinstance(data, list)
+        assert len(data) > 0
+        
+        # Verify our created status is in the list
+        found = False
+        for item in data:
+            if item['id'] == created_status['id']:
+                found = True
+                assert item['name'] == new_status['name']
+                assert item['value'] == new_status['value']
+                break
+        
+        assert found, "Created marital status not found in the list"
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/person_marital_statuses/{created_status['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_read_person_martial_status_by_id(self, async_client: AsyncClient, admin_token):
+        """Test getting a specific person marital status by ID."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test marital status first
+        new_status = {
+            "name": "Test Marital Status Get",
+            "value": "test_marital_status_get"
+        }
+        create_response = await async_client.post("/person_marital_statuses/", json=new_status, headers=headers)
+        assert create_response.status_code == 201
+        created_status = create_response.json()
+        
+        # Get the marital status by ID
+        response = await async_client.get(f"/person_marital_statuses/{created_status['id']}", headers=headers)
+        assert response.status_code == 200
+        
+        data = response.json()
+        assert data['id'] == created_status['id']
+        assert data['name'] == new_status['name']
+        assert data['value'] == new_status['value']
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/person_marital_statuses/{created_status['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_read_person_martial_status_not_found(self, async_client: AsyncClient, admin_token):
+        """Test getting a non-existent person marital status."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Generate a random UUID that doesn't exist
+        random_id = str(uuid.uuid4())
+        
+        # Try to get a non-existent marital status
+        response = await async_client.get(f"/person_marital_statuses/{random_id}", headers=headers)
+        assert response.status_code == 404
+        assert "not found" in response.json()["detail"].lower()
+
+    async def test_update_person_martial_status(self, async_client: AsyncClient, admin_token):
+        """Test updating a person marital status."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test marital status first
+        new_status = {
+            "name": "Test Marital Status Update",
+            "value": "test_marital_status_update"
+        }
+        create_response = await async_client.post("/person_marital_statuses/", json=new_status, headers=headers)
+        assert create_response.status_code == 201
+        created_status = create_response.json()
+        
+        # Update the marital status
+        update_data = {
+            "name": "Updated Marital Status",
+            "value": "updated_marital_status"
+        }
+        response = await async_client.put(f"/person_marital_statuses/{created_status['id']}", json=update_data, headers=headers)
+        assert response.status_code == 200
+        
+        updated_status = response.json()
+        assert updated_status['id'] == created_status['id']
+        assert updated_status['name'] == update_data['name']
+        assert updated_status['value'] == update_data['value']
+        
+        # Verify the update by getting the marital status
+        get_response = await async_client.get(f"/person_marital_statuses/{created_status['id']}", headers=headers)
+        assert get_response.status_code == 200
+        get_data = get_response.json()
+        assert get_data['name'] == update_data['name']
+        assert get_data['value'] == update_data['value']
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/person_marital_statuses/{created_status['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_update_person_martial_status_partial(self, async_client: AsyncClient, admin_token):
+        """Test partially updating a person marital status."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test marital status first
+        new_status = {
+            "name": "Test Marital Status Partial Update",
+            "value": "test_marital_status_partial_update"
+        }
+        create_response = await async_client.post("/person_marital_statuses/", json=new_status, headers=headers)
+        assert create_response.status_code == 201
+        created_status = create_response.json()
+        
+        # Update only the name
+        update_data = {
+            "name": "Partially Updated Marital Status"
+        }
+        response = await async_client.put(f"/person_marital_statuses/{created_status['id']}", json=update_data, headers=headers)
+        assert response.status_code == 200
+        
+        updated_status = response.json()
+        assert updated_status['id'] == created_status['id']
+        assert updated_status['name'] == update_data['name']
+        assert updated_status['value'] == new_status['value']  # Value should remain unchanged
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/person_marital_statuses/{created_status['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_update_person_martial_status_not_found(self, async_client: AsyncClient, admin_token):
+        """Test updating a non-existent person marital status."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Generate a random UUID that doesn't exist
+        random_id = str(uuid.uuid4())
+        
+        # Try to update a non-existent marital status
+        update_data = {
+            "name": "Non-existent Marital Status",
+            "value": "non_existent_marital_status"
+        }
+        response = await async_client.put(f"/person_marital_statuses/{random_id}", json=update_data, headers=headers)
+        assert response.status_code == 404
+        assert "not found" in response.json()["detail"].lower()
+
+    async def test_delete_person_martial_status(self, async_client: AsyncClient, admin_token):
+        """Test deleting a person marital status."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test marital status first
+        new_status = {
+            "name": "Test Marital Status Delete",
+            "value": "test_marital_status_delete"
+        }
+        create_response = await async_client.post("/person_marital_statuses/", json=new_status, headers=headers)
+        assert create_response.status_code == 201
+        created_status = create_response.json()
+        
+        # Delete the marital status
+        delete_response = await async_client.delete(f"/person_marital_statuses/{created_status['id']}", headers=headers)
+        assert delete_response.status_code == 204
+        
+        # Verify it's deleted by trying to get it
+        get_response = await async_client.get(f"/person_marital_statuses/{created_status['id']}", headers=headers)
+        assert get_response.status_code == 404
+
+    async def test_delete_person_martial_status_not_found(self, async_client: AsyncClient, admin_token):
+        """Test deleting a non-existent person marital status."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Generate a random UUID that doesn't exist
+        random_id = str(uuid.uuid4())
+        
+        # Try to delete a non-existent marital status
+        response = await async_client.delete(f"/person_marital_statuses/{random_id}", headers=headers)
+        assert response.status_code == 404
+        assert "not found" in response.json()["detail"].lower()

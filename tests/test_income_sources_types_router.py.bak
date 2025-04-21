@@ -1,0 +1,219 @@
+# tests/test_income_sources_types_router.py
+import pytest
+from httpx import AsyncClient
+import uuid
+
+
+@pytest.mark.asyncio
+class TestIncomeSourcesTypesRouter:
+    """Tests for the income_sources_types_router endpoints."""
+
+    async def test_create_income_source_type(self, async_client: AsyncClient, admin_token):
+        """Test creating a new income source type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        new_type = {
+            "name": "Test Income Source Type",
+            "value": "test_income_source_type"
+        }
+        
+        # Create the income source type
+        response = await async_client.post("/income_sources_types/", json=new_type, headers=headers)
+        assert response.status_code == 201, response.text
+        
+        data = response.json()
+        assert data['name'] == new_type['name']
+        assert data['value'] == new_type['value']
+        assert 'id' in data
+        
+        # Clean up - delete the created income source type
+        delete_response = await async_client.delete(f"/income_sources_types/{data['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_read_income_sources_types(self, async_client: AsyncClient, admin_token):
+        """Test listing all income source types."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test income source type first
+        new_type = {
+            "name": "Test Income Source Type List",
+            "value": "test_income_source_type_list"
+        }
+        create_response = await async_client.post("/income_sources_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Get all income source types
+        response = await async_client.get("/income_sources_types/", headers=headers)
+        assert response.status_code == 200
+        
+        data = response.json()
+        assert isinstance(data, list)
+        assert len(data) > 0
+        
+        # Verify our created type is in the list
+        found = False
+        for item in data:
+            if item['id'] == created_type['id']:
+                found = True
+                assert item['name'] == new_type['name']
+                assert item['value'] == new_type['value']
+                break
+        
+        assert found, "Created income source type not found in the list"
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/income_sources_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_read_income_source_type_by_id(self, async_client: AsyncClient, admin_token):
+        """Test getting a specific income source type by ID."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test income source type first
+        new_type = {
+            "name": "Test Income Source Type Get",
+            "value": "test_income_source_type_get"
+        }
+        create_response = await async_client.post("/income_sources_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Get the income source type by ID
+        response = await async_client.get(f"/income_sources_types/{created_type['id']}", headers=headers)
+        assert response.status_code == 200
+        
+        data = response.json()
+        assert data['id'] == created_type['id']
+        assert data['name'] == new_type['name']
+        assert data['value'] == new_type['value']
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/income_sources_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_read_income_source_type_not_found(self, async_client: AsyncClient, admin_token):
+        """Test getting a non-existent income source type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Generate a random UUID that doesn't exist
+        random_id = str(uuid.uuid4())
+        
+        # Try to get a non-existent income source type
+        response = await async_client.get(f"/income_sources_types/{random_id}", headers=headers)
+        assert response.status_code == 404
+        assert "not found" in response.json()["detail"].lower()
+
+    async def test_update_income_source_type(self, async_client: AsyncClient, admin_token):
+        """Test updating an income source type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test income source type first
+        new_type = {
+            "name": "Test Income Source Type Update",
+            "value": "test_income_source_type_update"
+        }
+        create_response = await async_client.post("/income_sources_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Update the income source type
+        update_data = {
+            "name": "Updated Income Source Type",
+            "value": "updated_income_source_type"
+        }
+        response = await async_client.put(f"/income_sources_types/{created_type['id']}", json=update_data, headers=headers)
+        assert response.status_code == 200
+        
+        updated_type = response.json()
+        assert updated_type['id'] == created_type['id']
+        assert updated_type['name'] == update_data['name']
+        assert updated_type['value'] == update_data['value']
+        
+        # Verify the update by getting the income source type
+        get_response = await async_client.get(f"/income_sources_types/{created_type['id']}", headers=headers)
+        assert get_response.status_code == 200
+        get_data = get_response.json()
+        assert get_data['name'] == update_data['name']
+        assert get_data['value'] == update_data['value']
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/income_sources_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_update_income_source_type_partial(self, async_client: AsyncClient, admin_token):
+        """Test partially updating an income source type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test income source type first
+        new_type = {
+            "name": "Test Income Source Type Partial Update",
+            "value": "test_income_source_type_partial_update"
+        }
+        create_response = await async_client.post("/income_sources_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Update only the name
+        update_data = {
+            "name": "Partially Updated Income Source Type"
+        }
+        response = await async_client.put(f"/income_sources_types/{created_type['id']}", json=update_data, headers=headers)
+        assert response.status_code == 200
+        
+        updated_type = response.json()
+        assert updated_type['id'] == created_type['id']
+        assert updated_type['name'] == update_data['name']
+        assert updated_type['value'] == new_type['value']  # Value should remain unchanged
+        
+        # Clean up
+        delete_response = await async_client.delete(f"/income_sources_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+
+    async def test_update_income_source_type_not_found(self, async_client: AsyncClient, admin_token):
+        """Test updating a non-existent income source type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Generate a random UUID that doesn't exist
+        random_id = str(uuid.uuid4())
+        
+        # Try to update a non-existent income source type
+        update_data = {
+            "name": "Non-existent Income Source Type",
+            "value": "non_existent_income_source_type"
+        }
+        response = await async_client.put(f"/income_sources_types/{random_id}", json=update_data, headers=headers)
+        assert response.status_code == 404
+        assert "not found" in response.json()["detail"].lower()
+
+    async def test_delete_income_source_type(self, async_client: AsyncClient, admin_token):
+        """Test deleting an income source type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Create a test income source type first
+        new_type = {
+            "name": "Test Income Source Type Delete",
+            "value": "test_income_source_type_delete"
+        }
+        create_response = await async_client.post("/income_sources_types/", json=new_type, headers=headers)
+        assert create_response.status_code == 201
+        created_type = create_response.json()
+        
+        # Delete the income source type
+        delete_response = await async_client.delete(f"/income_sources_types/{created_type['id']}", headers=headers)
+        assert delete_response.status_code == 204
+        
+        # Verify it's deleted by trying to get it
+        get_response = await async_client.get(f"/income_sources_types/{created_type['id']}", headers=headers)
+        assert get_response.status_code == 404
+
+    async def test_delete_income_source_type_not_found(self, async_client: AsyncClient, admin_token):
+        """Test deleting a non-existent income source type."""
+        headers = {"Authorization": f"Bearer {admin_token}"}
+        
+        # Generate a random UUID that doesn't exist
+        random_id = str(uuid.uuid4())
+        
+        # Try to delete a non-existent income source type
+        response = await async_client.delete(f"/income_sources_types/{random_id}", headers=headers)
+        assert response.status_code == 404
+        assert "not found" in response.json()["detail"].lower()

@@ -98,8 +98,8 @@ app.include_router(case_overview_router)
 
 
 async def create_schema_and_admin():
-    await drop_all_tables()
-    await create_schema_if_not_exists()
+    # await drop_all_tables()
+    # await create_schema_if_not_exists()
     await run_migrations()
     
 
